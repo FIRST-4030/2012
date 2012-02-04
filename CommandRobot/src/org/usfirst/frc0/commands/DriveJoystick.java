@@ -5,22 +5,18 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveJoystick extends Command {
 
 	public DriveJoystick() {
-		requires(CommandBase.driveMotors);
 	}
 
 	protected void initialize() {
+		requires(CommandBase.driveMotors);
 	}
 
 	protected void execute() {
-		CommandBase.driveMotors.DriveWithJoystick(CommandBase.oi.getJoystick());
+		CommandBase.driveMotors.DriveWithJoystick(CommandBase.oi.getDriveJoystick());
 	}
 
 	protected boolean isFinished() {
-		/*
-		 * TODO: Under some conditions we probably want to disengage
-		 * DriveJoystick, but now we just drive forever
-		 */
-		return false;
+		return CommandBase.globalState.isJoystickDriveEnabled();
 	}
 
 	protected void end() {

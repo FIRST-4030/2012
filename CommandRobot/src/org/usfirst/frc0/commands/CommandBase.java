@@ -2,6 +2,8 @@ package org.usfirst.frc0.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc0.GlobalState;
 import org.usfirst.frc0.OI;
 import org.usfirst.frc0.subsystems.*;
 
@@ -13,11 +15,14 @@ import org.usfirst.frc0.subsystems.*;
  */
 public abstract class CommandBase extends Command {
 
+	// Static operator interface handle
     public static OI oi;
-    // Create a single static instance of all of your subsystems
+
+    // Static instance of all subsystems
     public static DriveMotors driveMotors = new DriveMotors();
     public static BallTransport ballTransport = new BallTransport();
-
+    public static GlobalState globalState = new GlobalState();
+    
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
         // will), constructing it during the construction of CommandBase (from

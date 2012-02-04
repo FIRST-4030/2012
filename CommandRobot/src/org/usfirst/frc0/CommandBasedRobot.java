@@ -61,5 +61,15 @@ public class CommandBasedRobot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
+		/*
+		 * Toggle joystick drive motor input
+		 * 
+		 * This is tracked here rather than in OI because it does not fire a
+		 * command directly, it merely updates a state variable used by the
+		 * various commands
+		 */
+		CommandBase.globalState.updateJoystickDriveEnabled(CommandBase.oi
+				.isJoystickEnablePressed());
 	}
 }
