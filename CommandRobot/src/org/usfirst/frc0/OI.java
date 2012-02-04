@@ -1,7 +1,15 @@
-
 package org.usfirst.frc0;
 
-public class OI {
-    // Process operator interface input here.
-}
+import edu.wpi.first.wpilibj.Joystick;
 
+public class OI {
+	private Joystick stick;
+	
+	public OI() {
+		stick = new Joystick(RobotMap.JOYSTICK_DRIVE);
+	}
+
+	public Joystick getJoystick() {
+		return stick;
+	}
+}
