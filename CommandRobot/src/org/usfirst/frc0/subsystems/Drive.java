@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class DriveMotors extends Subsystem {
+public class Drive extends Subsystem {
 
 	RobotDrive drive;
 
@@ -15,13 +15,17 @@ public class DriveMotors extends Subsystem {
 		setDefaultCommand(new DriveJoystick());
 	}
 
-	public DriveMotors() {
+	public Drive() {
 		drive = new RobotDrive(RobotMap.MOTOR_DRIVE_LEFT,
 				RobotMap.MOTOR_DRIVE_RIGHT);
 		drive.setSafetyEnabled(false);
 	}
 
-	public void DriveWithJoystick(Joystick stick) {
+	public void driveWithJoystick(Joystick stick) {
 		drive.arcadeDrive(stick);
+	}
+	
+	public void stop() {
+		drive.stopMotor();
 	}
 }

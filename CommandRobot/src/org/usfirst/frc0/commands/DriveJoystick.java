@@ -8,11 +8,11 @@ public class DriveJoystick extends Command {
 	}
 
 	protected void initialize() {
-		requires(CommandBase.driveMotors);
+		requires(CommandBase.drive);
 	}
 
 	protected void execute() {
-		CommandBase.driveMotors.DriveWithJoystick(CommandBase.oi.getDriveJoystick());
+		CommandBase.drive.driveWithJoystick(CommandBase.oi.getDriveJoystick());
 	}
 
 	protected boolean isFinished() {
@@ -20,8 +20,10 @@ public class DriveJoystick extends Command {
 	}
 
 	protected void end() {
+		CommandBase.drive.stop();
 	}
 
 	protected void interrupted() {
+		this.end();
 	}
 }

@@ -9,11 +9,26 @@ import edu.wpi.first.wpilibj.Joystick;
  * floating around.
  */
 
-public class RobotMap {	
-	public static final int JOYSTICK_DRIVE_STICK = 1;
-	public static final int JOYSTICK_SHOOT_BUTTON = Joystick.ButtonType.kTrigger.value;
-	public static final int JOYSTICK_DRIVE_BUTTON = Joystick.ButtonType.kTop.value;
+public class RobotMap {
+	public static final int JOYSTICK_DRIVE = 1;
 	
+	public static final int BUTTON_SHOOT = Joystick.ButtonType.kTrigger.value;
+	public static final int BUTTON_DRIVE = Joystick.ButtonType.kTop.value;
+	public static final int BUTTON_LOAD = Joystick.ButtonType.kNumButton.value;
+
 	public static final int MOTOR_DRIVE_LEFT = 1;
 	public static final int MOTOR_DRIVE_RIGHT = 2;
+	public static final int MOTOR_SHOOTER = 3;
+	public static final int MOTOR_ELEVATOR = 4;
+	public static final int MOTOR_LOADER = 5;
+
+	public static final double SHOOTER_SPEED = 1000;
+	public static final double SHOOTER_P_GAIN = 0.1;
+	public static final double SHOOTER_I_GAIN = 0.01;
+	public static final double SHOOTER_D_GAIN = 0.0;
+
+	public static final double ELEVATOR_SPEED_SHOOT = 1.0;
+	public static final double ELEVATOR_SPEED_LOAD = 1.0;
+
+	public static final double LOADER_SPEED = 1.0;
 }

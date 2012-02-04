@@ -4,25 +4,22 @@ import org.usfirst.frc0.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Shoot extends Command {
-
-	public Shoot() {
-	}
+public class Load extends Command {
 
 	protected void initialize() {
 		requires(CommandBase.elevator);
-		requires(CommandBase.shooter);
+		requires(CommandBase.loader);
 	}
 
 	protected void execute() {
-		CommandBase.elevator.run(RobotMap.ELEVATOR_SPEED_SHOOT);
-		CommandBase.shooter.enable();
+		CommandBase.elevator.run(RobotMap.ELEVATOR_SPEED_LOAD);
+		CommandBase.loader.run(RobotMap.LOADER_SPEED);
 	}
 
 	/*
 	 * This command is called while the button is held, then canceled
 	 * automatically, so we're never ready to stop. If there's a use case to
-	 * detect the end of the shooting sequence this should be updated to trigger
+	 * detect the end of the loading sequence this should be updated to trigger
 	 * on that event
 	 */
 	protected boolean isFinished() {
@@ -30,11 +27,11 @@ public class Shoot extends Command {
 	}
 
 	protected void end() {
-		CommandBase.shooter.disable();
+		CommandBase.elevator.stop();
+		CommandBase.loader.stop();
 	}
 
 	protected void interrupted() {
 		this.end();
 	}
-
 }
