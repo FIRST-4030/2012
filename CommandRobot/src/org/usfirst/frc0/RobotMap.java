@@ -12,15 +12,15 @@ import edu.wpi.first.wpilibj.Joystick;
 public class RobotMap {
 	public static final int JOYSTICK_DRIVE = 1;
 	
-	public static final int BUTTON_SHOOT = Joystick.ButtonType.kTrigger.value;
-	public static final int BUTTON_DRIVE = Joystick.ButtonType.kTop.value;
-	public static final int BUTTON_LOAD = Joystick.ButtonType.kNumButton.value;
+	public static final int BUTTON_SHOOT = 1;
+	public static final int BUTTON_DRIVE = 3;
+	public static final int BUTTON_LOAD = 2;
 
 	public static final int MOTOR_DRIVE_LEFT = 1;
 	public static final int MOTOR_DRIVE_RIGHT = 2;
 	public static final int MOTOR_SHOOTER = 3;
-	public static final int MOTOR_ELEVATOR = 4;
-	public static final int MOTOR_LOADER = 5;
+	public static final int MOTOR_ELEVATOR = 5;
+	public static final int MOTOR_LOADER = 6;
 
 	public static final double SHOOTER_SPEED = 1000;
 	public static final double SHOOTER_P_GAIN = 0.1;

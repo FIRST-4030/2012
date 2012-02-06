@@ -25,6 +25,7 @@ public abstract class CommandBase extends Command {
 	public static Elevator elevator = new Elevator();
 	public static Shooter shooter = new Shooter();
 	public static Loader loader = new Loader();
+        public static TempShooter tempShooter = new TempShooter();
 	public static GlobalState globalState = new GlobalState();
 
 	public static void init() {
