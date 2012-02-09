@@ -30,6 +30,7 @@ public class TempShooterCmd extends Command {
     }
 
     protected void end() {
+        CommandBase.elevator.stop();
         CommandBase.tempShooter.stop();
     }
 

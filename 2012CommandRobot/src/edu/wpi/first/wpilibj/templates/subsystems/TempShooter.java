@@ -23,6 +23,22 @@ public class TempShooter extends Subsystem {
     }
 
     public void stop() {
+        final double STEP_INCREMENT = 0.1;
+        final int SLEEP_LENGTH = 100;
+        
+        while (shooter.get() > 0) {
+            if (shooter.get() <= STEP_INCREMENT) {
+                shooter.set(0);
+                break;
+            } else {
+                shooter.set(shooter.get() - STEP_INCREMENT);
+                try {
+                    Thread.sleep(SLEEP_LENGTH);
+                } catch (InterruptedException e) {
+                    // Oh noes! Sleep was interrupted!
+                }
+            }
+        }
         shooter.stopMotor();
     }
 }
