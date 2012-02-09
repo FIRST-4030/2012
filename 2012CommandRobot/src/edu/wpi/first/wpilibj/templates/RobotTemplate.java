@@ -4,13 +4,14 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
 package edu.wpi.first.wpilibj.templates;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
+import edu.wpi.first.wpilibj.templates.commands.DriveJoystick;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 public class RobotTemplate extends IterativeRobot {
 
     //Command autonomousCommand;
+    Command drive;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -48,11 +50,13 @@ public class RobotTemplate extends IterativeRobot {
     }
 
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to 
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		//autonomousCommand.cancel();
+        // This makes sure that the autonomous stops running when
+        // teleop starts running. If you want the autonomous to 
+        // continue until interrupted by another command, remove
+        // this line or comment it out.
+        //autonomousCommand.cancel();
+        
+        drive = new DriveJoystick();
     }
 
     /**
@@ -60,15 +64,20 @@ public class RobotTemplate extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        
+
         /*
-		 * Toggle joystick drive motor input
-		 * 
-		 * This is tracked here rather than in OI because it does not fire a
-		 * command directly, it merely updates a state variable used by the
-		 * various commands
-		 */
-		CommandBase.globalState.updateJoystickDriveEnabled(CommandBase.oi
-				.isJoystickEnablePressed());
+         * Toggle joystick drive motor input
+         *
+         * This is tracked here rather than in OI because it does not fire a
+         * command directly, it merely updates a state variable used by the
+         * various commands
+         */
+        CommandBase.globalState.updateJoystickDriveEnabled(CommandBase.oi.isJoystickEnablePressed());
+        SmartDashboard.putBoolean("Joystick Drive Enabled", CommandBase.globalState.isJoystickDriveEnabled());
+            if (CommandBase.globalState.isJoystickDriveEnabled()) {
+                drive.start();
+            } else {
+                drive.cancel();
+            }
     }
 }

@@ -26,7 +26,8 @@ public abstract class CommandBase extends Command {
 	//public static Shooter shooter = new Shooter();
         public static TempShooter tempShooter = new TempShooter();
 	public static Loader loader = new Loader();
-	public static GlobalState globalState = new GlobalState();
+        
+        public static GlobalState globalState = new GlobalState();
 
 	public static void init() {
 		// This MUST be here. If the OI creates Commands (which it very likely
@@ -35,7 +36,7 @@ public abstract class CommandBase extends Command {
 		// yet. Thus, their requires() statements may grab null pointers. Bad
 		// news. Don't move it.
 		oi = new OI();
-
+               
 		// Show what command your subsystem is running on the SmartDashboard
 		SmartDashboard.putData(drive);
 		SmartDashboard.putData(elevator);

@@ -16,7 +16,7 @@ public class DriveJoystick extends Command {
     }
 
     protected boolean isFinished() {
-        return CommandBase.globalState.isJoystickDriveEnabled();
+        return !CommandBase.globalState.isJoystickDriveEnabled();
     }
 
     protected void end() {
