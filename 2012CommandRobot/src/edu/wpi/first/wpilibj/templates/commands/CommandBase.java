@@ -26,6 +26,7 @@ public abstract class CommandBase extends Command {
 	//public static Shooter shooter = new Shooter();
         public static TempShooter tempShooter = new TempShooter();
 	public static Loader loader = new Loader();
+        public static Switches switches = new Switches();
         
         public static GlobalState globalState = new GlobalState();
 
@@ -43,6 +44,7 @@ public abstract class CommandBase extends Command {
 		//SmartDashboard.putData(shooter);
                 SmartDashboard.putData(tempShooter);
 		SmartDashboard.putData(loader);
+                SmartDashboard.putData(switches);
 	}
 
 	public CommandBase(String name) {

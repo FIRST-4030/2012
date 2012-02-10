@@ -55,7 +55,7 @@ public class RobotTemplate extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         //autonomousCommand.cancel();
-        
+
         drive = new DriveJoystick();
     }
 
@@ -65,19 +65,11 @@ public class RobotTemplate extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
 
-        /*
-         * Toggle joystick drive motor input
-         *
-         * This is tracked here rather than in OI because it does not fire a
-         * command directly, it merely updates a state variable used by the
-         * various commands
-         */
-        CommandBase.globalState.updateJoystickDriveEnabled(CommandBase.oi.isJoystickEnablePressed());
-        SmartDashboard.putBoolean("Joystick Drive Enabled", CommandBase.globalState.isJoystickDriveEnabled());
-            if (CommandBase.globalState.isJoystickDriveEnabled()) {
-                drive.start();
-            } else {
-                drive.cancel();
-            }
+        // Enable/disable joystick drive
+        if (CommandBase.globalState.isJoystickDriveEnabled()) {
+            drive.start();
+        } else {
+            drive.cancel();
+        }
     }
 }
