@@ -15,9 +15,11 @@ public class Switches extends Subsystem {
     }
 
     public Switches() {
+        initSwitches();
     }
     
-    public void initSwitches(){
+    
+    private void initSwitches(){
         this.balanceArmSwitches.setLimitsVoltage(1, 1);
         this.loaderFrontSwitch.setLimitsVoltage(1, 1);
         this.elevatorBottomSwitch.setLimitsVoltage(1, 1);
@@ -34,6 +36,7 @@ public class Switches extends Subsystem {
     private AnalogTrigger elevatorTopSwitch = new AnalogTrigger(RobotMap.ELEVATOR_TOP_SWITCH);
 
     public void readSwtiches() {
+        boolean state=false;
 
         // Read the joystick-drive-enable toggle
         CommandBase.globalState.updateJoystickDriveEnabled(CommandBase.oi.isJoystickEnablePressed());
@@ -43,8 +46,24 @@ public class Switches extends Subsystem {
         CommandBase.globalState.setArmSwitch(balanceArmSwitches.getTriggerState());
 
         // Read elevator ball switches
-        CommandBase.globalState.setLoaderFrontSwitch(loaderFrontSwitch.getTriggerState());
-        CommandBase.globalState.setElevatorBottomSwitch(elevatorBottomSwitch.getTriggerState());
-        CommandBase.globalState.setElevatorTopSwitch(elevatorTopSwitch.getTriggerState());
+        // Checks the current state compared to the last state for switches
+        state=loaderFrontSwitch.getTriggerState();
+        if(!(CommandBase.globalState.isLoaderFrontSwitch())&&state){
+            CommandBase.globalState.ballsInLoaderPlus();
+        }
+        CommandBase.globalState.setLoaderFrontSwitch(state);
+        
+        state=elevatorBottomSwitch.getTriggerState();
+        if(!(CommandBase.globalState.isElevatorBottomSwitch())&&state){
+            CommandBase.globalState.ballsInLoaderMinus();
+        }
+        CommandBase.globalState.setElevatorBottomSwitch(state);
+        
+        state=elevatorTopSwitch.getTriggerState();
+        if(CommandBase.globalState.isElevatorTopSwitch()&&(!state)){
+            //this indicates that a ball has just been moved into the shooting wheel from the switch at the top of the elevator
+            CommandBase.globalState.shotBall();
+        }
+        CommandBase.globalState.setElevatorTopSwitch(state);
     }
 }
