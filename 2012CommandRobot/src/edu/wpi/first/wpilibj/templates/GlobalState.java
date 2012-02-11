@@ -20,8 +20,9 @@ public class GlobalState {
     private boolean readyToLoad = false;
 
 
-
-    
+    //Is incremented by 1 when loaderFrontSwitch changes from false to true
+    //Is decremented by 1 when elevatorBottomSwitch changes from false to true 
+    private int ballsInLoader = 0;
     
     private boolean loaderFrontSwitch = false;
     private boolean elevatorBottomSwitch = false;
@@ -53,6 +54,19 @@ public class GlobalState {
     
     public void setArmSwitch(boolean armSwitch){
         this.armSwitch=armSwitch;
+    }
+    
+    
+    public int getBallsInLoader(){
+        return ballsInLoader;
+    }
+    
+    public void ballsInLoaderPlus(){
+        ballsInLoader++;
+    }
+    
+    public void ballsInLoaderMinus(){
+        ballsInLoader--;
     }
     
     
@@ -118,5 +132,9 @@ public class GlobalState {
 
     public void shotBall() {
         this.numBalls--;
+    }
+    
+    public int getNumBalls(){
+        return numBalls;
     }
 }
