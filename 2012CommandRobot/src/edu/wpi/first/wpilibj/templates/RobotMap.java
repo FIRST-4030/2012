@@ -30,4 +30,9 @@ public class RobotMap {
     public static final double LOADER_SPEED = -1.0;
     
     public static final int MAX_BALLS = 3;
+    
+    public static final int LOADER_FRONT_SWITCH = 1;
+    public static final int ELEVATOR_BOTTOM_SWITCH = 2;
+    public static final int ELEVATOR_TOP_SWITCH = 3;
+    public static final int BALANCE_ARM_SWITCHES = 4;
 }
