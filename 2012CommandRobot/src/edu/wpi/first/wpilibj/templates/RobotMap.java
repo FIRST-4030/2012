@@ -19,6 +19,9 @@ public class RobotMap {
     public static final int MOTOR_ELEVATOR = 5;
     public static final int MOTOR_LOADER = 6;
 
+    public static final int RELAY_ARM = 1;
+    public static final double ARM_TIMEOUT = 10.0;
+
     public static final double SHOOTER_SPEED = 1000;
     public static final double SHOOTER_P_GAIN = 0.1;
     public static final double SHOOTER_I_GAIN = 0.01;
@@ -35,4 +38,14 @@ public class RobotMap {
     public static final int ELEVATOR_BOTTOM_SWITCH = 2;
     public static final int ELEVATOR_TOP_SWITCH = 3;
     public static final int BALANCE_ARM_SWITCHES = 4;
+    
+    public static final int VIN = 1;
+    public static final int ACCELEROMETER = 2;
+    public static final int GYRO = 3;
+    public static final int RANGEFINDER = 4;
+    
+    public static final double BALANCE_P_GAIN = 0.01;
+    public static final double BALANCE_I_GAIN = 0.01;
+    public static final double BALANCE_D_GAIN = 0.0;
+    public static final double BALANCE_MAX_SPEED = 0.1;
 }

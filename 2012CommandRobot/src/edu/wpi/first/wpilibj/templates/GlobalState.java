@@ -12,66 +12,29 @@ public class GlobalState {
     private boolean targetLocked = false;
     // Is either arm switch closed
     private boolean armSwitch = false;
+    // Is the arm up?
+    private boolean armUp = true;
     // Track loaded balls
-    private int numBalls = 0;
-    // Is there a ball at the ready-to-shoot elevator switch?
-    private boolean readyToShoot = false;
-    // Is there a ball at the the read-load-load elevator switch?
-    private boolean readyToLoad = false;
-
-
-    //Is incremented by 1 when loaderFrontSwitch changes from false to true
-    //Is decremented by 1 when elevatorBottomSwitch changes from false to true 
+    private int ballsInControl = 0;
     private int ballsInLoader = 0;
-    
-    private boolean loaderFrontSwitch = false;
-    private boolean elevatorBottomSwitch = false;
-    private boolean elevatorTopSwitch = false;
-    
-    public boolean isElevatorBottomSwitch() {
-        return elevatorBottomSwitch;
-    }
+    // Is there a ball at the ready-to-shoot (elevator top) switch?
+    private boolean readyToShoot = false;
+    // Is there a ball at the the read-to-queue (elevator bottom) switch?
+    private boolean readyToRaise = false;
+    // Is there a ball at the read-to-load (loader front) switch
+    private boolean readyToLoad = false;
+    // Which way is down?
+    private double gravity = 0;
+    // Which way is north?
+    private double heading = 0;
 
-    public void setElevatorBottomSwitch(boolean elevatorBottomSwitch) {
-        this.elevatorBottomSwitch = elevatorBottomSwitch;
-    }
-
-    public boolean isElevatorTopSwitch() {
-        return elevatorTopSwitch;
-    }
-
-    public void setElevatorTopSwitch(boolean elevatorTopSwitch) {
-        this.elevatorTopSwitch = elevatorTopSwitch;
-    }
-
-    public boolean isLoaderFrontSwitch() {
-        return loaderFrontSwitch;
-    }
-
-    public void setLoaderFrontSwitch(boolean loaderFrontSwitch) {
-        this.loaderFrontSwitch = loaderFrontSwitch;
+    public void setArmSwitch(boolean armSwitch) {
+        this.armSwitch = armSwitch;
     }
     
-    public void setArmSwitch(boolean armSwitch){
-        this.armSwitch=armSwitch;
+    public boolean getArmSwtich() {
+        return armSwitch;
     }
-    
-    
-    public int getBallsInLoader(){
-        return ballsInLoader;
-    }
-    
-    public void ballsInLoaderPlus(){
-        ballsInLoader++;
-    }
-    
-    public void ballsInLoaderMinus(){
-        ballsInLoader--;
-    }
-    
-    
-    
-    
 
     public void updateJoystickDriveEnabled(boolean pressed) {
         joystickDrive.update(pressed);
@@ -104,19 +67,20 @@ public class GlobalState {
         return this.readyToShoot;
     }
 
+    public boolean readyToRaise() {
+        return this.readyToRaise;
+    }
+
     public boolean readyToLoad() {
         return this.readyToLoad;
     }
 
-    public boolean ballLoaded() {
-        if (this.numBalls > 0) {
-            return true;
-        }
-        return false;
+    public int ballsInControl() {
+        return this.ballsInControl;
     }
 
     public boolean loaderReady() {
-        if (this.numBalls < RobotMap.MAX_BALLS) {
+        if (ballsInControl() < RobotMap.MAX_BALLS) {
             return true;
         }
         return false;
@@ -127,14 +91,51 @@ public class GlobalState {
     }
 
     public void loadedBall() {
-        this.numBalls++;
+        this.ballsInControl++;
+        this.ballsInLoader++;
     }
 
-    public void shotBall() {
-        this.numBalls--;
+    public void raisedBall() {
+        this.ballsInLoader--;
     }
-    
-    public int getNumBalls(){
-        return numBalls;
+
+    public void unloadedBall() {
+        this.ballsInControl--;
+    }
+
+    public void setGravity(double gravity) {
+        this.gravity = gravity;
+    }
+
+    public double getGravity() {
+        return gravity;
+    }
+
+    public void setHeading(double heading) {
+        this.heading = heading;
+    }
+
+    public double getHeading() {
+        return heading;
+    }
+
+    public void setReadyToLoad(boolean ready) {
+        this.readyToLoad = ready;
+    }
+
+    public void setReadyToRaise(boolean ready) {
+        this.readyToRaise = ready;
+    }
+
+    public void setReadyToShoot(boolean ready) {
+        this.readyToShoot = ready;
+    }
+
+    public boolean isArmUp() {
+        return armUp;
+    }
+
+    public void setArmUp(boolean armUp) {
+        this.armUp = armUp;
     }
 }

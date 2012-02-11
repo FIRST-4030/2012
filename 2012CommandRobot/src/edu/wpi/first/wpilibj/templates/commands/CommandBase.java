@@ -27,6 +27,9 @@ public abstract class CommandBase extends Command {
         public static TempShooter tempShooter = new TempShooter();
 	public static Loader loader = new Loader();
         public static Switches switches = new Switches();
+        public static Gravity gravity = new Gravity();
+        public static Heading heading = new Heading();
+        public static Arm arm = new Arm();
         
         public static GlobalState globalState = new GlobalState();
 
@@ -45,6 +48,9 @@ public abstract class CommandBase extends Command {
                 SmartDashboard.putData(tempShooter);
 		SmartDashboard.putData(loader);
                 SmartDashboard.putData(switches);
+                SmartDashboard.putData(gravity);
+                SmartDashboard.putData(heading);
+                SmartDashboard.putData(arm);
 	}
 
 	public CommandBase(String name) {
