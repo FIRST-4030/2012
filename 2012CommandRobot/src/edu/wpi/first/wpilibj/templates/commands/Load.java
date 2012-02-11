@@ -10,12 +10,19 @@ public class Load extends Command {
         requires(CommandBase.elevator);
         requires(CommandBase.loader);
     }
+    
 
     protected void initialize() {
     }
 
     protected void execute() {
-        CommandBase.elevator.run(RobotMap.ELEVATOR_SPEED_LOAD);
+        // If there is a ball in the loader and there is a ball at the bottom of the elevator,
+        // this moves the elevator until the ball isn't touching the switch
+        if(CommandBase.globalState.isElevatorBottomSwitch()&&(CommandBase.globalState.getBallsInLoader()>0)){
+            CommandBase.elevator.run(RobotMap.ELEVATOR_SPEED_LOAD);
+        }else{
+            CommandBase.elevator.stop();
+        }
         CommandBase.loader.run(RobotMap.LOADER_SPEED);
     }
 
