@@ -1,5 +1,7 @@
 package edu.wpi.first.wpilibj.templates;
 
+import edu.wpi.first.wpilibj.AnalogTrigger;
+
 public class GlobalState {
 
     // Are we driving manually or automatically?
@@ -16,6 +18,46 @@ public class GlobalState {
     private boolean readyToShoot = false;
     // Is there a ball at the the read-load-load elevator switch?
     private boolean readyToLoad = false;
+
+
+
+    
+    
+    private boolean loaderFrontSwitch = false;
+    private boolean elevatorBottomSwitch = false;
+    private boolean elevatorTopSwitch = false;
+    
+    public boolean isElevatorBottomSwitch() {
+        return elevatorBottomSwitch;
+    }
+
+    public void setElevatorBottomSwitch(boolean elevatorBottomSwitch) {
+        this.elevatorBottomSwitch = elevatorBottomSwitch;
+    }
+
+    public boolean isElevatorTopSwitch() {
+        return elevatorTopSwitch;
+    }
+
+    public void setElevatorTopSwitch(boolean elevatorTopSwitch) {
+        this.elevatorTopSwitch = elevatorTopSwitch;
+    }
+
+    public boolean isLoaderFrontSwitch() {
+        return loaderFrontSwitch;
+    }
+
+    public void setLoaderFrontSwitch(boolean loaderFrontSwitch) {
+        this.loaderFrontSwitch = loaderFrontSwitch;
+    }
+    
+    public void setArmSwitch(boolean armSwitch){
+        this.armSwitch=armSwitch;
+    }
+    
+    
+    
+    
 
     public void updateJoystickDriveEnabled(boolean pressed) {
         joystickDrive.update(pressed);
