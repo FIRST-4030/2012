@@ -2,17 +2,17 @@ package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ReadSwitches extends Command {
+public class ReadSwitches extends CommandBase {
 
     public ReadSwitches() {
-        requires(CommandBase.switches);
+        requires(switches);
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-        CommandBase.switches.readSwtiches();
+        switches.readSwtiches();
     }
 
     protected boolean isFinished() {

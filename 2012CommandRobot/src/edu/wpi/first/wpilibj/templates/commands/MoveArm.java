@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj.templates.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class MoveArm extends Command {
+public class MoveArm extends CommandBase {
 
     private boolean armMoving = false;
 
     public MoveArm() {
-        requires(CommandBase.arm);
+        requires(arm);
     }
 
     protected void initialize() {
@@ -17,29 +17,29 @@ public class MoveArm extends Command {
     }
 
     protected void execute() {
-        CommandBase.arm.toggle();
+        arm.toggle();
     }
 
     protected boolean isFinished() {
         boolean done = false;
         if (isTimedOut()) {
             done = true;
-        } else if (!armMoving && !CommandBase.globalState.getArmSwtich()) {
+        } else if (!armMoving && !globalState.getArmSwtich()) {
             armMoving = true;
-        } else if (armMoving && CommandBase.globalState.getArmSwtich()) {
+        } else if (armMoving && globalState.getArmSwtich()) {
             armMoving = false;
             done = true;
         }
         
         // Toggle our stored state after a timeout or transit
         if (done) {
-            CommandBase.globalState.setArmSwitch(!CommandBase.globalState.getArmSwtich());
+            globalState.setArmSwitch(!globalState.getArmSwtich());
         }
         return done;
     }
 
     protected void end() {
-        CommandBase.arm.stop();
+        arm.stop();
     }
 
     protected void interrupted() {

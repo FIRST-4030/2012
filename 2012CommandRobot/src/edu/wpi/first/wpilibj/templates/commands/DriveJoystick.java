@@ -2,25 +2,25 @@ package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveJoystick extends Command {
+public class DriveJoystick extends CommandBase {
 
     public DriveJoystick() {
-        requires(CommandBase.drive);
+        requires(drive);
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-        CommandBase.drive.driveWithJoystick(CommandBase.oi.getDriveJoystick());
+        drive.driveWithJoystick(oi.getDriveJoystick());
     }
 
     protected boolean isFinished() {
-        return !CommandBase.globalState.isJoystickDriveEnabled();
+        return !globalState.isJoystickDriveEnabled();
     }
 
     protected void end() {
-        CommandBase.drive.stop();
+        drive.stop();
     }
 
     protected void interrupted() {
