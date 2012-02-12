@@ -22,8 +22,7 @@ public class OI {
 		
 		// Shoot when the trigger is pulled
 		shoot = new JoystickButton(stick, RobotMap.BUTTON_SHOOT);
-		//shoot.whileHeld(new Shoot());
-                shoot.whileHeld(new TempShooterCmd());
+		shoot.whileHeld(new Shoot());
 		
 		// Toggle joystick driving with the top button
 		joystickEnabled = new JoystickButton(stick, RobotMap.BUTTON_DRIVE);

@@ -25,12 +25,12 @@ public abstract class CommandBase extends Command {
 	public static Elevator elevator = new Elevator();
 	public static Shooter shooter = new Shooter();
         public static ShooterEncoder shooterEncoder=new ShooterEncoder();
-        public static TempShooter tempShooter = new TempShooter();
 	public static Loader loader = new Loader();
         public static Switches switches = new Switches();
         public static Gravity gravity = new Gravity();
         public static Heading heading = new Heading();
         public static Arm arm = new Arm();
+        public static Vin vin = new Vin();
         
         public static GlobalState globalState = new GlobalState();
 
@@ -45,13 +45,13 @@ public abstract class CommandBase extends Command {
 		// Show what command your subsystem is running on the SmartDashboard
 		SmartDashboard.putData(drive);
 		SmartDashboard.putData(elevator);
-		//SmartDashboard.putData(shooter);
-                SmartDashboard.putData(tempShooter);
+		SmartDashboard.putData(shooter);
 		SmartDashboard.putData(loader);
                 SmartDashboard.putData(switches);
                 SmartDashboard.putData(gravity);
                 SmartDashboard.putData(heading);
                 SmartDashboard.putData(arm);
+                SmartDashboard.putData(vin);
 	}
 
 	public CommandBase(String name) {
