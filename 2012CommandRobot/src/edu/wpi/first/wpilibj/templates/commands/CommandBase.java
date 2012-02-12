@@ -21,6 +21,7 @@ public abstract class CommandBase extends Command {
 	public static OI oi;
 
 	// Static instance of all subsystems
+        public static HoodAngle hoodAngle=new HoodAngle();
 	public static Drive drive = new Drive();
 	public static Elevator elevator = new Elevator();
 	public static Shooter shooter = new Shooter();

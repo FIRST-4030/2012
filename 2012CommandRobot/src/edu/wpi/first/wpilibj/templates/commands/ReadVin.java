@@ -2,17 +2,17 @@ package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ReadVin extends Command {
+public class ReadVin extends CommandBase {
 
     public ReadVin() {
-        requires(CommandBase.vin);
+        requires(vin);
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-        CommandBase.globalState.setVin(CommandBase.vin.readVoltage());
+        globalState.setVin(vin.readVoltage());
     }
 
     protected boolean isFinished() {
@@ -20,6 +20,7 @@ public class ReadVin extends Command {
     }
 
     protected void end() {
+         
     }
 
     protected void interrupted() {

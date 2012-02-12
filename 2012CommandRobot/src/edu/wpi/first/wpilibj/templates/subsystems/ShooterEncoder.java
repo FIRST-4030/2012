@@ -7,6 +7,8 @@ package edu.wpi.first.wpilibj.templates.subsystems;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.templates.RobotMap;
+import edu.wpi.first.wpilibj.templates.commands.ReadGravity;
+import edu.wpi.first.wpilibj.templates.commands.ReadShooterEncoder;
 
 /**
  *
@@ -23,6 +25,7 @@ public class ShooterEncoder extends Subsystem
 
     public void initDefaultCommand()
     {  
+        setDefaultCommand(new ReadShooterEncoder());
     }
     public double getRate(){
         return encoder.getRate();
