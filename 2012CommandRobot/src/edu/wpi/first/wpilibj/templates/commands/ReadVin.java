@@ -18,6 +18,7 @@ public class ReadVin extends CommandBase {
     }
 
     protected void end() {
+         
     }
 
     protected void interrupted() {

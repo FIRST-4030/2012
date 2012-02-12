@@ -7,6 +7,8 @@ package edu.wpi.first.wpilibj.templates.subsystems;
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.templates.RobotMap;
+import edu.wpi.first.wpilibj.templates.commands.CommandBase;
+import edu.wpi.first.wpilibj.templates.commands.ReadHoodAngle;
 
 /**
  *
@@ -20,7 +22,13 @@ public class HoodAngle extends Subsystem
 
     public void initDefaultCommand()
     {
+        setDefaultCommand(new ReadHoodAngle());
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    }
+
+    public double getPosition()
+    {
+        return (angle.getVoltage()/CommandBase.globalState.getVin());
     }
 }

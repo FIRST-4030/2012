@@ -17,13 +17,10 @@ public class GlobalState {
     // Track loaded balls
     private int ballsInControl = 0;
     private int ballsInLoader = 0;
-    private int ballsAboveBottomOfElevator = 0;
     // Is there a ball at the ready-to-shoot (elevator top) switch?
     private boolean readyToShoot = false;
     // Is there a ball at the the read-to-queue (elevator bottom) switch?
     private boolean readyToRaise = false;
-    // Is there a ball at the done-raising switch?
-    private boolean doneRaising = false;
     // Is there a ball at the read-to-load (loader front) switch
     private boolean readyToLoad = false;
     // Which way is down?
@@ -32,23 +29,17 @@ public class GlobalState {
     private double heading = 0;
     // Reference voltage for analog sensors
     private double vin = 0;
-    
-    public boolean isDoneRaising() {
-        return doneRaising;
+    //hood angle?
+    private double hoodAngle=0;
+
+    public double getHoodAngle()
+    {
+        return hoodAngle;
     }
 
-    public void setDoneRaising(boolean doneRaising) {
-        this.doneRaising = doneRaising;
-    }
-    
-    public int getBallsAboveBottomOfElevator() {
-        return ballsAboveBottomOfElevator;
-    }
-    public void ballsAboveBottomOfElevatorPlus(){
-        ballsAboveBottomOfElevator++;
-    }
-    public void ballsAboveBottomOfElevatorMinus(){
-        ballsAboveBottomOfElevator--;
+    public void setHoodAngle(double hoodAngle)
+    {
+        this.hoodAngle = hoodAngle;
     }
 
     public void setArmSwitch(boolean armSwitch) {
@@ -57,10 +48,6 @@ public class GlobalState {
     
     public boolean getArmSwtich() {
         return armSwitch;
-    }
-    
-    public int getBallsInLoader() {
-        return ballsInLoader;
     }
 
     public void updateJoystickDriveEnabled(boolean pressed) {
