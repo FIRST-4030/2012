@@ -29,6 +29,18 @@ public class GlobalState {
     private double heading = 0;
     // Reference voltage for analog sensors
     private double vin = 0;
+    //hood angle?
+    private double hoodAngle=0;
+
+    public double getHoodAngle()
+    {
+        return hoodAngle;
+    }
+
+    public void setHoodAngle(double hoodAngle)
+    {
+        this.hoodAngle = hoodAngle;
+    }
 
     public void setArmSwitch(boolean armSwitch) {
         this.armSwitch = armSwitch;
