@@ -2,8 +2,6 @@ package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.templates.RobotMap;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 public class Load extends CommandBase {
 
     public Load() {

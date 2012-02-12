@@ -2,8 +2,6 @@ package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.templates.RobotMap;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 public class MoveArm extends CommandBase {
 
     private boolean armMoving = false;

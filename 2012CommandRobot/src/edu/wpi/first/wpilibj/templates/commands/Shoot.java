@@ -1,6 +1,5 @@
 package edu.wpi.first.wpilibj.templates.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 
 public class Shoot extends CommandBase {
