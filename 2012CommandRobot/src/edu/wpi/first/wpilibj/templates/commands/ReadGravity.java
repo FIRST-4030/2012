@@ -1,18 +1,16 @@
 package edu.wpi.first.wpilibj.templates.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-
-public class ReadGravity extends Command {
+public class ReadGravity extends CommandBase {
 
     public ReadGravity() {
-        requires(CommandBase.gravity);
+        requires(gravity);
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-        CommandBase.globalState.setGravity(CommandBase.gravity.readGravity());
+        globalState.setGravity(gravity.readGravity());
     }
 
     protected boolean isFinished() {

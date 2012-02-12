@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.templates.RobotMap;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 
 public class Shooter extends PIDSubsystem {
 
@@ -19,8 +20,8 @@ public class Shooter extends PIDSubsystem {
 	}
 
 	protected double returnPIDInput() {
-		/* TODO: Read the shooter encoder */
-		return 0;
+		return CommandBase.shooterEncoder.getRate();
+		
 	}
 
 	protected void usePIDOutput(double output) {

@@ -2,13 +2,11 @@ package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.templates.RobotMap;
 
-import edu.wpi.first.wpilibj.command.Command;
-
-public class Load extends Command {
+public class Load extends CommandBase {
 
     public Load() {
-        requires(CommandBase.elevator);
-        requires(CommandBase.loader);
+        requires(elevator);
+        requires(loader);
     }
 
     protected void initialize() {
@@ -21,7 +19,7 @@ public class Load extends Command {
         if (!CommandBase.globalState.readyToShoot() && CommandBase.globalState.ballsInControl() > 0 && CommandBase.globalState.getBallsAboveBottomOfElevator()>0) {
             CommandBase.elevator.run(RobotMap.ELEVATOR_SPEED_LOAD);
         } else {
-            CommandBase.elevator.stop();
+            elevator.stop();
         }
         CommandBase.loader.run(RobotMap.LOADER_SPEED);
     }
@@ -33,8 +31,8 @@ public class Load extends Command {
     }
 
     protected void end() {
-        CommandBase.elevator.stop();
-        CommandBase.loader.stop();
+        elevator.stop();
+        loader.stop();
     }
 
     protected void interrupted() {

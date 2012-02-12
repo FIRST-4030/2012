@@ -1,76 +1,35 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.wpi.first.wpilibj.templates.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.templates.RobotMap;
 
-/**
- *
- * @author Ingyram
- */
-public class Shoot extends CommandGroup {
-    private class MoveElevatorToFire extends Command{
+public class Shoot extends CommandBase {
 
-        protected void initialize() {
-        }
-
-        protected void execute() {
-        }
-
-        protected boolean isFinished() {
-            return true;
-        }
-
-        protected void end() {
-        }
-
-        protected void interrupted() {
-        }
-    }
-    private class SpinMotor extends Command{
-
-        protected void initialize() {
-        }
-
-        protected void execute() {
-        }
-
-        protected boolean isFinished() {
-            return true;
-        }
-
-        protected void end() {
-        }
-
-        protected void interrupted() {
-        }
-        
-        /*
-         * This CommandGroup has yet to be written
-         * 
-         */
-        
-        
-    }
     public Shoot() {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
+        requires(elevator);
+    }
 
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
+    protected void initialize() {
+    }
 
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
+    protected void execute() {
+        if (globalState.readyToShoot()) {
+            elevator.run(RobotMap.ELEVATOR_SPEED_SHOOT);
+        } else {
+            elevator.stop();
+        }
+    }
+
+    protected boolean isFinished() {
+        return !globalState.readyToShoot();
+    }
+
+    protected void end() {
+        elevator.stop();
+    }
+
+    protected void interrupted() {
+        this.end();
     }
 }
+
+

@@ -1,24 +1,23 @@
 package edu.wpi.first.wpilibj.templates.commands;
 
-public class DriveJoystick extends CommandBase {
+public class ReadVin extends CommandBase {
 
-    public DriveJoystick() {
-        requires(drive);
+    public ReadVin() {
+        requires(vin);
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-        drive.driveWithJoystick(oi.getDriveJoystick());
+        globalState.setVin(vin.readVoltage());
     }
 
     protected boolean isFinished() {
-        return !globalState.isJoystickDriveEnabled();
+        return false;
     }
 
     protected void end() {
-        drive.stop();
     }
 
     protected void interrupted() {
