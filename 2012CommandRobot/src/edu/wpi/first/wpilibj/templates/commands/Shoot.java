@@ -3,29 +3,29 @@ package edu.wpi.first.wpilibj.templates.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 
-public class Shoot extends Command {
+public class Shoot extends CommandBase {
 
     public Shoot() {
-        requires(CommandBase.elevator);
+        requires(elevator);
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-        if (CommandBase.globalState.readyToShoot()) {
-            CommandBase.elevator.run(RobotMap.ELEVATOR_SPEED_SHOOT);
+        if (globalState.readyToShoot()) {
+            elevator.run(RobotMap.ELEVATOR_SPEED_SHOOT);
         } else {
-            CommandBase.elevator.stop();
+            elevator.stop();
         }
     }
 
     protected boolean isFinished() {
-        return !CommandBase.globalState.readyToShoot();
+        return !globalState.readyToShoot();
     }
 
     protected void end() {
-        CommandBase.elevator.stop();
+        elevator.stop();
     }
 
     protected void interrupted() {
