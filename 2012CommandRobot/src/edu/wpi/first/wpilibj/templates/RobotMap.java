@@ -38,6 +38,7 @@ public class RobotMap {
     public static final int ELEVATOR_BOTTOM_SWITCH = 2;
     public static final int ELEVATOR_TOP_SWITCH = 3;
     public static final int BALANCE_ARM_SWITCHES = 4;
+    public static final int ELEVATOR_MID_SWITCH = 8;
     public static final int ENCODER_CHANNEL_A=5;
     public static final int ENCODER_CHANNEL_B=6;
     public static final int HOOD_POTENTIOMETER=7;
