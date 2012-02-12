@@ -40,6 +40,7 @@ public class RobotMap {
     public static final int BALANCE_ARM_SWITCHES = 4;
     public static final int ENCODER_CHANNEL_A=5;
     public static final int ENCODER_CHANNEL_B=6;
+    public static final int HOOD_POTENTIOMETER=7;
     
     public static final int VIN = 1;
     public static final int ACCELEROMETER = 2;

@@ -15,7 +15,7 @@ public class SpinShooter extends CommandBase
     private double speed;
     
     public SpinShooter(double speed){
-        requires(CommandBase.shooter);
+        requires(shooter);
         this.speed=speed;
     }
     public SpinShooter()
@@ -33,7 +33,7 @@ public class SpinShooter extends CommandBase
     // Called repeatedly when this Command is scheduled to run
     protected void execute()
     {
-        CommandBase.shooter.setSetpoint(speed);
+        shooter.setSetpoint(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -45,7 +45,7 @@ public class SpinShooter extends CommandBase
     // Called once after isFinished returns true
     protected void end()
     {
-        CommandBase.shooter.setSetpoint(0);
+        shooter.setSetpoint(0);
     }
 
     // Called when another command which requires one or more of the same

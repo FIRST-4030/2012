@@ -2,17 +2,17 @@ package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ReadHeading extends Command {
+public class ReadHeading extends CommandBase {
 
     public ReadHeading() {
-        requires(CommandBase.heading);
+        requires(heading);
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-        CommandBase.globalState.setHeading(CommandBase.heading.readHeading());
+        globalState.setHeading(heading.readHeading());
     }
 
     protected boolean isFinished() {

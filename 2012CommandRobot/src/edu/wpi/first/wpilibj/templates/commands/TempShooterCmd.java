@@ -3,20 +3,20 @@ package edu.wpi.first.wpilibj.templates.commands;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TempShooterCmd extends Command {
+public class TempShooterCmd extends CommandBase {
 
     public TempShooterCmd() {
-        requires(CommandBase.elevator);
-        //requires(CommandBase.shooter);
-        requires(CommandBase.tempShooter);
+        requires(elevator);
+        //requires(shooter);
+        requires(tempShooter);
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-        CommandBase.elevator.run(RobotMap.ELEVATOR_SPEED_SHOOT);
-        CommandBase.tempShooter.run(1.0);
+        elevator.run(RobotMap.ELEVATOR_SPEED_SHOOT);
+        tempShooter.run(1.0);
     }
 
     /*
@@ -30,8 +30,8 @@ public class TempShooterCmd extends Command {
     }
 
     protected void end() {
-        CommandBase.elevator.stop();
-        CommandBase.tempShooter.stop();
+        elevator.stop();
+        tempShooter.stop();
     }
 
     protected void interrupted() {
