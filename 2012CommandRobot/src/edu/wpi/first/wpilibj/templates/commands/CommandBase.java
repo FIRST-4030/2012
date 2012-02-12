@@ -23,7 +23,8 @@ public abstract class CommandBase extends Command {
 	// Static instance of all subsystems
 	public static Drive drive = new Drive();
 	public static Elevator elevator = new Elevator();
-	//public static Shooter shooter = new Shooter();
+	public static Shooter shooter = new Shooter();
+        public static ShooterEncoder shooterEncoder=new ShooterEncoder();
         public static TempShooter tempShooter = new TempShooter();
 	public static Loader loader = new Loader();
         public static Switches switches = new Switches();
