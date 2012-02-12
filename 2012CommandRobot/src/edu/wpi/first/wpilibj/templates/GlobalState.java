@@ -27,6 +27,8 @@ public class GlobalState {
     private double gravity = 0;
     // Which way is north?
     private double heading = 0;
+    // Reference voltage for analog sensors
+    private double vin = 0;
 
     public void setArmSwitch(boolean armSwitch) {
         this.armSwitch = armSwitch;
@@ -137,5 +139,13 @@ public class GlobalState {
 
     public void setArmUp(boolean armUp) {
         this.armUp = armUp;
+    }
+    
+    public double getVin() {
+        return vin;
+    }
+    
+    public void setVin(double vin) {
+        this.vin = vin;
     }
 }
