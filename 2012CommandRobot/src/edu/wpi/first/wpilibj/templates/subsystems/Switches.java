@@ -17,6 +17,8 @@ public class Switches extends Subsystem {
     private DigitalInput elevatorBottomSwitch = new DigitalInput(RobotMap.ELEVATOR_BOTTOM_SWITCH);
     // The switch at the top of the elevator
     private DigitalInput elevatorTopSwitch = new DigitalInput(RobotMap.ELEVATOR_TOP_SWITCH);
+    // The switch at one ball length above the bottom of the elevator
+    //private DigitalInput elevatorMidSwitch = new DigitalInput(RobotMap.ELEVATOR_MID_SWITCH);
 
     protected void initDefaultCommand() {
         setDefaultCommand(new ReadSwitches());
@@ -47,9 +49,12 @@ public class Switches extends Subsystem {
 
         // Is a ball ready to be raised by the elevator?
         // On leading edge, count the ball as raised
+        // On trailing edge, add to ballsAboveBottomOfElevator
         state = elevatorBottomSwitch.get();
         if (!(CommandBase.globalState.readyToRaise()) && state) {
             CommandBase.globalState.raisedBall();
+        }else if((CommandBase.globalState.readyToRaise()) && !state){
+            CommandBase.globalState.ballsAboveBottomOfElevatorPlus();
         }
         CommandBase.globalState.setReadyToRaise(state);
         SmartDashboard.putBoolean("Ready to raise", state);
@@ -62,5 +67,11 @@ public class Switches extends Subsystem {
         }
         CommandBase.globalState.setReadyToShoot(state);
         SmartDashboard.putBoolean("Ready to shoot", state);
+        
+        
+//        state = elevatorMidSwitch.get();
+        if (CommandBase.globalState.getBallsAboveBottomOfElevator()>0 && CommandBase.globalState.isDoneRaising() && !state){
+            CommandBase.globalState.ballsAboveBottomOfElevatorMinus();
+        }
     }
 }

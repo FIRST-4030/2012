@@ -1,7 +1,5 @@
 package edu.wpi.first.wpilibj.templates.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 public class ReadGravity extends CommandBase {
 
     public ReadGravity() {
