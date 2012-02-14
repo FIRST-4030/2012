@@ -82,14 +82,21 @@ public class RobotTemplate extends IterativeRobot {
         // Master mode swtich between shooting and loading
         if (CommandBase.globalState.isShootMode()) {
             // Shoot
-            load.cancel();
-            shooter.start();
-            elevator.start();
+            if (!shooter.isRunning()) {
+                load.cancel();
+                shooter.start();
+            }
+            // Restart the elevator anytime we have balls and no shoot-mode balls handler is running
+            if (!shoot.isRunning() && !elevator.isRunning() && CommandBase.globalState.ballsInControl() > 0) {
+                elevator.start();
+            }
         } else {
             // Load
-            shooter.cancel();
-            elevator.cancel();
-            load.start();
+            if (!load.isRunning()) {
+                shooter.cancel();
+                elevator.cancel();
+                load.start();
+            }
         }
     }
 }
