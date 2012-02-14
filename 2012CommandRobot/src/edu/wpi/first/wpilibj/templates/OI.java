@@ -11,6 +11,7 @@ public class OI {
 	private JoystickButton load;
 	private JoystickButton shoot;
 	private JoystickButton joystickEnabled;
+        private JoystickButton shootMode;
 		
 	public OI() {
 		// Map the primary joystick
@@ -24,16 +25,19 @@ public class OI {
 		shoot = new JoystickButton(stick, RobotMap.BUTTON_SHOOT);
 		shoot.whileHeld(new Shoot());
 		
-		// Toggle joystick driving with the top button
+		// Toggle joystick driving mode
 		joystickEnabled = new JoystickButton(stick, RobotMap.BUTTON_DRIVE);
+                
+                // Toggle the shoot/load mode
+                shootMode = new JoystickButton(stick, RobotMap.BUTTON_SHOOT_MODE);
  	}
 	
 	public Joystick getDriveJoystick() {
 		return stick;
 	}
 	
-	public boolean isShootPressed() {
-		return shoot.get();
+	public boolean isShootModePressed() {
+		return shootMode.get();
 	}
 	
 	public boolean isJoystickEnablePressed() {

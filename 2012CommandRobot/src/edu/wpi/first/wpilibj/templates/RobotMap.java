@@ -12,6 +12,7 @@ public class RobotMap {
     public static final int BUTTON_SHOOT = 1;
     public static final int BUTTON_DRIVE = 3;
     public static final int BUTTON_LOAD = 2;
+    public static final int BUTTON_SHOOT_MODE = 4;
     
     public static final int MOTOR_DRIVE_LEFT = 1;
     public static final int MOTOR_DRIVE_RIGHT = 2;

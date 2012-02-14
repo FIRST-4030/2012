@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
-import edu.wpi.first.wpilibj.templates.commands.DriveJoystick;
+import edu.wpi.first.wpilibj.templates.commands.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,7 +22,11 @@ import edu.wpi.first.wpilibj.templates.commands.DriveJoystick;
 public class RobotTemplate extends IterativeRobot {
 
     //Command autonomousCommand;
-    Command drive;
+    private Command drive;
+    private Command load;
+    private Command shoot;
+    private Command elevator;
+    private Command shooter;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -56,6 +60,10 @@ public class RobotTemplate extends IterativeRobot {
         //autonomousCommand.cancel();
 
         drive = new DriveJoystick();
+        load = new Load();
+        shooter = new SpinShooter();
+        shoot = new Shoot();
+        elevator = new ElevatorQueue();
     }
 
     /**
@@ -69,6 +77,19 @@ public class RobotTemplate extends IterativeRobot {
             drive.start();
         } else {
             drive.cancel();
+        }
+
+        // Master mode swtich between shooting and loading
+        if (CommandBase.globalState.isShootMode()) {
+            // Shoot
+            load.cancel();
+            shooter.start();
+            elevator.start();
+        } else {
+            // Load
+            shooter.cancel();
+            elevator.cancel();
+            load.start();
         }
     }
 }

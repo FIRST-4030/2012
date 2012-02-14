@@ -6,6 +6,7 @@ public class GlobalState {
 
     // Are we driving manually or automatically?
     private ToggleButtonState joystickDrive = new ToggleButtonState(ToggleButtonState.ON);
+    private ToggleButtonState shootMode = new ToggleButtonState(ToggleButtonState.OFF);
     // Do we have the target in sight?
     private boolean targetVisible = false;
     // Are we in position to shoot?
@@ -33,18 +34,16 @@ public class GlobalState {
     // Reference voltage for analog sensors
     private double vin = 0;
     //hood angle?
-    private double hoodAngle=0;
+    private double hoodAngle = 0;
 
-    public double getHoodAngle()
-    {
+    public double getHoodAngle() {
         return hoodAngle;
     }
 
-    public void setHoodAngle(double hoodAngle)
-    {
+    public void setHoodAngle(double hoodAngle) {
         this.hoodAngle = hoodAngle;
     }
-    
+
     public boolean isDoneRaising() {
         return doneRaising;
     }
@@ -52,21 +51,23 @@ public class GlobalState {
     public void setDoneRaising(boolean doneRaising) {
         this.doneRaising = doneRaising;
     }
-    
+
     public int getBallsAboveBottomOfElevator() {
         return ballsAboveBottomOfElevator;
     }
-    public void ballsAboveBottomOfElevatorPlus(){
+
+    public void ballsAboveBottomOfElevatorPlus() {
         ballsAboveBottomOfElevator++;
     }
-    public void ballsAboveBottomOfElevatorMinus(){
+
+    public void ballsAboveBottomOfElevatorMinus() {
         ballsAboveBottomOfElevator--;
     }
 
     public void setArmSwitch(boolean armSwitch) {
         this.armSwitch = armSwitch;
     }
-    
+
     public boolean getArmSwtich() {
         return armSwitch;
     }
@@ -77,6 +78,14 @@ public class GlobalState {
 
     public boolean isJoystickDriveEnabled() {
         return joystickDrive.isOn();
+    }
+
+    public void updateShootMode(boolean pressed) {
+        shootMode.update(pressed);
+    }
+
+    public boolean isShootMode() {
+        return shootMode.isOn();
     }
 
     public void setTargetVisible(boolean visible) {
@@ -173,11 +182,11 @@ public class GlobalState {
     public void setArmUp(boolean armUp) {
         this.armUp = armUp;
     }
-    
+
     public double getVin() {
         return vin;
     }
-    
+
     public void setVin(double vin) {
         this.vin = vin;
     }

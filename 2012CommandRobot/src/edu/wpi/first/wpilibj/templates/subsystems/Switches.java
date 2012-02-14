@@ -34,6 +34,11 @@ public class Switches extends Subsystem {
         CommandBase.globalState.updateJoystickDriveEnabled(CommandBase.oi.isJoystickEnablePressed());
         SmartDashboard.putBoolean("Joystick Drive Enabled", CommandBase.globalState.isJoystickDriveEnabled());
 
+        // Read the shoot/load toggle
+        CommandBase.globalState.updateShootMode(CommandBase.oi.isShootModePressed());
+        SmartDashboard.putBoolean("Shoot Mode Enabled", CommandBase.globalState.isShootMode());
+
+        
         // Read balanceArm limit switches
         CommandBase.globalState.setArmSwitch(balanceArmSwitches.get());
 
