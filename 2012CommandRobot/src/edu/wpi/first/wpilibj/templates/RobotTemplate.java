@@ -97,8 +97,8 @@ public class RobotTemplate extends IterativeRobot {
         if (CommandBase.globalState.isBallHandlingEnabled()) {
             // Mode swtich between shooting and loading
             if (CommandBase.globalState.isShootMode()) {
-                // Shoot
-                if (!shooter.isRunning()) {
+                // Shoot (but not until the load elevator is done)
+                if (!shooter.isRunning() && !((Load) load).isElevatorRunning()) {
                     load.cancel();
                     shooter.start();
                 }

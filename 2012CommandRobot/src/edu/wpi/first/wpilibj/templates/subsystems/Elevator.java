@@ -7,21 +7,29 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Elevator extends Subsystem {
 
-	Jaguar elevator;
+    Jaguar elevator;
 
-	protected void initDefaultCommand() {
-		setDefaultCommand(null);
-	}
+    protected void initDefaultCommand() {
+        setDefaultCommand(null);
+    }
 
-	public Elevator() {
-		elevator = new Jaguar(RobotMap.MOTOR_ELEVATOR);
-	}
+    public Elevator() {
+        elevator = new Jaguar(RobotMap.MOTOR_ELEVATOR);
+    }
 
-	public void run(double speed) {
-		elevator.set(speed);
-	}
+    public boolean isRunning() {
+        if (elevator.get() != 0) {
+            return true;
+        }
+        return false;
+    }
 
-	public void stop() {
-		elevator.stopMotor();
-	}
+    public void run(double speed) {
+        elevator.set(speed);
+    }
+
+    public void stop() {
+        elevator.set(0);
+        elevator.stopMotor();
+    }
 }

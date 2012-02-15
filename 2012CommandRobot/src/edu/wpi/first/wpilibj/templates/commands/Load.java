@@ -17,8 +17,8 @@ public class Load extends CommandBase {
         /*
          * Raise the elevator if any only if:
          *
-         * We have a ball between the bottom and middle elevator switches
-         * We do not have a ball at the top of the elevator
+         * We have a ball between the bottom and middle elevator switches We do
+         * not have a ball at the top of the elevator
          */
         if (!globalState.readyToShoot() && globalState.getBallsAboveBottomOfElevator() > 0) {
             elevator.run(RobotMap.ELEVATOR_SPEED_LOAD);
@@ -28,8 +28,16 @@ public class Load extends CommandBase {
         loader.run(RobotMap.LOADER_SPEED);
     }
 
+    public boolean isElevatorRunning() {
+        if (elevator.isRunning()) {
+            return true;
+        }
+        return false;
+    }
+
     /*
-     * Stop loading if we have a ball at the top of the elevator or we cannot legally pick up more balls
+     * Stop loading if we have a ball at the top of the elevator or we cannot
+     * legally pick up more balls
      */
     protected boolean isFinished() {
         if (globalState.readyToShoot()) {
