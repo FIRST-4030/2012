@@ -27,7 +27,7 @@ public class Vin extends Subsystem {
     }
 
     public double readVoltage() {
-        double voltage = vin.getVoltage();
+        double voltage = vin.getAverageVoltage();
         SmartDashboard.putDouble("Vin", voltage);
         return voltage;
     }

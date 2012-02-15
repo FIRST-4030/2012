@@ -10,25 +10,15 @@ import edu.wpi.first.wpilibj.templates.RobotMap;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 import edu.wpi.first.wpilibj.templates.commands.ReadHoodAngle;
 
-/**
- *
- * @author prog
- */
-public class HoodAngle extends Subsystem
-{
-    AnalogChannel angle =new AnalogChannel(RobotMap.HOOD_POTENTIOMETER);
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+public class HoodAngle extends Subsystem {
 
-    public void initDefaultCommand()
-    {
+    AnalogChannel angle = new AnalogChannel(RobotMap.HOOD_POTENTIOMETER);
+
+    public void initDefaultCommand() {
         setDefaultCommand(new ReadHoodAngle());
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
     }
 
-    public double getPosition()
-    {
-        return (angle.getVoltage()/CommandBase.globalState.getVin());
+    public double getPosition() {
+        return (angle.getAverageVoltage() / CommandBase.globalState.getVin());
     }
 }
