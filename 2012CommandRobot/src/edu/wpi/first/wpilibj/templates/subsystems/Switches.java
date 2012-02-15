@@ -31,14 +31,31 @@ public class Switches extends Subsystem {
         boolean state;
 
         // Read the joystick-drive-enable toggle
-        CommandBase.globalState.updateJoystickDriveEnabled(CommandBase.oi.isJoystickEnablePressed());
-        SmartDashboard.putBoolean("Joystick Drive Enabled", CommandBase.globalState.isJoystickDriveEnabled());
+        CommandBase.globalState.updateDriveEnabled(CommandBase.oi.isDriveEnablePressed());
+        SmartDashboard.putBoolean("Drive Enabled", CommandBase.globalState.isDriveEnabled());
+
+        // Read the balance-mode toggle
+        // Reset to joystick control if driving is disabled
+        if (CommandBase.globalState.isDriveEnabled()) {
+            CommandBase.globalState.updateBalanceEnabled(CommandBase.oi.isBalanceEnablePressed());
+        } else {
+            CommandBase.globalState.setBalanceEnabled(false);
+        }
+        SmartDashboard.putBoolean("Balance Mode Enabled", CommandBase.globalState.isBalanceEnabled());
+
+        // Read the ball-handing-enable toggle
+        CommandBase.globalState.updateBallHandlingEnabled(CommandBase.oi.isBallHandlingEnablePressed());
+        SmartDashboard.putBoolean("Ball Handling Enabled", CommandBase.globalState.isBallHandlingEnabled());
 
         // Read the shoot/load toggle
-        CommandBase.globalState.updateShootMode(CommandBase.oi.isShootModePressed());
+        // Reset to load if ball handling is disabled
+        if (CommandBase.globalState.isBallHandlingEnabled()) {
+            CommandBase.globalState.updateShootMode(CommandBase.oi.isShootModePressed());
+        } else {
+            CommandBase.globalState.setShootMode(false);
+        }
         SmartDashboard.putBoolean("Shoot Mode Enabled", CommandBase.globalState.isShootMode());
 
-        
         // Read balanceArm limit switches
         CommandBase.globalState.setArmSwitch(balanceArmSwitches.get());
 
@@ -58,7 +75,7 @@ public class Switches extends Subsystem {
         state = elevatorBottomSwitch.get();
         if (!(CommandBase.globalState.readyToRaise()) && state) {
             CommandBase.globalState.raisedBall();
-        }else if((CommandBase.globalState.readyToRaise()) && !state){
+        } else if ((CommandBase.globalState.readyToRaise()) && !state) {
             CommandBase.globalState.ballsAboveBottomOfElevatorPlus();
         }
         CommandBase.globalState.setReadyToRaise(state);
@@ -72,10 +89,10 @@ public class Switches extends Subsystem {
         }
         CommandBase.globalState.setReadyToShoot(state);
         SmartDashboard.putBoolean("Ready to shoot", state);
-        
-        
+
+
         state = elevatorMidSwitch.get();
-        if (CommandBase.globalState.getBallsAboveBottomOfElevator()>0 && CommandBase.globalState.isDoneRaising() && !state){
+        if (CommandBase.globalState.getBallsAboveBottomOfElevator() > 0 && CommandBase.globalState.isDoneRaising() && !state) {
             CommandBase.globalState.ballsAboveBottomOfElevatorMinus();
         }
     }

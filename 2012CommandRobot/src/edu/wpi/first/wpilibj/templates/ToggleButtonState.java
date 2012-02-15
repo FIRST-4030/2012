@@ -13,10 +13,7 @@ public class ToggleButtonState {
     }
 
     public ToggleButtonState(int state) {
-        if (state != OFF && state != RECENTLY_OFF && state != ON && state != RECENTLY_ON) {
-            state = OFF;
-        }
-        this.state = state;
+        this.set(state);
     }
 
     public boolean isOn() {
@@ -24,6 +21,13 @@ public class ToggleButtonState {
             return true;
         }
         return false;
+    }
+
+    public void set(int state) {
+        if (state != OFF && state != RECENTLY_OFF && state != ON && state != RECENTLY_ON) {
+            state = OFF;
+        }
+        this.state = state;
     }
 
     public void update(boolean pressed) {

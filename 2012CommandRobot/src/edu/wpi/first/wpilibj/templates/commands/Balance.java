@@ -1,8 +1,8 @@
 package edu.wpi.first.wpilibj.templates.commands;
 
-public class DriveJoystick extends CommandBase {
+public class Balance extends CommandBase {
 
-    public DriveJoystick() {
+    public Balance() {
         requires(drive);
     }
 
@@ -10,14 +10,14 @@ public class DriveJoystick extends CommandBase {
     }
 
     protected void execute() {
-        drive.driveWithJoystick(oi.getDriveJoystick());
+        drive.balance();
     }
 
     protected boolean isFinished() {
         if (!globalState.isDriveEnabled()) {
             return true;
         }
-        if (globalState.isBalanceEnabled()) {
+        if (!globalState.isBalanceEnabled()) {
             return true;
         }
         return false;

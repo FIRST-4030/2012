@@ -7,40 +7,49 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
 	// Input interfaces
-	private Joystick stick;
-	private JoystickButton load;
+	private Joystick driveStick;
+	private Joystick ballStick;
 	private JoystickButton shoot;
-	private JoystickButton joystickEnabled;
+	private JoystickButton driveEnabled;
+        private JoystickButton balanceEnabled;
+        private JoystickButton ballHandlingEnabled;
         private JoystickButton shootMode;
 		
 	public OI() {
-		// Map the primary joystick
-		stick = new Joystick(RobotMap.JOYSTICK_DRIVE);
-		
-		// Load when button 1 in depressed
-		load = new JoystickButton(stick, RobotMap.BUTTON_LOAD);
-		load.whileHeld(new Load());
+		// Map the joysticks
+		driveStick = new Joystick(RobotMap.JOYSTICK_DRIVE);
+		ballStick = new Joystick(RobotMap.JOYSTICK_BALL);
 		
 		// Shoot when the trigger is pulled
-		shoot = new JoystickButton(stick, RobotMap.BUTTON_SHOOT);
+		shoot = new JoystickButton(ballStick, RobotMap.BUTTON_SHOOT);
 		shoot.whileHeld(new Shoot());
 		
 		// Toggle joystick driving mode
-		joystickEnabled = new JoystickButton(stick, RobotMap.BUTTON_DRIVE);
+		driveEnabled = new JoystickButton(driveStick, RobotMap.BUTTON_DRIVE);
+                balanceEnabled = new JoystickButton(driveStick, RobotMap.BUTTON_BALANCE);
                 
                 // Toggle the shoot/load mode
-                shootMode = new JoystickButton(stick, RobotMap.BUTTON_SHOOT_MODE);
+                ballHandlingEnabled = new JoystickButton(ballStick, RobotMap.BUTTON_BALL_HANDLING);
+                shootMode = new JoystickButton(ballStick, RobotMap.BUTTON_SHOOT_MODE);
  	}
 	
 	public Joystick getDriveJoystick() {
-		return stick;
+		return driveStick;
 	}
 	
 	public boolean isShootModePressed() {
 		return shootMode.get();
 	}
 	
-	public boolean isJoystickEnablePressed() {
-		return joystickEnabled.get();
+	public boolean isDriveEnablePressed() {
+		return driveEnabled.get();
+	}
+        
+	public boolean isBalanceEnablePressed() {
+		return balanceEnabled.get();
+	}
+
+        public boolean isBallHandlingEnablePressed() {
+		return ballHandlingEnabled.get();
 	}
 }

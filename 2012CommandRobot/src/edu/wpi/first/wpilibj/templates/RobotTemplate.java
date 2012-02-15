@@ -22,7 +22,8 @@ import edu.wpi.first.wpilibj.templates.commands.*;
 public class RobotTemplate extends IterativeRobot {
 
     //Command autonomousCommand;
-    private Command drive;
+    private Command joystick;
+    private Command balance;
     private Command load;
     private Command shoot;
     private Command elevator;
@@ -59,7 +60,8 @@ public class RobotTemplate extends IterativeRobot {
         // this line or comment it out.
         //autonomousCommand.cancel();
 
-        drive = new DriveJoystick();
+        joystick = new DriveJoystick();
+        balance = new Balance();
         load = new Load();
         shooter = new SpinShooter();
         shoot = new Shoot();
@@ -72,31 +74,50 @@ public class RobotTemplate extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
 
-        // Enable/disable joystick drive
-        if (CommandBase.globalState.isJoystickDriveEnabled()) {
-            drive.start();
+        // Enable/disable drive
+        if (CommandBase.globalState.isDriveEnabled()) {
+            // Mode switch between joystick and balance
+            if (CommandBase.globalState.isBalanceEnabled()) {
+                if (!balance.isRunning()) {
+                    joystick.cancel();
+                    balance.start();
+                }
+            } else {
+                if (!joystick.isRunning()) {
+                    balance.cancel();
+                    joystick.start();
+                }
+            }
         } else {
-            drive.cancel();
+            balance.cancel();
+            joystick.cancel();
         }
 
-        // Master mode swtich between shooting and loading
-        if (CommandBase.globalState.isShootMode()) {
-            // Shoot
-            if (!shooter.isRunning()) {
-                load.cancel();
-                shooter.start();
-            }
-            // Restart the elevator anytime we have balls and no shoot-mode balls handler is running
-            if (!shoot.isRunning() && !elevator.isRunning() && CommandBase.globalState.ballsInControl() > 0) {
-                elevator.start();
+        // Enable/disable ball handling
+        if (CommandBase.globalState.isBallHandlingEnabled()) {
+            // Mode swtich between shooting and loading
+            if (CommandBase.globalState.isShootMode()) {
+                // Shoot
+                if (!shooter.isRunning()) {
+                    load.cancel();
+                    shooter.start();
+                }
+                // Restart the elevator anytime we have balls and no shoot-mode balls handler is running
+                if (!shoot.isRunning() && !elevator.isRunning() && CommandBase.globalState.ballsInControl() > 0) {
+                    elevator.start();
+                }
+            } else {
+                // Load
+                if (!load.isRunning()) {
+                    shooter.cancel();
+                    elevator.cancel();
+                    load.start();
+                }
             }
         } else {
-            // Load
-            if (!load.isRunning()) {
-                shooter.cancel();
-                elevator.cancel();
-                load.start();
-            }
+            shooter.cancel();
+            elevator.cancel();
+            load.cancel();
         }
     }
 }

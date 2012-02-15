@@ -1,11 +1,14 @@
 package edu.wpi.first.wpilibj.templates;
 
-import edu.wpi.first.wpilibj.AnalogTrigger;
-
 public class GlobalState {
 
-    // Are we driving manually or automatically?
-    private ToggleButtonState joystickDrive = new ToggleButtonState(ToggleButtonState.ON);
+    // Is driving enabled?
+    private ToggleButtonState drive = new ToggleButtonState(ToggleButtonState.OFF);
+    // Is balance mode enabled
+    private ToggleButtonState balanceMode = new ToggleButtonState(ToggleButtonState.OFF);
+    // Is ball handling enabled
+    private ToggleButtonState ballHandling = new ToggleButtonState(ToggleButtonState.OFF);
+    // Are we shooting or loading
     private ToggleButtonState shootMode = new ToggleButtonState(ToggleButtonState.OFF);
     // Do we have the target in sight?
     private boolean targetVisible = false;
@@ -72,20 +75,53 @@ public class GlobalState {
         return armSwitch;
     }
 
-    public void updateJoystickDriveEnabled(boolean pressed) {
-        joystickDrive.update(pressed);
+    public void updateDriveEnabled(boolean pressed) {
+        drive.update(pressed);
     }
 
-    public boolean isJoystickDriveEnabled() {
-        return joystickDrive.isOn();
+    public boolean isDriveEnabled() {
+        return drive.isOn();
+    }
+
+    public void updateBallHandlingEnabled(boolean pressed) {
+        ballHandling.update(pressed);
+    }
+
+    public boolean isBallHandlingEnabled() {
+        return ballHandling.isOn();
     }
 
     public void updateShootMode(boolean pressed) {
         shootMode.update(pressed);
     }
 
+    public void setShootMode(boolean enable) {
+        if (enable) {
+            shootMode.set(ToggleButtonState.ON);
+        } else {
+            shootMode.set(ToggleButtonState.OFF);
+        }
+    }
+
     public boolean isShootMode() {
         return shootMode.isOn();
+    }
+
+    public void updateBalanceEnabled(boolean pressed) {
+        balanceMode.update(pressed);
+    }
+
+    public void setBalanceEnabled(boolean enable) {
+        if (enable) {
+            balanceMode.set(ToggleButtonState.ON);
+        } else {
+            balanceMode.set(ToggleButtonState.OFF);
+        }
+
+    }
+
+    public boolean isBalanceEnabled() {
+        return balanceMode.isOn();
     }
 
     public void setTargetVisible(boolean visible) {

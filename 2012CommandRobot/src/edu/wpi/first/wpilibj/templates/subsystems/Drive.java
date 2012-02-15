@@ -20,7 +20,6 @@ public class Drive extends PIDSubsystem {
                 RobotMap.BALANCE_D_GAIN);
         this.disable();
 
-
         drive = new RobotDrive(RobotMap.MOTOR_DRIVE_LEFT,
                 RobotMap.MOTOR_DRIVE_RIGHT);
         drive.setSafetyEnabled(false);
@@ -37,7 +36,7 @@ public class Drive extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         drive.tankDrive(output * RobotMap.BALANCE_MAX_SPEED, output * RobotMap.BALANCE_MAX_SPEED);
     }
-    
+
     public void balance() {
         this.setSetpoint(0);
         this.enable();
