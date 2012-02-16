@@ -11,6 +11,8 @@ public class RobotMap {
     public static final int JOYSTICK_DRIVE = 1;
     public static final int BUTTON_BALANCE = 2;
     public static final int BUTTON_DRIVE = 3;
+    public static final int BUTTON_BACKWARDS = 4;
+    public static final int DRIVE_SENSITIVITY = 2;
 
     public static final int JOYSTICK_BALL = 2;
     public static final int BUTTON_BALL_HANDLING = 3;
@@ -56,6 +58,4 @@ public class RobotMap {
     public static final double BALANCE_I_GAIN = 0.01;
     public static final double BALANCE_D_GAIN = 0.0;
     public static final double BALANCE_MAX_SPEED = 0.1;
-    
-    public static final double DEFAULT_MOTOR_SPEED=1.;
 }

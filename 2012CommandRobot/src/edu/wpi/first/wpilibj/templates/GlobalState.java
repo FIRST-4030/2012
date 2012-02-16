@@ -4,6 +4,8 @@ public class GlobalState {
 
     // Is driving enabled?
     private ToggleButtonState drive = new ToggleButtonState(ToggleButtonState.OFF);
+    // Are we driving backwards
+    private ToggleButtonState driveBackwards = new ToggleButtonState(ToggleButtonState.OFF);
     // Is balance mode enabled
     private ToggleButtonState balanceMode = new ToggleButtonState(ToggleButtonState.OFF);
     // Is ball handling enabled
@@ -83,6 +85,13 @@ public class GlobalState {
         return drive.isOn();
     }
 
+    public void updateDriveBackwards(boolean pressed) {
+        driveBackwards.update(pressed);
+    }
+
+    public boolean isDriveBackwards() {
+        return driveBackwards.isOn();
+    }
     public void updateBallHandlingEnabled(boolean pressed) {
         ballHandling.update(pressed);
     }

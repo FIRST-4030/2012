@@ -34,6 +34,10 @@ public class Switches extends Subsystem {
         CommandBase.globalState.updateDriveEnabled(CommandBase.oi.isDriveEnablePressed());
         SmartDashboard.putBoolean("Drive Enabled", CommandBase.globalState.isDriveEnabled());
 
+        // Read the drive-backwards toggle
+        CommandBase.globalState.updateDriveBackwards(CommandBase.oi.isDriveBackwardsPressed());
+        SmartDashboard.putBoolean("Drive Backwards", CommandBase.globalState.isDriveBackwards());
+        
         // Read the balance-mode toggle
         // Reset to joystick control if driving is disabled
         if (CommandBase.globalState.isDriveEnabled()) {
