@@ -66,6 +66,7 @@ public class Drive extends PIDSubsystem {
         for (count = 1; count <= exponent; count++) {
             value *= base;
         }
+        value = java.lang.Math.abs(value);
         if (base < 0.0) {
             return value * -1.0;
         }
