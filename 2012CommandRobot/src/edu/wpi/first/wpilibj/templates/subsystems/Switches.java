@@ -66,12 +66,12 @@ public class Switches extends Subsystem {
         // On leading edge, count the ball as raised
         // On trailing edge, add to ballsQueued
         state = elevatorBottomSwitch.get();
-        if (!(CommandBase.globalState.readyToRaise()) && state) {
-            CommandBase.globalState.raisedBall();
-        } else if ((CommandBase.globalState.readyToRaise()) && !state) {
+        if (!(CommandBase.globalState.readyToQueue()) && state) {
+            CommandBase.globalState.loadedBall();
+        } else if ((CommandBase.globalState.readyToQueue()) && !state) {
             CommandBase.globalState.queuedBall();
         }
-        CommandBase.globalState.setReadyToRaise(state);
+        CommandBase.globalState.setReadyToQueue(state);
         SmartDashboard.putBoolean("Elevator bottom switch", state);
 
         // On the trailing edge, remove the ball from the raise queue

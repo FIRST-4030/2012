@@ -24,12 +24,11 @@ public class GlobalState {
     private boolean armUp = true;
     // Track loaded balls
     private int ballsInControl = 0;
-    private int ballsInLoader = 0;
     private int ballsInQueue = 0;
     // Is there a ball at the ready-to-shoot (elevator top) switch?
     private boolean readyToShoot = false;
     // Is there a ball at the the ready-to-queue (elevator bottom) switch?
-    private boolean readyToRaise = false;
+    private boolean readyToQueue = false;
     // Which way is down?
     private double gravity = 0;
     // Which way is north?
@@ -153,8 +152,8 @@ public class GlobalState {
         return this.readyToShoot;
     }
 
-    public boolean readyToRaise() {
-        return this.readyToRaise;
+    public boolean readyToQueue() {
+        return this.readyToQueue;
     }
 
     public int ballsInControl() {
@@ -168,20 +167,9 @@ public class GlobalState {
         return false;
     }
 
-    public int getBallsInLoader() {
-        return ballsInLoader;
-    }
-
     public void loadedBall() {
         this.ballsInControl++;
-        this.ballsInLoader++;
         SmartDashboard.putInt("Balls in control", ballsInControl);
-        SmartDashboard.putInt("Balls in loader", ballsInLoader);
-    }
-
-    public void raisedBall() {
-        this.ballsInLoader--;
-        SmartDashboard.putInt("Balls in loader", ballsInLoader);
     }
 
     public void unloadedBall() {
@@ -205,9 +193,9 @@ public class GlobalState {
         return heading;
     }
 
-    public void setReadyToRaise(boolean ready) {
-        this.readyToRaise = ready;
-        SmartDashboard.putBoolean("Ready to Raise", readyToRaise);
+    public void setReadyToQueue(boolean ready) {
+        this.readyToQueue = ready;
+        SmartDashboard.putBoolean("Ready to Queue", readyToQueue);
     }
 
     public void setReadyToShoot(boolean ready) {

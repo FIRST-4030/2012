@@ -42,7 +42,7 @@ public class Load extends CommandBase {
     protected boolean isFinished() {
         if (globalState.readyToShoot()) {
             return true;
-        } else if (globalState.canLoadMoreBalls() && globalState.getBallsInLoader() < 1) {
+        } else if (globalState.canLoadMoreBalls() && globalState.getBallsInQueue() < 1) {
             return true;
         }
         return false;
