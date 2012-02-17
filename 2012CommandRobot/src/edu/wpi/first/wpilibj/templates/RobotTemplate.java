@@ -65,7 +65,7 @@ public class RobotTemplate extends IterativeRobot {
         load = new Load();
         shooter = new SpinShooter();
         shoot = new Shoot();
-        elevator = new ElevatorQueue();
+        elevator = new ElevatorCmd();
     }
 
     /**

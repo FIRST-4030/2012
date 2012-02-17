@@ -6,9 +6,9 @@ import edu.wpi.first.wpilibj.templates.RobotMap;
 *
 * @author Ingyram
 */
-public class ElevatorQueue extends CommandBase {
+public class ElevatorCmd extends CommandBase {
     
-    public ElevatorQueue() {
+    public ElevatorCmd() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(CommandBase.elevator);
