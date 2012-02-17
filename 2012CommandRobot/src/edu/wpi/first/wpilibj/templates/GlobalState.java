@@ -42,6 +42,8 @@ public class GlobalState {
     private double hoodAngle = 0;
     // Rangefinder reading (in inches)
     private int distance = 0;
+    // Rotational rate of the shooter wheel (in blips/second)
+    private double shooterRate = 0;
 
     public double getHoodAngle() {
         return hoodAngle;
@@ -94,6 +96,7 @@ public class GlobalState {
     public boolean isDriveBackwards() {
         return driveBackwards.isOn();
     }
+
     public void updateBallHandlingEnabled(boolean pressed) {
         ballHandling.update(pressed);
     }
@@ -237,12 +240,20 @@ public class GlobalState {
     public void setVin(double vin) {
         this.vin = vin;
     }
-    
+
     public double getDistance() {
         return distance;
     }
 
     public void setDistance(int distance) {
         this.distance = distance;
+    }
+
+    public double getShooterRate() {
+        return shooterRate;
+    }
+
+    public void setShooterRate(double rate) {
+        this.shooterRate = rate;
     }
 }
