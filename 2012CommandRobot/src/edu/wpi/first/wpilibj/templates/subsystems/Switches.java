@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.templates.commands.ReadSwitches;
 public class Switches extends Subsystem {
 
     private DigitalInput balanceArmSwitches = new DigitalInput(RobotMap.BALANCE_ARM_SWITCHES);
-    // The switch at the front of the loader
-    private DigitalInput loaderFrontSwitch = new DigitalInput(RobotMap.LOADER_FRONT_SWITCH);
     // The switch at the bottom of the elevator
     private DigitalInput elevatorBottomSwitch = new DigitalInput(RobotMap.ELEVATOR_BOTTOM_SWITCH);
     // The switch at the top of the elevator
