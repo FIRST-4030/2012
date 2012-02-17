@@ -50,10 +50,11 @@ public class RobotMap {
     public static final int HOOD_POTENTIOMETER=7;
     
     public static final int VIN = 1;
-    public static final int ACCELEROMETER = 2;
+    public static final int RANGEFINDER = 2;
     public static final int GYRO = 3;
-    public static final int RANGEFINDER = 4;
     
+    public static final int ACCELEROMETER = 1;
+
     public static final double BALANCE_P_GAIN = 0.01;
     public static final double BALANCE_I_GAIN = 0.01;
     public static final double BALANCE_D_GAIN = 0.0;
