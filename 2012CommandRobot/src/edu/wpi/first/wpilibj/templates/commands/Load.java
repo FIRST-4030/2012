@@ -20,7 +20,7 @@ public class Load extends CommandBase {
          * We have a ball between the bottom and middle elevator switches We do
          * not have a ball at the top of the elevator
          */
-        if (!globalState.readyToShoot() && globalState.getBallsAboveBottomOfElevator() > 0) {
+        if (!globalState.readyToShoot() && globalState.getBallsInQueue() > 0) {
             elevator.run(RobotMap.ELEVATOR_SPEED_LOAD);
         } else {
             elevator.stop();
@@ -42,7 +42,7 @@ public class Load extends CommandBase {
     protected boolean isFinished() {
         if (globalState.readyToShoot()) {
             return true;
-        } else if (globalState.ballsInControl() >= RobotMap.MAX_BALLS && globalState.getBallsInLoader() < 1) {
+        } else if (globalState.canLoadMoreBalls() && globalState.getBallsInLoader() < 1) {
             return true;
         }
         return false;

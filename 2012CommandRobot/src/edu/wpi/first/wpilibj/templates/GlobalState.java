@@ -1,5 +1,7 @@
 package edu.wpi.first.wpilibj.templates;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class GlobalState {
 
     // Is driving enabled?
@@ -23,15 +25,11 @@ public class GlobalState {
     // Track loaded balls
     private int ballsInControl = 0;
     private int ballsInLoader = 0;
-    private int ballsAboveBottomOfElevator = 0;
+    private int ballsInQueue = 0;
     // Is there a ball at the ready-to-shoot (elevator top) switch?
     private boolean readyToShoot = false;
-    // Is there a ball at the the read-to-queue (elevator bottom) switch?
+    // Is there a ball at the the ready-to-queue (elevator bottom) switch?
     private boolean readyToRaise = false;
-    // Is there a ball at the done-raising switch?
-    private boolean doneRaising = false;
-    // Is there a ball at the read-to-load (loader front) switch
-    private boolean readyToLoad = false;
     // Which way is down?
     private double gravity = 0;
     // Which way is north?
@@ -53,24 +51,18 @@ public class GlobalState {
         this.hoodAngle = hoodAngle;
     }
 
-    public boolean isDoneRaising() {
-        return doneRaising;
+    public int getBallsInQueue() {
+        return ballsInQueue;
     }
 
-    public void setDoneRaising(boolean doneRaising) {
-        this.doneRaising = doneRaising;
+    public void queuedBall() {
+        ballsInQueue++;
+        SmartDashboard.putInt("Balls in queue", ballsInQueue);
     }
 
-    public int getBallsAboveBottomOfElevator() {
-        return ballsAboveBottomOfElevator;
-    }
-
-    public void ballsAboveBottomOfElevatorPlus() {
-        ballsAboveBottomOfElevator++;
-    }
-
-    public void ballsAboveBottomOfElevatorMinus() {
-        ballsAboveBottomOfElevator--;
+    public void dequeuedBall() {
+        ballsInQueue--;
+        SmartDashboard.putInt("Balls in queue", ballsInQueue);
     }
 
     public void setArmSwitch(boolean armSwitch) {
@@ -165,15 +157,11 @@ public class GlobalState {
         return this.readyToRaise;
     }
 
-    public boolean readyToLoad() {
-        return this.readyToLoad;
-    }
-
     public int ballsInControl() {
         return this.ballsInControl;
     }
 
-    public boolean loaderReady() {
+    public boolean canLoadMoreBalls() {
         if (ballsInControl() < RobotMap.MAX_BALLS) {
             return true;
         }
@@ -187,14 +175,18 @@ public class GlobalState {
     public void loadedBall() {
         this.ballsInControl++;
         this.ballsInLoader++;
+        SmartDashboard.putInt("Balls in control", ballsInControl);
+        SmartDashboard.putInt("Balls in loader", ballsInLoader);
     }
 
     public void raisedBall() {
         this.ballsInLoader--;
+        SmartDashboard.putInt("Balls in loader", ballsInLoader);
     }
 
     public void unloadedBall() {
         this.ballsInControl--;
+        SmartDashboard.putInt("Balls in control", ballsInControl);
     }
 
     public void setGravity(double gravity) {
@@ -213,16 +205,14 @@ public class GlobalState {
         return heading;
     }
 
-    public void setReadyToLoad(boolean ready) {
-        this.readyToLoad = ready;
-    }
-
     public void setReadyToRaise(boolean ready) {
         this.readyToRaise = ready;
+        SmartDashboard.putBoolean("Ready to Raise", readyToRaise);
     }
 
     public void setReadyToShoot(boolean ready) {
         this.readyToShoot = ready;
+        SmartDashboard.putBoolean("Ready to Shoot", readyToShoot);
     }
 
     public boolean isArmUp() {

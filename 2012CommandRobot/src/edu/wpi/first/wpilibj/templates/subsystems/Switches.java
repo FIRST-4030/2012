@@ -62,42 +62,34 @@ public class Switches extends Subsystem {
 
         // Read balanceArm limit switches
         CommandBase.globalState.setArmSwitch(balanceArmSwitches.get());
-
-        // Is a ball ready to load?
-        // On leading edge, count the ball as loaded
-        // TODO: This will need special handling if we have a ball-reject case
-        state = loaderFrontSwitch.get();
-        if (!(CommandBase.globalState.readyToLoad()) && state) {
-            CommandBase.globalState.loadedBall();
-        }
-        CommandBase.globalState.setReadyToLoad(state);
-        SmartDashboard.putBoolean("Ready to load", state);
+        SmartDashboard.putBoolean("Arm switch", CommandBase.globalState.getArmSwtich());
 
         // Is a ball ready to be raised by the elevator?
         // On leading edge, count the ball as raised
-        // On trailing edge, add to ballsAboveBottomOfElevator
+        // On trailing edge, add to ballsQueued
         state = elevatorBottomSwitch.get();
         if (!(CommandBase.globalState.readyToRaise()) && state) {
             CommandBase.globalState.raisedBall();
         } else if ((CommandBase.globalState.readyToRaise()) && !state) {
-            CommandBase.globalState.ballsAboveBottomOfElevatorPlus();
+            CommandBase.globalState.queuedBall();
         }
         CommandBase.globalState.setReadyToRaise(state);
-        SmartDashboard.putBoolean("Ready to raise", state);
+        SmartDashboard.putBoolean("Elevator bottom switch", state);
 
-        // Is a ball queued and ready to shoot?
-        // On leading edge, count the ball as shot
+        // On the trailing edge, remove the ball from the raise queue
+        state = elevatorMidSwitch.get();
+        if (CommandBase.globalState.getBallsInQueue() > 0 && !state) {
+            CommandBase.globalState.dequeuedBall();
+        }
+        SmartDashboard.putBoolean("Elevator mid switch", state);
+
+        // Is a ball ready to shoot?
+        // On trailing edge, count the ball as shot
         state = elevatorTopSwitch.get();
         if (CommandBase.globalState.readyToShoot() && (!state)) {
             CommandBase.globalState.unloadedBall();
         }
         CommandBase.globalState.setReadyToShoot(state);
-        SmartDashboard.putBoolean("Ready to shoot", state);
-
-
-        state = elevatorMidSwitch.get();
-        if (CommandBase.globalState.getBallsAboveBottomOfElevator() > 0 && CommandBase.globalState.isDoneRaising() && !state) {
-            CommandBase.globalState.ballsAboveBottomOfElevatorMinus();
-        }
+        SmartDashboard.putBoolean("Elevator top switch", state);
     }
 }
