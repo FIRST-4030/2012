@@ -32,6 +32,7 @@ public abstract class CommandBase extends Command {
         public static Heading heading = new Heading();
         public static Arm arm = new Arm();
         public static Vin vin = new Vin();
+        public static Distance distance = new Distance();
         
         public static GlobalState globalState = new GlobalState();
 
@@ -53,6 +54,7 @@ public abstract class CommandBase extends Command {
                 SmartDashboard.putData(heading);
                 SmartDashboard.putData(arm);
                 SmartDashboard.putData(vin);
+                SmartDashboard.putData(distance);
 	}
 
 	public CommandBase(String name) {
