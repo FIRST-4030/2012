@@ -1,13 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.wpi.first.wpilibj.templates.commands;
 
-/**
- *
- * @author prog
- */
 public class ReadDistance extends CommandBase {
 
     public ReadDistance() {
@@ -26,7 +18,6 @@ public class ReadDistance extends CommandBase {
     }
 
     protected void end() {
-        distance.stop();
     }
 
     protected void interrupted() {

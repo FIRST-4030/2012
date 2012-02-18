@@ -37,19 +37,17 @@ public class RobotMap {
     public static final double LOADER_SPEED = -1.0;
     public static final int MAX_BALLS = 3;
     // Digital Bus
-    public static final int LOADER_FRONT_SWITCH = 1;
-    public static final int ELEVATOR_BOTTOM_SWITCH = 2;
+    public static final int BALANCE_ARM_SWITCHES = 1;
+    public static final int ELEVATOR_MID_SWITCH = 2;
     public static final int ELEVATOR_TOP_SWITCH = 3;
-    public static final int BALANCE_ARM_SWITCHES = 4;
     public static final int ENCODER_CHANNEL_A = 5;
     public static final int ENCODER_CHANNEL_B = 6;
-    public static final int ELEVATOR_MID_SWITCH = 7;
-    public static final int RANGEFINDER_A = 8;
-    public static final int RANGEFINDER_B = 9;
+    public static final int ELEVATOR_BOTTOM_SWITCH = 8;
     // Analog Bus
     public static final int VIN = 1;
     public static final int HOOD_POTENTIOMETER = 2;
     public static final int GYRO = 3;
+    public static final int RANGEFINDER = 4;
     // IC2 Bus
     public static final int ACCELEROMETER = 1;
     // Driving Constants
