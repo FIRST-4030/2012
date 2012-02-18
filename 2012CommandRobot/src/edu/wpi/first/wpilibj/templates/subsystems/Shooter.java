@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.templates.RobotMap;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 
 public class Shooter extends PIDSubsystem {
@@ -25,6 +26,7 @@ public class Shooter extends PIDSubsystem {
     }
 
     protected void usePIDOutput(double output) {
+        SmartDashboard.putDouble("Shooter Command Speed", output);
         shooter.set(output);
     }
 

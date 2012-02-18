@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.templates.RobotMap;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends Subsystem {
 
@@ -25,11 +26,12 @@ public class Elevator extends Subsystem {
     }
 
     public void run(double speed) {
+        SmartDashboard.putDouble("Elevator Command Speed", speed);
         elevator.set(speed);
     }
 
     public void stop() {
-        elevator.set(0);
+        this.run(0);
         elevator.stopMotor();
     }
 }

@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.templates.RobotMap;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 
 public class Arm extends Subsystem {
@@ -27,6 +28,7 @@ public class Arm extends Subsystem {
 
     public void toggleArmUp() {
         this.armUp = !this.armUp;
+        SmartDashboard.putBoolean("Arm Up", this.isArmUp());
     }
 
     public void toggle() {
@@ -39,16 +41,20 @@ public class Arm extends Subsystem {
 
     public void up() {
         arm.set(Value.kForward);
+        SmartDashboard.putString("Arm Moving", "Up");
     }
 
     public void down() {
         arm.set(Value.kReverse);
+        SmartDashboard.putString("Arm Moving", "Down");
     }
 
     public void stop() {
+
         arm.set(Value.kOff);
         if (CommandBase.globalState.getArmSwitch()) {
             this.toggleArmUp();
         }
+        SmartDashboard.putString("Arm Moving", "Off");
     }
 }

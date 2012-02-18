@@ -2,6 +2,7 @@ package edu.wpi.first.wpilibj.templates.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 import edu.wpi.first.wpilibj.templates.commands.ReadShooterEncoder;
 
@@ -18,6 +19,8 @@ public class ShooterEncoder extends Subsystem {
     }
 
     public double getRate() {
-        return encoder.getRate();
+        double rate = encoder.getRate();
+        SmartDashboard.putDouble("Shooter Rate", rate);
+        return rate;
     }
 }

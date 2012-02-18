@@ -13,7 +13,6 @@ public class RobotMap {
     public static final int BUTTON_BALANCE = 2;
     public static final int BUTTON_DRIVE = 3;
     public static final int BUTTON_BACKWARDS = 4;
-    public static final int DRIVE_SENSITIVITY = 2;
     // Ball Joystick
     public static final int JOYSTICK_BALL = 2;
     public static final int BUTTON_SHOOT = 1;
@@ -54,8 +53,13 @@ public class RobotMap {
     // IC2 Bus
     public static final int ACCELEROMETER = 1;
     // Driving Constants
+    public static final int DRIVE_SENSITIVITY = 3;
     public static final double BALANCE_P_GAIN = 0.01;
     public static final double BALANCE_I_GAIN = 0.01;
     public static final double BALANCE_D_GAIN = 0.0;
     public static final double BALANCE_MAX_SPEED = 0.1;
+    // Hood Angle Constants
+    public static final double HOOD_P_GAIN = 0.01;
+    public static final double HOOD_I_GAIN = 0.01;
+    public static final double HOOD_D_GAIN = 0.0;
 }

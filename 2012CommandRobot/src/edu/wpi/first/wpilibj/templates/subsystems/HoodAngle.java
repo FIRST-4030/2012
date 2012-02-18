@@ -6,6 +6,7 @@ package edu.wpi.first.wpilibj.templates.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 import edu.wpi.first.wpilibj.templates.commands.ReadHoodAngle;
@@ -19,6 +20,8 @@ public class HoodAngle extends Subsystem {
     }
 
     public double getPosition() {
-        return (angle.getAverageVoltage() / CommandBase.globalState.getVin());
+        double vangle = angle.getAverageVoltage();
+        SmartDashboard.putDouble("Hood Pot Voltage", vangle);
+        return (vangle / CommandBase.globalState.getVin());
     }
 }
