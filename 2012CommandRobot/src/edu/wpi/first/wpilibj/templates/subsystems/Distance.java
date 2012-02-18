@@ -17,16 +17,24 @@ public class Distance extends Subsystem {
 
     public Distance() {
         range = new Ultrasonic(RobotMap.RANGEFINDER_A, RobotMap.RANGEFINDER_B);
+        this.start();
     }
-
+    
+    public void start() {
+        range.setEnabled(true);
+        range.setAutomaticMode(true);
+    }
+    
     public void stop() {
         range.setEnabled(false);
+    }
+    
+    public void ping() {
+        range.ping();
     }
 
     public int readDistance() {
         int distance = -1;
-
-        range.ping();
         if (range.isRangeValid()) {
             distance = (int) range.getRangeInches();
         }

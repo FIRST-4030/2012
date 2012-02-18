@@ -26,6 +26,7 @@ public class ReadDistance extends CommandBase {
     }
 
     protected void end() {
+        distance.stop();
     }
 
     protected void interrupted() {
