@@ -12,6 +12,7 @@ public class MoveArm extends CommandBase {
 
     protected void initialize() {
         setTimeout(RobotMap.ARM_TIMEOUT);
+        this.armMoving = false;
     }
 
     protected void execute() {
@@ -22,17 +23,13 @@ public class MoveArm extends CommandBase {
         boolean done = false;
         if (isTimedOut()) {
             done = true;
-        } else if (!armMoving && !globalState.getArmSwtich()) {
+        } else if (!armMoving && !globalState.getArmSwitch()) {
             armMoving = true;
-        } else if (armMoving && globalState.getArmSwtich()) {
+        } else if (armMoving && globalState.getArmSwitch()) {
             armMoving = false;
             done = true;
         }
         
-        // Toggle our stored state after a timeout or transit
-        if (done) {
-            globalState.setArmSwitch(!globalState.getArmSwtich());
-        }
         return done;
     }
 

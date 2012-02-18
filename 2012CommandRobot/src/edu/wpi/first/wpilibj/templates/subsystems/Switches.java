@@ -60,7 +60,7 @@ public class Switches extends Subsystem {
 
         // Read balanceArm limit switches
         CommandBase.globalState.setArmSwitch(balanceArmSwitches.get());
-        SmartDashboard.putBoolean("Arm switch", CommandBase.globalState.getArmSwtich());
+        SmartDashboard.putBoolean("Arm switch", CommandBase.globalState.getArmSwitch());
 
         // Is a ball ready to be raised by the elevator?
         // On leading edge, count the ball as raised

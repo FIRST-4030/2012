@@ -20,8 +20,6 @@ public class GlobalState {
     private boolean targetLocked = false;
     // Is either arm switch closed
     private boolean armSwitch = false;
-    // Is the arm up?
-    private boolean armUp = true;
     // Track loaded balls
     private int ballsInControl = 0;
     private int ballsInQueue = 0;
@@ -68,7 +66,7 @@ public class GlobalState {
         this.armSwitch = armSwitch;
     }
 
-    public boolean getArmSwtich() {
+    public boolean getArmSwitch() {
         return armSwitch;
     }
 
@@ -201,14 +199,6 @@ public class GlobalState {
     public void setReadyToShoot(boolean ready) {
         this.readyToShoot = ready;
         SmartDashboard.putBoolean("Ready to Shoot", readyToShoot);
-    }
-
-    public boolean isArmUp() {
-        return armUp;
-    }
-
-    public void setArmUp(boolean armUp) {
-        this.armUp = armUp;
     }
 
     public double getVin() {
