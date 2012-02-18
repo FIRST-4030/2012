@@ -44,9 +44,10 @@ public class RobotMap {
     public static final int ENCODER_CHANNEL_B = 6;
     public static final int ELEVATOR_BOTTOM_SWITCH = 8;
     // Analog Bus
-    public static final int VIN = 1;
+    public static final int GYRO = 1;
+    public static final int TEMP = 2;
     public static final int HOOD_POTENTIOMETER = 2;
-    public static final int GYRO = 3;
+    public static final int VIN = 3;
     public static final int RANGEFINDER = 4;
     // IC2 Bus
     public static final int ACCELEROMETER = 1;
