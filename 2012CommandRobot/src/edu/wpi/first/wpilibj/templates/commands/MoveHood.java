@@ -9,17 +9,13 @@ public class MoveHood extends CommandBase {
     }
 
     protected void initialize() {
-        setTimeout(RobotMap.HOOD_TIMEOUT);
-    }
-
-    protected void execute() {
         hood.start();
     }
 
+    protected void execute() {
+    }
+
     protected boolean isFinished() {
-        if (isTimedOut()) {
-            return true;
-        }
         return false;
     }
 

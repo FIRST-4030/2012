@@ -8,24 +8,17 @@ public class HoodUp extends CommandBase {
     }
 
     protected void initialize() {
-        setTimeout(RobotMap.HOOD_TIMEOUT);
-        hood.start();
     }
 
     protected void execute() {
         hood.adjustSetpoint(RobotMap.HOOD_ADJUST_RATE);
-        setTimeout(RobotMap.HOOD_TIMEOUT);
     }
 
     protected boolean isFinished() {
-        if (isTimedOut()) {
-            return true;
-        }
-        return false;
+        return true;
     }
 
     protected void end() {
-        hood.stop();
     }
 
     protected void interrupted() {
