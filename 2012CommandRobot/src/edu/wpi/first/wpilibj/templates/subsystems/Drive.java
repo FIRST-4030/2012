@@ -1,15 +1,16 @@
 package edu.wpi.first.wpilibj.templates.subsystems;
 
 import edu.wpi.first.wpilibj.templates.RobotMap;
-
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
+
+import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class Drive extends PIDSubsystem {
 
-    RobotDrive drive;
+    private Jaguar left;
+    private Jaguar right;
 
     protected void initDefaultCommand() {
         setDefaultCommand(null);
@@ -18,11 +19,9 @@ public class Drive extends PIDSubsystem {
     public Drive() {
         super("drive", RobotMap.BALANCE_P_GAIN, RobotMap.BALANCE_I_GAIN,
                 RobotMap.BALANCE_D_GAIN);
-        this.disable();
 
-        drive = new RobotDrive(RobotMap.MOTOR_DRIVE_LEFT,
-                RobotMap.MOTOR_DRIVE_RIGHT);
-        drive.setSafetyEnabled(false);
+        left = new Jaguar(RobotMap.MOTOR_DRIVE_LEFT);
+        right = new Jaguar(RobotMap.MOTOR_DRIVE_RIGHT);
     }
 
     public void driveWithJoystick(Joystick stick) {
@@ -34,17 +33,25 @@ public class Drive extends PIDSubsystem {
     }
 
     protected void usePIDOutput(double output) {
-        drive.tankDrive(output * RobotMap.BALANCE_MAX_SPEED, output * RobotMap.BALANCE_MAX_SPEED);
+        left.set(output * RobotMap.BALANCE_MAX_SPEED);
+        right.set(output * RobotMap.BALANCE_MAX_SPEED);
     }
 
     public void balance() {
         this.setSetpoint(0);
         this.enable();
     }
+    
+    private void set(double leftSpeed, double rightSpeed) {
+        left.set(leftSpeed);
+        right.set(rightSpeed);
+    }
 
     public void stop() {
         this.disable();
-        drive.stopMotor();
+        this.set(0, 0);
+        left.stopMotor();
+        right.stopMotor();
     }
 
     private double limit(double num) {
@@ -61,7 +68,7 @@ public class Drive extends PIDSubsystem {
      * Provide an approximation of java.lang.Math.pow(), but preserve the sign
      */
     private double pow(double base, int exponent) {
-        int count = 0;
+        int count;
         double value = 1.0;
         for (count = 1; count <= exponent; count++) {
             value *= base;
@@ -111,6 +118,6 @@ public class Drive extends PIDSubsystem {
         }
 
         // Feed raw left/right motor speeds
-        drive.tankDrive(leftMotorSpeed, rightMotorSpeed);
+        this.set(leftMotorSpeed, rightMotorSpeed);
     }
 }
