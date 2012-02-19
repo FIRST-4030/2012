@@ -32,4 +32,13 @@ public class Shooter extends PIDSubsystem {
     protected void initDefaultCommand() {
         setDefaultCommand(null);
     }
+    
+    public void start() {
+        this.enable();
+    }
+    
+    public void stop() {
+        this.disable();
+        shooter.stopMotor();
+    }
 }

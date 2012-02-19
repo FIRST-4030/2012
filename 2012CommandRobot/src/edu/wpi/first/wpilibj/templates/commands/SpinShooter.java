@@ -24,6 +24,7 @@ public class SpinShooter extends CommandBase {
     }
 
     protected void initialize() {
+        shooter.start();
     }
 
     protected void execute() {
@@ -31,10 +32,11 @@ public class SpinShooter extends CommandBase {
     }
 
     protected boolean isFinished() {
-        return false;
+        return !globalState.isShootMode();
     }
 
     protected void end() {
+        shooter.stop();
         shooter.setSetpoint(0);
     }
 

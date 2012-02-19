@@ -21,7 +21,7 @@ public class GlobalState {
     // Is either arm switch closed
     private boolean armSwitch = false;
     // Track loaded balls
-    private int ballsInControl = 0;
+    private int ballsInControl = 3;
     private int ballsInQueue = 0;
     // Is there a ball at the ready-to-shoot (elevator top) switch?
     private boolean readyToShoot = false;

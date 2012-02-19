@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Elevator extends Subsystem {
 
     Jaguar elevator;
+    private boolean running = false;
 
     protected void initDefaultCommand() {
         setDefaultCommand(null);
@@ -19,18 +20,17 @@ public class Elevator extends Subsystem {
     }
 
     public boolean isRunning() {
-        if (elevator.get() != 0) {
-            return true;
-        }
-        return false;
+        return running;
     }
 
     public void run(double speed) {
         SmartDashboard.putDouble("Elevator Command Speed", speed);
+        running = true;
         elevator.set(speed);
     }
 
     public void stop() {
+        running = false;
         elevator.stopMotor();
     }
 }

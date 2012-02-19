@@ -103,7 +103,7 @@ public class RobotTemplate extends IterativeRobot {
                     shooter.start();
                 }
                 // Restart the elevator anytime we have balls and no shoot-mode balls handler is running
-                if (!shoot.isRunning() && !elevator.isRunning() && CommandBase.globalState.ballsInControl() > 0) {
+                if (!shoot.isRunning() && !elevator.isRunning() && !CommandBase.globalState.readyToShoot() && CommandBase.globalState.ballsInControl() > 0) {
                     elevator.start();
                 }
             } else {

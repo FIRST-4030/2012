@@ -12,6 +12,7 @@ public class ShooterEncoder extends Subsystem {
 
     public ShooterEncoder() {
         encoder = new Encoder(RobotMap.ENCODER_CHANNEL_A, RobotMap.ENCODER_CHANNEL_B);
+        encoder.setDistancePerPulse(1);
     }
 
     public void initDefaultCommand() {
