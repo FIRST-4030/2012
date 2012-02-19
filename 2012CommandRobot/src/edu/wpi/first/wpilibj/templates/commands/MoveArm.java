@@ -27,7 +27,7 @@ public class MoveArm extends CommandBase {
             armMoving = true;
         } else if (armMoving && globalState.getArmSwitch()) {
             armMoving = false;
-            done = true;
+            //done = true;
         }
         
         return done;

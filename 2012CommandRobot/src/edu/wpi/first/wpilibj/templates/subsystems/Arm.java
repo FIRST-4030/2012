@@ -52,9 +52,7 @@ public class Arm extends Subsystem {
     public void stop() {
 
         arm.set(Value.kOff);
-        if (CommandBase.globalState.getArmSwitch()) {
-            this.toggleArmUp();
-        }
+        this.toggleArmUp();
         SmartDashboard.putString("Arm Moving", "Off");
     }
 }
