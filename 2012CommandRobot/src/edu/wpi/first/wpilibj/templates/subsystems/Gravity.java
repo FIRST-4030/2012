@@ -24,4 +24,14 @@ public class Gravity extends Subsystem {
         SmartDashboard.putDouble("Gravity Reading", grav);
         return grav;
     }
+    public double readAccelX(){
+        double accelX = accel.getAcceleration(ADXL345_I2C.Axes.kX);
+        SmartDashboard.putDouble("accel X", accelX);
+        return accelX;
+    }
+    public double readAccelY(){
+        double accelY = accel.getAcceleration(ADXL345_I2C.Axes.kY);
+        SmartDashboard.putDouble("accel Y", accelY);
+        return accelY;
+    }
 }
