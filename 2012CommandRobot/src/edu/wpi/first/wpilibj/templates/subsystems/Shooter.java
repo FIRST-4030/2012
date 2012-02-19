@@ -14,7 +14,6 @@ public class Shooter extends PIDSubsystem {
     public Shooter() {
         super("shooter", RobotMap.SHOOTER_P_GAIN, RobotMap.SHOOTER_I_GAIN,
                 RobotMap.SHOOTER_D_GAIN);
-        this.disable();
         this.setSetpoint(RobotMap.SHOOTER_SPEED);
 
         shooter = new Jaguar(RobotMap.MOTOR_SHOOTER);
