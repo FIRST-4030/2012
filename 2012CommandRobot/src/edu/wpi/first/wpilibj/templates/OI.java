@@ -17,6 +17,8 @@ public class OI {
     private JoystickButton ballHandlingEnabled;
     private JoystickButton shootMode;
     private JoystickButton arm;
+    private JoystickButton hoodUp;
+    private JoystickButton hoodDown;
 
     public OI() {
         // Map the joysticks
@@ -39,6 +41,12 @@ public class OI {
         // Balance arm
         arm = new JoystickButton(ballStick, RobotMap.BUTTON_ARM);
         arm.whenPressed(new MoveArm());
+        
+        // Hood adjust
+        hoodUp = new JoystickButton(ballStick, RobotMap.BUTTON_HOOD_UP);
+        hoodUp.whenPressed(new HoodUp());
+        hoodDown = new JoystickButton(ballStick, RobotMap.BUTTON_HOOD_DOWN);
+        hoodDown.whenPressed(new HoodDown());
     }
 
     public Joystick getDriveJoystick() {

@@ -33,6 +33,7 @@ public abstract class CommandBase extends Command {
     public static Vin vin = new Vin();
     public static Distance distance = new Distance();
     public static GlobalState globalState = new GlobalState();
+    public static Hood hood = new Hood();
 
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
