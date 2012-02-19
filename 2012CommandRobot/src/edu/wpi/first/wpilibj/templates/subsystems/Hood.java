@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Hood extends PIDSubsystem {
 
     Victor hood;
-    
+
     public Hood() {
         super("HoodAngle", RobotMap.HOOD_P_GAIN, RobotMap.HOOD_I_GAIN, RobotMap.HOOD_D_GAIN);
         this.setSetpoint(RobotMap.HOOD_ANGLE_MIN);
@@ -28,8 +28,9 @@ public class Hood extends PIDSubsystem {
 
     protected void usePIDOutput(double output) {
         SmartDashboard.putDouble("Hood Command Speed", output);
+        SmartDashboard.putDouble("Hood Setpoint", this.getSetpoint());
     }
-    
+
     public void adjustSetpoint(double delta) {
         double setpoint = this.getSetpoint() + delta;
         setpoint = Math.min(setpoint, RobotMap.HOOD_ANGLE_MAX);
