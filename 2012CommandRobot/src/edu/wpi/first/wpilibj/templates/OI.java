@@ -49,7 +49,7 @@ public class OI {
     }
 
     public boolean isDriveBackwardsPressed() {
-        return driveEnabled.get();
+        return driveBackwards.get();
     }
 
     public boolean isBalanceEnablePressed() {
