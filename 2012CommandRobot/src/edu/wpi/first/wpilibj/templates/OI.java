@@ -16,6 +16,7 @@ public class OI {
     private JoystickButton balanceEnabled;
     private JoystickButton ballHandlingEnabled;
     private JoystickButton shootMode;
+    private JoystickButton arm;
 
     public OI() {
         // Map the joysticks
@@ -24,7 +25,7 @@ public class OI {
 
         // Shoot when the trigger is pulled
         shoot = new JoystickButton(ballStick, RobotMap.BUTTON_SHOOT);
-        shoot.whileHeld(new Shoot());
+        shoot.whenPressed(new Shoot());
 
         // Toggle joystick driving mode
         driveEnabled = new JoystickButton(driveStick, RobotMap.BUTTON_DRIVE);
@@ -34,6 +35,10 @@ public class OI {
         // Toggle the shoot/load mode
         ballHandlingEnabled = new JoystickButton(ballStick, RobotMap.BUTTON_BALL_HANDLING);
         shootMode = new JoystickButton(ballStick, RobotMap.BUTTON_SHOOT_MODE);
+        
+        // Balance arm
+        arm = new JoystickButton(ballStick, RobotMap.BUTTON_ARM);
+        arm.whenPressed(new MoveArm());
     }
 
     public Joystick getDriveJoystick() {

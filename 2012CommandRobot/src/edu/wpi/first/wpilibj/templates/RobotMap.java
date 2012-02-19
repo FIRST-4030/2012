@@ -18,6 +18,7 @@ public class RobotMap {
     public static final int BUTTON_SHOOT = 1;
     public static final int BUTTON_SHOOT_MODE = 2;
     public static final int BUTTON_BALL_HANDLING = 3;
+    public static final int BUTTON_ARM = 4;
     // PWM Bus
     public static final int MOTOR_DRIVE_LEFT = 1;
     public static final int MOTOR_DRIVE_RIGHT = 2;
@@ -26,7 +27,7 @@ public class RobotMap {
     public static final int MOTOR_LOADER = 6;
     // Relay Bus
     public static final int RELAY_ARM = 1;
-    public static final double ARM_TIMEOUT = 2.0;
+    public static final double ARM_TIMEOUT = 1.0;
     // Ball handling constants
     public static final double SHOOTER_SPEED = 1000;
     public static final double SHOOTER_P_GAIN = 0.1;
@@ -46,9 +47,9 @@ public class RobotMap {
     // Analog Bus
     public static final int GYRO = 1;
     public static final int TEMP = 2;
-    public static final int HOOD_POTENTIOMETER = 2;
-    public static final int VIN = 3;
-    public static final int RANGEFINDER = 4;
+    public static final int RANGEFINDER = 3;
+    public static final int HOOD_POTENTIOMETER = 4;
+    public static final int VIN = 7;
     // IC2 Bus
     public static final int ACCELEROMETER = 1;
     // Driving Constants
