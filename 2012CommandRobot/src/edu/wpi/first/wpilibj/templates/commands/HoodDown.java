@@ -15,7 +15,7 @@ public class HoodDown extends CommandBase {
     }
 
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     protected void end() {

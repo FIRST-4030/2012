@@ -19,7 +19,7 @@ public class Hood extends PIDSubsystem {
     }
 
     public void initDefaultCommand() {
-        setDefaultCommand(new MoveHood());
+        //setDefaultCommand(new MoveHood());
     }
 
     protected double returnPIDInput() {
@@ -29,6 +29,7 @@ public class Hood extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         SmartDashboard.putDouble("Hood Command Speed", output);
         SmartDashboard.putDouble("Hood Setpoint", this.getSetpoint());
+        hood.set(output);
     }
 
     public void adjustSetpoint(double delta) {

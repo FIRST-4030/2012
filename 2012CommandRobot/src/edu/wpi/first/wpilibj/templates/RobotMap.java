@@ -19,15 +19,15 @@ public class RobotMap {
     public static final int BUTTON_SHOOT_MODE = 2;
     public static final int BUTTON_BALL_HANDLING = 3;
     public static final int BUTTON_ARM = 4;
-    public static final int BUTTON_HOOD_UP = 5;
-    public static final int BUTTON_HOOD_DOWN = 6;
+    public static final int BUTTON_HOOD_UP = 6;
+    public static final int BUTTON_HOOD_DOWN = 7;
     // PWM Bus
     public static final int MOTOR_DRIVE_LEFT = 1;
     public static final int MOTOR_DRIVE_RIGHT = 2;
     public static final int MOTOR_SHOOTER = 3;
+    public static final int MOTOR_HOOD = 4;
     public static final int MOTOR_ELEVATOR = 5;
     public static final int MOTOR_LOADER = 6;
-    public static final int MOTOR_HOOD = 7;
     // Relay Bus
     public static final int RELAY_ARM = 1;
     public static final double ARM_TIMEOUT = 1.0;
@@ -56,17 +56,18 @@ public class RobotMap {
     // IC2 Bus
     public static final int ACCELEROMETER = 1;
     // Driving Constants
-    public static final int DRIVE_SENSITIVITY = 4;
+    public static final int DRIVE_SENSITIVITY = 2;
     public static final double BALANCE_P_GAIN = 0.01;
     public static final double BALANCE_I_GAIN = 0.01;
     public static final double BALANCE_D_GAIN = 0.0;
     public static final double BALANCE_MAX_SPEED = 0.1;
+    public static final double DRIVE_SPEED_SCALE = 0.70;
     // Hood Angle Constants
     public static final double HOOD_TIMEOUT = 0.5;
     public static final double HOOD_ANGLE_MIN = 0.10;
-    public static final double HOOD_ANGLE_MAX = 1.00;
-    public static final double HOOD_ADJUST_RATE = 0.0001;
-    public static final double HOOD_P_GAIN = 0.01;
+    public static final double HOOD_ANGLE_MAX = 1.75;
+    public static final double HOOD_ADJUST_RATE = 0.001;
+    public static final double HOOD_P_GAIN = 3.00;
     public static final double HOOD_I_GAIN = 0.01;
     public static final double HOOD_D_GAIN = 0.0;
 }

@@ -28,7 +28,6 @@ public class Arm extends Subsystem {
 
     public void toggleArmUp() {
         this.armUp = !this.armUp;
-        SmartDashboard.putBoolean("Arm Up", this.isArmUp());
     }
 
     public void toggle() {
@@ -41,18 +40,15 @@ public class Arm extends Subsystem {
 
     public void up() {
         arm.set(Value.kForward);
-        SmartDashboard.putString("Arm Moving", "Up");
     }
 
     public void down() {
         arm.set(Value.kReverse);
-        SmartDashboard.putString("Arm Moving", "Down");
     }
 
     public void stop() {
 
         arm.set(Value.kOff);
         this.toggleArmUp();
-        SmartDashboard.putString("Arm Moving", "Off");
     }
 }

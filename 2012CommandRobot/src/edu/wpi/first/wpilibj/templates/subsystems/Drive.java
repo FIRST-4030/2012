@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends PIDSubsystem {
 
@@ -45,6 +46,8 @@ public class Drive extends PIDSubsystem {
     private void set(double leftSpeed, double rightSpeed) {
         left.set(leftSpeed);
         right.set(rightSpeed);
+        SmartDashboard.putDouble("Left Drive Speed", leftSpeed);
+        SmartDashboard.putDouble("Right Drive Speed", rightSpeed);
     }
 
     public void stop() {
@@ -84,6 +87,9 @@ public class Drive extends PIDSubsystem {
         // local variables to hold the computed PWM values for the motors
         double leftMotorSpeed;
         double rightMotorSpeed;
+        
+        moveValue *= RobotMap.DRIVE_SPEED_SCALE;
+        rotateValue *= RobotMap.DRIVE_SPEED_SCALE;
 
         // Ensure inputs are in the -1.0 to 1.0 range
         moveValue = limit(moveValue);

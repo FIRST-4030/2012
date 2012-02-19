@@ -44,9 +44,9 @@ public class OI {
         
         // Hood adjust
         hoodUp = new JoystickButton(ballStick, RobotMap.BUTTON_HOOD_UP);
-        hoodUp.whenPressed(new HoodUp());
+        hoodUp.whileHeld(new HoodUp());
         hoodDown = new JoystickButton(ballStick, RobotMap.BUTTON_HOOD_DOWN);
-        hoodDown.whenPressed(new HoodDown());
+        hoodDown.whileHeld(new HoodDown());
     }
 
     public Joystick getDriveJoystick() {
