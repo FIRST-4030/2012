@@ -59,7 +59,7 @@ public class Switches extends Subsystem {
         SmartDashboard.putBoolean("Shoot Mode Enabled", CommandBase.globalState.isShootMode());
 
         // Read balanceArm limit switches
-        CommandBase.globalState.setArmSwitch(balanceArmSwitches.get());
+        CommandBase.globalState.setArmSwitch(!balanceArmSwitches.get());
         SmartDashboard.putBoolean("Arm switch", CommandBase.globalState.getArmSwitch());
 
         // Is a ball ready to be raised by the elevator?
