@@ -41,6 +41,25 @@ public class GlobalState {
     private int distance = 0;
     // Rotational rate of the shooter wheel (in blips/second)
     private double shooterRate = 0;
+    
+    private double accelX=0;
+
+    public double getAccelX() {
+        return accelX;
+    }
+
+    public void setAccelX(double accelX) {
+        this.accelX = accelX;
+    }
+
+    public double getAccelY() {
+        return accelY;
+    }
+
+    public void setAccelY(double accelY) {
+        this.accelY = accelY;
+    }
+    private double accelY=0;
 
     public double getHoodAngle() {
         return hoodAngle;
