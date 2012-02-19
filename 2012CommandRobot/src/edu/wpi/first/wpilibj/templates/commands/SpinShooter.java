@@ -32,7 +32,13 @@ public class SpinShooter extends CommandBase {
     }
 
     protected boolean isFinished() {
-        return !globalState.isShootMode();
+        if (!globalState.isShootMode()) {
+            return true;
+        }
+        if (globalState.ballsInControl() < 1) {
+            return true;
+        }
+        return false;
     }
 
     protected void end() {
