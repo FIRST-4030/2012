@@ -33,8 +33,8 @@ public class RobotMap {
     public static final double SHOOTER_P_GAIN = 0.1;
     public static final double SHOOTER_I_GAIN = 0.01;
     public static final double SHOOTER_D_GAIN = 0.0;
-    public static final double ELEVATOR_SPEED_SHOOT = -1.0;
-    public static final double ELEVATOR_SPEED_LOAD = -1.0;
+    public static final double ELEVATOR_SPEED_SHOOT = 1.0;
+    public static final double ELEVATOR_SPEED_LOAD = 1.0;
     public static final double LOADER_SPEED = -1.0;
     public static final int MAX_BALLS = 3;
     // Digital Bus
@@ -53,7 +53,7 @@ public class RobotMap {
     // IC2 Bus
     public static final int ACCELEROMETER = 1;
     // Driving Constants
-    public static final int DRIVE_SENSITIVITY = 3;
+    public static final int DRIVE_SENSITIVITY = 4;
     public static final double BALANCE_P_GAIN = 0.01;
     public static final double BALANCE_I_GAIN = 0.01;
     public static final double BALANCE_D_GAIN = 0.0;

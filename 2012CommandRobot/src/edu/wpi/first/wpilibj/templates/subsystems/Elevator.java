@@ -31,7 +31,6 @@ public class Elevator extends Subsystem {
     }
 
     public void stop() {
-        this.run(0);
         elevator.stopMotor();
     }
 }

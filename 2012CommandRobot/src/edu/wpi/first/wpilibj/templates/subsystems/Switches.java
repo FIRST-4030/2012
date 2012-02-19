@@ -35,7 +35,7 @@ public class Switches extends Subsystem {
         // Read the drive-backwards toggle
         CommandBase.globalState.updateDriveBackwards(CommandBase.oi.isDriveBackwardsPressed());
         SmartDashboard.putBoolean("Drive Backwards", CommandBase.globalState.isDriveBackwards());
-        
+
         // Read the balance-mode toggle
         // Reset to joystick control if driving is disabled
         if (CommandBase.globalState.isDriveEnabled()) {
@@ -68,7 +68,6 @@ public class Switches extends Subsystem {
         state = elevatorBottomSwitch.get();
         if (!(CommandBase.globalState.readyToQueue()) && state) {
             CommandBase.globalState.loadedBall();
-        } else if ((CommandBase.globalState.readyToQueue()) && !state) {
             CommandBase.globalState.queuedBall();
         }
         CommandBase.globalState.setReadyToQueue(state);
@@ -76,10 +75,12 @@ public class Switches extends Subsystem {
 
         // On the trailing edge, remove the ball from the raise queue
         state = elevatorMidSwitch.get();
-        if (CommandBase.globalState.getBallsInQueue() > 0 && !state) {
+        if (CommandBase.globalState.readyToDequeue() && !state) {
             CommandBase.globalState.dequeuedBall();
         }
+        CommandBase.globalState.setReadyToDequeue(state);
         SmartDashboard.putBoolean("Elevator mid switch", state);
+
 
         // Is a ball ready to shoot?
         // On trailing edge, count the ball as shot
@@ -89,5 +90,9 @@ public class Switches extends Subsystem {
         }
         CommandBase.globalState.setReadyToShoot(state);
         SmartDashboard.putBoolean("Elevator top switch", state);
+
+        // A handy place for debug output
+        SmartDashboard.putInt("Balls in queue", CommandBase.globalState.getBallsInQueue());
+        SmartDashboard.putInt("Balls in control", CommandBase.globalState.ballsInControl());
     }
 }

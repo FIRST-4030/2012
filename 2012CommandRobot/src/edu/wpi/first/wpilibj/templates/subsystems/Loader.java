@@ -24,7 +24,6 @@ public class Loader extends Subsystem {
     }
 
     public void stop() {
-        this.run(0);
         loader.stopMotor();
     }
 }

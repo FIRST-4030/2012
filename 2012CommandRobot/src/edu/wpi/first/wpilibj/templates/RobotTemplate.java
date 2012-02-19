@@ -108,7 +108,7 @@ public class RobotTemplate extends IterativeRobot {
                 }
             } else {
                 // Load
-                if (!load.isRunning()) {
+                if (!load.isRunning() && !CommandBase.globalState.readyToShoot() && CommandBase.globalState.canLoadMoreBalls()) {
                     shooter.cancel();
                     elevator.cancel();
                     load.start();

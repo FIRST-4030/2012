@@ -25,7 +25,11 @@ public class Load extends CommandBase {
         } else {
             elevator.stop();
         }
-        loader.run(RobotMap.LOADER_SPEED);
+        if (!globalState.readyToShoot() && globalState.canLoadMoreBalls()) {
+            loader.run(RobotMap.LOADER_SPEED);
+        } else {
+            loader.stop();
+        }
     }
 
     public boolean isElevatorRunning() {
@@ -42,7 +46,7 @@ public class Load extends CommandBase {
     protected boolean isFinished() {
         if (globalState.readyToShoot()) {
             return true;
-        } else if (globalState.canLoadMoreBalls() && globalState.getBallsInQueue() < 1) {
+        } else if (!globalState.canLoadMoreBalls() && globalState.getBallsInQueue() < 1) {
             return true;
         }
         return false;

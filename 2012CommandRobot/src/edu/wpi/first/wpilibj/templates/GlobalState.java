@@ -27,6 +27,8 @@ public class GlobalState {
     private boolean readyToShoot = false;
     // Is there a ball at the the ready-to-queue (elevator bottom) switch?
     private boolean readyToQueue = false;
+    // Is there a ball at the ready-to-dequeue (elevator middle) switch?
+    private boolean readyToDequeue = false;
     // Which way is down?
     private double gravity = 0;
     // Which way is north?
@@ -54,12 +56,10 @@ public class GlobalState {
 
     public void queuedBall() {
         ballsInQueue++;
-        SmartDashboard.putInt("Balls in queue", ballsInQueue);
     }
 
     public void dequeuedBall() {
         ballsInQueue--;
-        SmartDashboard.putInt("Balls in queue", ballsInQueue);
     }
 
     public void setArmSwitch(boolean armSwitch) {
@@ -153,6 +153,10 @@ public class GlobalState {
     public boolean readyToQueue() {
         return this.readyToQueue;
     }
+    
+    public boolean readyToDequeue() {
+        return this.readyToDequeue;
+    }
 
     public int ballsInControl() {
         return this.ballsInControl;
@@ -194,6 +198,11 @@ public class GlobalState {
     public void setReadyToQueue(boolean ready) {
         this.readyToQueue = ready;
         SmartDashboard.putBoolean("Ready to Queue", readyToQueue);
+    }
+    
+    public void setReadyToDequeue(boolean ready) {
+        this.readyToDequeue = ready;
+        SmartDashboard.putBoolean("Ready to Dequeue", readyToDequeue);
     }
 
     public void setReadyToShoot(boolean ready) {
