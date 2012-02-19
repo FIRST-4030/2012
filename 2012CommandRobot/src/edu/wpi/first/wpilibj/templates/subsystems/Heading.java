@@ -25,7 +25,7 @@ public class Heading extends Subsystem {
 
     public double readHeading() {
         double heading = gyro.getAngle();
-        SmartDashboard.putDouble("Heading", heading);
+        SmartDashboard.putDouble("Heading Reading", heading);
         return heading;
     }
 }
