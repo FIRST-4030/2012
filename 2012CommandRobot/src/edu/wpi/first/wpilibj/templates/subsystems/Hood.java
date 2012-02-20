@@ -14,7 +14,9 @@ public class Hood extends PIDSubsystem {
 
     public Hood() {
         super("HoodAngle", RobotMap.HOOD_P_GAIN, RobotMap.HOOD_I_GAIN, RobotMap.HOOD_D_GAIN);
+        this.setSetpointRange(RobotMap.HOOD_ANGLE_MIN, RobotMap.HOOD_ANGLE_MAX);
         this.setSetpoint(RobotMap.HOOD_ANGLE_MIN);
+        
         hood = new Victor(RobotMap.MOTOR_HOOD);
     }
 
@@ -33,10 +35,7 @@ public class Hood extends PIDSubsystem {
     }
 
     public void adjustSetpoint(double delta) {
-        double setpoint = this.getSetpoint() + delta;
-        setpoint = Math.min(setpoint, RobotMap.HOOD_ANGLE_MAX);
-        setpoint = Math.max(setpoint, RobotMap.HOOD_ANGLE_MIN);
-        this.setSetpoint(setpoint);
+        this.setSetpointRelative(delta);
     }
 
     public void start() {

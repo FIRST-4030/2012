@@ -21,6 +21,9 @@ public class Drive extends PIDSubsystem {
         super("drive", RobotMap.BALANCE_P_GAIN, RobotMap.BALANCE_I_GAIN,
                 RobotMap.BALANCE_D_GAIN);
 
+        this.setSetpointRange(-1.0 * RobotMap.BALANCE_MAX_SETPOINT, RobotMap.BALANCE_MAX_SETPOINT);
+        this.getPIDController().setOutputRange(-1.0 * RobotMap.BALANCE_MAX_SPEED, RobotMap.BALANCE_MAX_SPEED);
+
         left = new Jaguar(RobotMap.MOTOR_DRIVE_LEFT);
         right = new Jaguar(RobotMap.MOTOR_DRIVE_RIGHT);
     }
@@ -34,15 +37,15 @@ public class Drive extends PIDSubsystem {
     }
 
     protected void usePIDOutput(double output) {
-        left.set(output * RobotMap.BALANCE_MAX_SPEED);
-        right.set(output * RobotMap.BALANCE_MAX_SPEED);
+        left.set(output);
+        right.set(output);
     }
 
     public void balance() {
         this.setSetpoint(0);
         this.enable();
     }
-    
+
     private void set(double leftSpeed, double rightSpeed) {
         left.set(leftSpeed);
         right.set(rightSpeed);
@@ -52,7 +55,6 @@ public class Drive extends PIDSubsystem {
 
     public void stop() {
         this.disable();
-        this.set(0, 0);
         left.stopMotor();
         right.stopMotor();
     }
@@ -87,7 +89,7 @@ public class Drive extends PIDSubsystem {
         // local variables to hold the computed PWM values for the motors
         double leftMotorSpeed;
         double rightMotorSpeed;
-        
+
         moveValue *= RobotMap.DRIVE_SPEED_SCALE;
         rotateValue *= RobotMap.DRIVE_SPEED_SCALE;
         // rotateValue*=1;
