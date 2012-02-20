@@ -19,6 +19,8 @@ public class OI {
     private JoystickButton arm;
     private JoystickButton hoodUp;
     private JoystickButton hoodDown;
+    private JoystickButton ballup;
+    private JoystickButton balldown;
 
     public OI() {
         // Map the joysticks
@@ -47,6 +49,12 @@ public class OI {
         hoodUp.whileHeld(new HoodUp());
         hoodDown = new JoystickButton(ballStick, RobotMap.BUTTON_HOOD_DOWN);
         hoodDown.whileHeld(new HoodDown());
+        
+        ballup = new JoystickButton(ballStick, 11);
+        ballup.whenPressed(new ManualBallCountControl(true));
+        
+        balldown = new JoystickButton(ballStick, 10);
+        balldown.whenPressed(new ManualBallCountControl(false));
     }
 
     public Joystick getDriveJoystick() {

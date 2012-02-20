@@ -252,4 +252,12 @@ public class GlobalState {
     public void setShooterRate(double rate) {
         this.shooterRate = rate;
     }
+
+    public void incrementBallCount() {
+        ballsInControl++;
+    }
+
+    public void deincrementBallCount() {
+        ballsInControl--;
+    }
 }
