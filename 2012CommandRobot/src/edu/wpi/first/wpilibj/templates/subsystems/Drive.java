@@ -90,7 +90,7 @@ public class Drive extends PIDSubsystem {
         
         moveValue *= RobotMap.DRIVE_SPEED_SCALE;
         rotateValue *= RobotMap.DRIVE_SPEED_SCALE;
-
+        // rotateValue*=1;
         // Ensure inputs are in the -1.0 to 1.0 range
         moveValue = limit(moveValue);
         rotateValue = limit(rotateValue);
@@ -100,8 +100,9 @@ public class Drive extends PIDSubsystem {
         rotateValue = pow(rotateValue, sensitivity);
 
         // Reverse inputs if requested (for driving backward)
+        moveValue *= -1.0;
         if (reverse) {
-            moveValue *= -1.0;
+            
             rotateValue *= -1.0;
         }
 
