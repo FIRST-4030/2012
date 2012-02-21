@@ -9,10 +9,11 @@ package edu.wpi.first.wpilibj.templates.commands;
  * @author Ingyram
  */
 public class ManualBallCountControl extends CommandBase {
-    
+
     private boolean ballUp;
+
     public ManualBallCountControl(boolean ballUp) {
-        this.ballUp=ballUp;
+        this.ballUp = ballUp;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -23,10 +24,10 @@ public class ManualBallCountControl extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if(ballUp){
-        CommandBase.globalState.incrementBallCount();
-        }else{
-        CommandBase.globalState.deincrementBallCount();
+        if (ballUp) {
+            CommandBase.globalState.incrementBallCount();
+        } else {
+            CommandBase.globalState.deincrementBallCount();
         }
     }
 
