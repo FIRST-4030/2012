@@ -1,1 +1,7 @@
+# The FRC build script generates these automatically
+build/
 suite/
+j2meclasses
+
+# NetBeans stashes things here that should not be in the repo
+nbproject/private/

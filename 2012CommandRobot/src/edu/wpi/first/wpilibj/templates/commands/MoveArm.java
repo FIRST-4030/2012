@@ -4,19 +4,29 @@ import edu.wpi.first.wpilibj.templates.RobotMap;
 
 public class MoveArm extends CommandBase {
 
-    private boolean armMoving = false;
+    private boolean armMoving = true;
 
     public MoveArm() {
         requires(arm);
+        requires(armlock);
     }
 
     protected void initialize() {
-        setTimeout(RobotMap.ARM_TIMEOUT);
+        double mod=RobotMap.ARMLOCK_MOD;
+        if(arm.isArmUp())mod=0;
+        setTimeout(RobotMap.ARM_TIMEOUT+mod);
         this.armMoving = false;
     }
 
     protected void execute() {
+        if(!arm.isArmUp()){
+            armlock.unlock();
+            if(timeSinceInitialized()>RobotMap.ARMLOCK_MOD){
+                arm.toggle();
+            }
+        }else
         arm.toggle();
+        
     }
 
     protected boolean isFinished() {
@@ -34,10 +44,14 @@ public class MoveArm extends CommandBase {
     }
 
     protected void end() {
+        
         arm.stop();
+        if(!arm.isArmUp())armlock.lock();
+        
     }
 
     protected void interrupted() {
-        this.end();
+        
+        arm.stop();
     }
 }
