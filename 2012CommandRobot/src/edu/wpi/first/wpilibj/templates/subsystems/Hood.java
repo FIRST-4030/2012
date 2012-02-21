@@ -21,7 +21,7 @@ public class Hood extends PIDSubsystem {
     }
 
     public void initDefaultCommand() {
-        //setDefaultCommand(new MoveHood());
+        
     }
 
     protected double returnPIDInput() {
