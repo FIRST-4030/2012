@@ -28,11 +28,23 @@ public class ArmLock extends Subsystem {
     }
     public void toggle(){
         if(isSet){
-            servo.set(0);
+            lock();
+            //servo.set(0);
             
         }else{
-            servo.set(.6);
+            unlock();
+            //servo.set(.6);
         }
         isSet=!isSet;
+    }
+
+    public void unlock()
+    {
+        servo.set(.0);
+    }
+
+    public void lock()
+    {
+        servo.set(.5);
     }
 }

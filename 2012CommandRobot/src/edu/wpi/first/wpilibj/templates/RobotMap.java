@@ -76,4 +76,5 @@ public class RobotMap {
     public static final double HOOD_P_GAIN = -5.00;
     public static final double HOOD_I_GAIN = -0.1;//1.0;
     public static final double HOOD_D_GAIN = 0;//0.5;
+    public static final double ARMLOCK_MOD =.5;
 }

@@ -39,10 +39,12 @@ public class Arm extends Subsystem {
     }
 
     public void up() {
+        //System.out.println("up");
         arm.set(Value.kForward);
     }
 
     public void down() {
+        //System.out.println("down");
         arm.set(Value.kReverse);
     }
 
