@@ -7,7 +7,7 @@ package edu.wpi.first.wpilibj.templates;
  * floating around.
  */
 public class RobotMap {
-//
+
     // Drive Joystick
     public static final int JOYSTICK_DRIVE = 1;
     public static final int BUTTON_BALANCE = 2;
@@ -66,13 +66,13 @@ public class RobotMap {
     public static final double DRIVE_SPEED_SCALE = 0.90;
     public static final double BALANCE_MAX_SETPOINT = 0.1;
     // Hood Angle Constants
-    //TESTED Hood Pot Min Max angles
     public static final double HOOD_ANGLE_MIN = 3.900;
     public static final double HOOD_ANGLE_MAX = 4.850;
-    
     public static final double HOOD_ADJUST_RATE = 0.05;
-    public static final double HOOD_P_GAIN = -2.0;//-8.0;
-    public static final double HOOD_I_GAIN = -0.08;//-0.3;//1.0;
-    public static final double HOOD_D_GAIN = 0;//-1.0;//0.5;
-    public static final double ARMLOCK_MOD =.5;
+    public static final double HOOD_P_GAIN = -2.0;
+    public static final double HOOD_I_GAIN = -0.08;
+    public static final double HOOD_D_GAIN = 0;
+    // Arm Constants
+    public static final double ARM_TIMEOUT = 0.75;
+    public static final double ARMLOCK_MOD = .5;
 }
