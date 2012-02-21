@@ -1,27 +1,24 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.wpi.first.wpilibj.templates.subsystems;
+
+import edu.wpi.first.wpilibj.templates.RobotMap;
+import edu.wpi.first.wpilibj.templates.commands.ReadHoodAngle;
 
 import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.templates.RobotMap;
-import edu.wpi.first.wpilibj.templates.commands.CommandBase;
-import edu.wpi.first.wpilibj.templates.commands.ReadHoodAngle;
 
 public class HoodAngle extends Subsystem {
 
-    AnalogChannel angle = new AnalogChannel(RobotMap.HOOD_POTENTIOMETER);
+    AnalogChannel pot = new AnalogChannel(RobotMap.HOOD_POTENTIOMETER);
+    AnalogChannel vin = new AnalogChannel(RobotMap.HOOD_POT_VIN);
 
     public void initDefaultCommand() {
         setDefaultCommand(new ReadHoodAngle());
     }
 
     public double getPosition() {
-        double vangle = angle.getAverageVoltage();
-        SmartDashboard.putDouble("Hood Pot Voltage", vangle);//(-vangle+10));
+        double vangle = pot.getAverageVoltage() / vin.getAverageVoltage();
+        SmartDashboard.putDouble("Hood Pot Voltage", vangle);
         return (vangle);
     }
 }
