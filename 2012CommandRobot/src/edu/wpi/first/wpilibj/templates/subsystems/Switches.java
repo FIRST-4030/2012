@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.templates.commands.ReadSwitches;
 
 public class Switches extends Subsystem {
 
-    private DigitalInput balanceArmSwitches = new DigitalInput(RobotMap.BALANCE_ARM_SWITCHES);
     // The switch at the bottom of the elevator
     private DigitalInput elevatorBottomSwitch = new DigitalInput(RobotMap.ELEVATOR_BOTTOM_SWITCH);
     // The switch at the top of the elevator
@@ -57,10 +56,6 @@ public class Switches extends Subsystem {
             CommandBase.globalState.setShootMode(false);
         }
         SmartDashboard.putBoolean("Shoot Mode Enabled", CommandBase.globalState.isShootMode());
-
-        // Read balanceArm limit switches
-        CommandBase.globalState.setArmSwitch(!balanceArmSwitches.get());
-        SmartDashboard.putBoolean("Arm switch", CommandBase.globalState.getArmSwitch());
 
         // Is a ball ready to be raised by the elevator?
         // On leading edge, count the ball as raised

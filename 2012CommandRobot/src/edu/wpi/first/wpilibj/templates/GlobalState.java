@@ -18,8 +18,6 @@ public class GlobalState {
     private boolean targetVisible = false;
     // Are we in position to shoot?
     private boolean targetLocked = false;
-    // Is either arm switch closed
-    private boolean armSwitch = false;
     // Track loaded balls
     private int ballsInControl = 0;
     private int ballsInQueue = 0;
@@ -79,14 +77,6 @@ public class GlobalState {
 
     public void dequeuedBall() {
         ballsInQueue--;
-    }
-
-    public void setArmSwitch(boolean armSwitch) {
-        this.armSwitch = armSwitch;
-    }
-
-    public boolean getArmSwitch() {
-        return armSwitch;
     }
 
     public void updateDriveEnabled(boolean pressed) {

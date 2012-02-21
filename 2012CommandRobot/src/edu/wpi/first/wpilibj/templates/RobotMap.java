@@ -22,8 +22,8 @@ public class RobotMap {
     public static final int ARM_LOCK = 5;
     public static final int BUTTON_HOOD_UP = 6;
     public static final int BUTTON_HOOD_DOWN = 7;
-    public static final int MANUAL_BALL_INC=11;
-    public static final int MANUAL_BALL_DEC=10;
+    public static final int MANUAL_BALL_INC = 11;
+    public static final int MANUAL_BALL_DEC = 10;
     // PWM Bus
     public static final int MOTOR_DRIVE_LEFT = 1;
     public static final int MOTOR_DRIVE_RIGHT = 2;
@@ -33,7 +33,6 @@ public class RobotMap {
     public static final int MOTOR_LOADER = 6;
     // Relay Bus
     public static final int RELAY_ARM = 1;
-    public static final double ARM_TIMEOUT = .75;
     // Ball handling constants
     public static final double SHOOTER_SPEED = 1000;
     public static final double SHOOTER_P_GAIN = 0.1;
@@ -44,7 +43,6 @@ public class RobotMap {
     public static final double LOADER_SPEED = -1.0;
     public static final int MAX_BALLS = 3;
     // Digital Bus
-    public static final int BALANCE_ARM_SWITCHES = 1;
     public static final int ELEVATOR_MID_SWITCH = 2;
     public static final int ELEVATOR_TOP_SWITCH = 3;
     public static final int ENCODER_CHANNEL_A = 5;
@@ -55,6 +53,7 @@ public class RobotMap {
     public static final int TEMP = 2;
     public static final int RANGEFINDER = 3;
     public static final int HOOD_POTENTIOMETER = 4;
+    public static final int HOOD_POT_VIN = 5;
     public static final int VIN = 7;
     // IC2 Bus
     public static final int ACCELEROMETER = 1;
@@ -67,14 +66,14 @@ public class RobotMap {
     public static final double DRIVE_SPEED_SCALE = 0.90;
     public static final double BALANCE_MAX_SETPOINT = 0.1;
     // Hood Angle Constants
-    public static final double HOOD_TIMEOUT = 0.5;
     //TESTED Hood Pot Min Max angles
     public static final double HOOD_ANGLE_MIN = 3.700;
     public static final double HOOD_ANGLE_MAX = 4.800;
-    
     public static final double HOOD_ADJUST_RATE = 0.1;
     public static final double HOOD_P_GAIN = -5.00;
-    public static final double HOOD_I_GAIN = -0.1;//1.0;
-    public static final double HOOD_D_GAIN = 0;//0.5;
-    public static final double ARMLOCK_MOD =.5;
+    public static final double HOOD_I_GAIN = -0.1;
+    public static final double HOOD_D_GAIN = 0;
+    // Arm Contants
+    public static final double ARM_TIMEOUT = .75;
+    public static final double ARMLOCK_MOD = .5;
 }
