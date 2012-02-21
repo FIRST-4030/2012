@@ -69,12 +69,12 @@ public class RobotMap {
     // Hood Angle Constants
     public static final double HOOD_TIMEOUT = 0.5;
     //TESTED Hood Pot Min Max angles
-    public static final double HOOD_ANGLE_MIN = 3.700;
-    public static final double HOOD_ANGLE_MAX = 4.800;
+    public static final double HOOD_ANGLE_MIN = 3.900;
+    public static final double HOOD_ANGLE_MAX = 4.850;
     
-    public static final double HOOD_ADJUST_RATE = 0.1;
-    public static final double HOOD_P_GAIN = -5.00;
-    public static final double HOOD_I_GAIN = -0.1;//1.0;
-    public static final double HOOD_D_GAIN = 0;//0.5;
+    public static final double HOOD_ADJUST_RATE = 0.05;
+    public static final double HOOD_P_GAIN = -2.0;//-8.0;
+    public static final double HOOD_I_GAIN = -0.08;//-0.3;//1.0;
+    public static final double HOOD_D_GAIN = 0;//-1.0;//0.5;
     public static final double ARMLOCK_MOD =.5;
 }

@@ -11,7 +11,7 @@ public class HoodDown extends CommandBase {
     }
 
     protected void execute() {
-        hood.adjustSetpoint(-1.0 * RobotMap.HOOD_ADJUST_RATE);
+        hood.adjustSetpoint(1.0 * RobotMap.HOOD_ADJUST_RATE);
     }
 
     protected boolean isFinished() {
