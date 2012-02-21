@@ -45,8 +45,6 @@ public class OI {
         // Balance arm
         arm = new JoystickButton(ballStick, RobotMap.BUTTON_ARM);
         arm.whenPressed(new MoveArm());
-        armlock = new JoystickButton(ballStick, RobotMap.ARM_LOCK);
-        armlock.whenPressed(new ToggleServo());
         // Hood adjust
         hoodUp = new JoystickButton(ballStick, RobotMap.BUTTON_HOOD_UP);
         hoodUp.whileHeld(new HoodUp());
