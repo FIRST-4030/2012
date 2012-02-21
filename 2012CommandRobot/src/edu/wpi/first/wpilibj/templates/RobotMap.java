@@ -30,7 +30,7 @@ public class RobotMap {
     public static final int MOTOR_LOADER = 6;
     // Relay Bus
     public static final int RELAY_ARM = 1;
-    public static final double ARM_TIMEOUT = 5.0;
+    public static final double ARM_TIMEOUT = .75;
     // Ball handling constants
     public static final double SHOOTER_SPEED = 1000;
     public static final double SHOOTER_P_GAIN = 0.1;
@@ -65,10 +65,12 @@ public class RobotMap {
     public static final double BALANCE_MAX_SETPOINT = 0.1;
     // Hood Angle Constants
     public static final double HOOD_TIMEOUT = 0.5;
-    public static final double HOOD_ANGLE_MIN = 0.10;
-    public static final double HOOD_ANGLE_MAX = 1.75;
+    //TESTED Hood Pot Min Max angles
+    public static final double HOOD_ANGLE_MIN = 3.700;
+    public static final double HOOD_ANGLE_MAX = 4.950;
+    
     public static final double HOOD_ADJUST_RATE = 0.001;
-    public static final double HOOD_P_GAIN = 10.00;
+    public static final double HOOD_P_GAIN = 2.00;
     public static final double HOOD_I_GAIN = 1.0;
     public static final double HOOD_D_GAIN = 0.5;
 }

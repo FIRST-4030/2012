@@ -21,7 +21,7 @@ public class HoodAngle extends Subsystem {
 
     public double getPosition() {
         double vangle = angle.getAverageVoltage();
-        SmartDashboard.putDouble("Hood Pot Voltage", vangle);
-        return (vangle / CommandBase.globalState.getVin());
+        SmartDashboard.putDouble("Hood Pot Voltage", (-vangle+10));
+        return (vangle);
     }
 }
