@@ -28,6 +28,7 @@ public class ShooterEncoder extends Subsystem {
         SmartDashboard.putDouble("Shooter Raw", encoder.getRaw());
         SmartDashboard.putBoolean("Channel A", a.get());
         SmartDashboard.putBoolean("Channel B", b.get());
+        SmartDashboard.putDouble("Get_Period", encoder.getPeriod());
         return rate;
     }
 }

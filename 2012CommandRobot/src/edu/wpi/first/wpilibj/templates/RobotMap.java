@@ -19,8 +19,11 @@ public class RobotMap {
     public static final int BUTTON_SHOOT_MODE = 2;
     public static final int BUTTON_BALL_HANDLING = 3;
     public static final int BUTTON_ARM = 4;
+    public static final int ARM_LOCK = 5;
     public static final int BUTTON_HOOD_UP = 6;
     public static final int BUTTON_HOOD_DOWN = 7;
+    public static final int MANUAL_BALL_INC=11;
+    public static final int MANUAL_BALL_DEC=10;
     // PWM Bus
     public static final int MOTOR_DRIVE_LEFT = 1;
     public static final int MOTOR_DRIVE_RIGHT = 2;
@@ -67,10 +70,10 @@ public class RobotMap {
     public static final double HOOD_TIMEOUT = 0.5;
     //TESTED Hood Pot Min Max angles
     public static final double HOOD_ANGLE_MIN = 3.700;
-    public static final double HOOD_ANGLE_MAX = 4.950;
+    public static final double HOOD_ANGLE_MAX = 4.800;
     
-    public static final double HOOD_ADJUST_RATE = 0.001;
-    public static final double HOOD_P_GAIN = 2.00;
-    public static final double HOOD_I_GAIN = 1.0;
-    public static final double HOOD_D_GAIN = 0.5;
+    public static final double HOOD_ADJUST_RATE = 0.1;
+    public static final double HOOD_P_GAIN = -5.00;
+    public static final double HOOD_I_GAIN = -0.1;//1.0;
+    public static final double HOOD_D_GAIN = 0;//0.5;
 }

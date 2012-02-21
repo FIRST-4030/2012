@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.templates.commands.*;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.templates.subsystems.ArmLock;
 
 public class OI {
     // Input interfaces
@@ -21,6 +22,7 @@ public class OI {
     private JoystickButton hoodDown;
     private JoystickButton ballup;
     private JoystickButton balldown;
+    private JoystickButton armlock;
 
     public OI() {
         // Map the joysticks
@@ -43,17 +45,18 @@ public class OI {
         // Balance arm
         arm = new JoystickButton(ballStick, RobotMap.BUTTON_ARM);
         arm.whenPressed(new MoveArm());
-        
+        armlock = new JoystickButton(ballStick, RobotMap.ARM_LOCK);
+        armlock.whenPressed(new ToggleServo());
         // Hood adjust
         hoodUp = new JoystickButton(ballStick, RobotMap.BUTTON_HOOD_UP);
         hoodUp.whileHeld(new HoodUp());
         hoodDown = new JoystickButton(ballStick, RobotMap.BUTTON_HOOD_DOWN);
         hoodDown.whileHeld(new HoodDown());
         
-        ballup = new JoystickButton(ballStick, 11);
+        ballup = new JoystickButton(ballStick, RobotMap.MANUAL_BALL_INC);
         ballup.whenPressed(new ManualBallCountControl(true));
         
-        balldown = new JoystickButton(ballStick, 10);
+        balldown = new JoystickButton(ballStick, RobotMap.MANUAL_BALL_DEC);
         balldown.whenPressed(new ManualBallCountControl(false));
     }
 

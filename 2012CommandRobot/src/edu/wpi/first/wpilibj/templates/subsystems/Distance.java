@@ -30,7 +30,8 @@ public class Distance extends Subsystem {
     
     public int readDistance() {
         //range.
-        SmartDashboard.putDouble("raw range", range.getAverageValue());
+        SmartDashboard.putDouble("raw range Val", range.getAverageValue());
+        SmartDashboard.putDouble("raw range volts", range.getAverageVoltage());
         double voltsPerInch = CommandBase.globalState.getVin() / 512.0;
         int distance = (int)(range.getAverageVoltage() * voltsPerInch);
         SmartDashboard.putDouble("voltsPerInch", voltsPerInch);
