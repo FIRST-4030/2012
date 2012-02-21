@@ -7,7 +7,7 @@ package edu.wpi.first.wpilibj.templates;
  * floating around.
  */
 public class RobotMap {
-
+//
     // Drive Joystick
     public static final int JOYSTICK_DRIVE = 1;
     public static final int BUTTON_BALANCE = 2;
