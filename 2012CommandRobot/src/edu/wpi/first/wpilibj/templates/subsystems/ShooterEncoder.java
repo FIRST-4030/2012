@@ -14,6 +14,7 @@ public class ShooterEncoder extends Subsystem {
     
     public ShooterEncoder() {
         encoder = new Counter(a);
+        encoder.start();
     }
 
     public void initDefaultCommand() {
