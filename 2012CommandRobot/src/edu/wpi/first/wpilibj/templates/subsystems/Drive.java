@@ -12,17 +12,17 @@ public class Drive extends PIDSubsystem {
 
     private Jaguar left;
     private Jaguar right;
+    private double grav = 0;
 
     protected void initDefaultCommand() {
         setDefaultCommand(null);
     }
 
     public Drive() {
-        super("Drive", RobotMap.BALANCE_P_GAIN, RobotMap.BALANCE_I_GAIN,
+        super("drive", RobotMap.BALANCE_P_GAIN, RobotMap.BALANCE_I_GAIN,
                 RobotMap.BALANCE_D_GAIN);
 
         this.setSetpointRange(-1.0 * RobotMap.BALANCE_MAX_SETPOINT, RobotMap.BALANCE_MAX_SETPOINT);
-        this.getPIDController().setOutputRange(-1.0 * RobotMap.BALANCE_MAX_SPEED_HIGH, RobotMap.BALANCE_MAX_SPEED_HIGH);
 
         left = new Jaguar(RobotMap.MOTOR_DRIVE_LEFT);
         right = new Jaguar(RobotMap.MOTOR_DRIVE_RIGHT);
@@ -32,26 +32,36 @@ public class Drive extends PIDSubsystem {
         this.drive(stick.getX(), stick.getY(), RobotMap.DRIVE_SENSITIVITY, CommandBase.globalState.isDriveBackwards());
     }
 
-    private double getGravity() {
-        double grav = CommandBase.globalState.getGravity();
-        if (Math.abs(grav) < RobotMap.BALANCE_ZERO_THRESHOLD) {
-            grav = 0;
+    protected double returnPIDInput() {
+        double tempGrav = CommandBase.globalState.getGravity();
+        if (Math.abs(tempGrav) < RobotMap.BALANCE_ZERO_THRESHOLD) {
+            tempGrav = 0;
         }
+        grav = tempGrav;
+
+        if (Math.abs(grav) < RobotMap.BALANCE_FALL_STARTS) {
+            this.getPIDController().setOutputRange(-1.0 * RobotMap.BALANCE_MAX_SPEED_LOW, RobotMap.BALANCE_MAX_SPEED_LOW);
+        } else {
+            this.getPIDController().setOutputRange(-1.0 * RobotMap.BALANCE_MAX_SPEED_HIGH, RobotMap.BALANCE_MAX_SPEED_HIGH);
+        }
+
+        // Reset the PID control as we pass through 0
+        // This isn't stickly necessary for PID in general,
+        // but given our particular system it's a good plan
+        if (grav == 0) {
+            this.getPIDController().reset();
+        }
+
         return grav;
     }
 
-    protected double returnPIDInput() {
-        if (this.getGravity() == 0) {
-            this.getPIDController().reset();
-        }
-        return this.getGravity();
-    }
-
     protected void usePIDOutput(double output) {
-        if (this.getGravity() < 0.25 && this.getGravity() > 0.10) {
-            this.set(-0.20, 0.20);
-        } else if (this.getGravity() > -0.25 && this.getGravity() < -0.10) {
-            this.set(0.20, -0.20);
+        if (grav < RobotMap.BALANCE_FALL_STARTS
+                && grav > RobotMap.BALANCE_NEAR_LEVEL) {
+            this.set(-1.0 * RobotMap.BALANCE_NEAR_LEVEL_SPEED, RobotMap.BALANCE_NEAR_LEVEL_SPEED);
+        } else if (grav > -1.0 * RobotMap.BALANCE_FALL_STARTS
+                && grav < -1.0 * RobotMap.BALANCE_NEAR_LEVEL) {
+            this.set(RobotMap.BALANCE_NEAR_LEVEL_SPEED, -1.0 * RobotMap.BALANCE_NEAR_LEVEL_SPEED);
         } else {
             this.set(-1.0 * output, output);
         }
