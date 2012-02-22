@@ -32,8 +32,9 @@ public class Hood extends PIDSubsystem {
         SmartDashboard.putDouble("Hood Setpoint", this.getSetpoint());
 
         // Prevent hood overruns
-        if (CommandBase.globalState.getHoodAngle() >= RobotMap.HOOD_ANGLE_MAX
-                || CommandBase.globalState.getHoodAngle() <= RobotMap.HOOD_ANGLE_MIN) {
+        // The mistmatch bewteen MAX and command direction is intentional -- the hood runs backwards with respect to the pot
+        if ((CommandBase.globalState.getHoodAngle() >= RobotMap.HOOD_ANGLE_MAX && output < 0)
+                || (CommandBase.globalState.getHoodAngle() <= RobotMap.HOOD_ANGLE_MIN && output < 0)) {
             output = 0;
         }
         hood.set(output);
