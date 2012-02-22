@@ -22,7 +22,6 @@ public class Drive extends PIDSubsystem {
                 RobotMap.BALANCE_D_GAIN);
 
         this.setSetpointRange(-1.0 * RobotMap.BALANCE_MAX_SETPOINT, RobotMap.BALANCE_MAX_SETPOINT);
-        this.getPIDController().setOutputRange(-1.0 * RobotMap.BALANCE_MAX_SPEED, RobotMap.BALANCE_MAX_SPEED);
 
         left = new Jaguar(RobotMap.MOTOR_DRIVE_LEFT);
         right = new Jaguar(RobotMap.MOTOR_DRIVE_RIGHT);
@@ -32,13 +31,29 @@ public class Drive extends PIDSubsystem {
         this.drive(stick.getX(), stick.getY(), RobotMap.DRIVE_SENSITIVITY, CommandBase.globalState.isDriveBackwards());
     }
 
+    private double getGravity() {
+        double grav = CommandBase.globalState.getGravity();
+        if (Math.abs(grav) < RobotMap.BALANCE_ZERO_THRESHOLD) {
+            grav = 0;
+        }
+        return grav;
+    }
+
     protected double returnPIDInput() {
-        return CommandBase.globalState.getGravity();
+        if (this.getGravity() == 0) {
+            this.getPIDController().reset();
+        }
+        return this.getGravity();
     }
 
     protected void usePIDOutput(double output) {
-        left.set(output);
-        right.set(output);
+        if (this.getGravity() < 0.25 && this.getGravity() > 0.10) {
+            this.set(-0.20, 0.20);
+        } else if (this.getGravity() > -0.25 && this.getGravity() < -0.10) {
+            this.set(0.20, -0.20);
+        } else {
+            this.set(-1.0 * output, output);
+        }
     }
 
     public void balance() {
@@ -104,7 +119,7 @@ public class Drive extends PIDSubsystem {
         // Reverse inputs if requested (for driving backward)
         moveValue *= -1.0;
         if (reverse) {
-            
+
             rotateValue *= -1.0;
         }
 

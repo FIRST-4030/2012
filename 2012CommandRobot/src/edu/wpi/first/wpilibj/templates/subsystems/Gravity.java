@@ -22,6 +22,7 @@ public class Gravity extends Subsystem {
 
     public double readGravity() {
         double grav = accel.getAcceleration(ADXL345_I2C.Axes.kY);
+        grav -= RobotMap.BALANCE_ZERO_ADJUST;
         SmartDashboard.putDouble("Gravity Reading", grav);
         return grav;
     }

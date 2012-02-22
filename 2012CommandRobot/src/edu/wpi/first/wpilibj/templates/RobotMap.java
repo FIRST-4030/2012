@@ -61,12 +61,16 @@ public class RobotMap {
     public static final int ACCELEROMETER = 1;
     // Driving Constants
     public static final int DRIVE_SENSITIVITY = 2;
-    public static final double BALANCE_P_GAIN = 0.50;
+    public static final double BALANCE_P_GAIN = 2.00;
     public static final double BALANCE_I_GAIN = 0.01;
-    public static final double BALANCE_D_GAIN = 0.00;
-    public static final double BALANCE_MAX_SPEED = 0.1;
-    public static final double DRIVE_SPEED_SCALE = 1.0;
+    public static final double BALANCE_D_GAIN = 0.01;
+    public static final double BALANCE_MAX_SPEED_LOW = 0.20;
+    public static final double BALANCE_MAX_SPEED_HIGH = 0.45;
+    public static final double BALANCE_SPEED_THRESHOLD = 0.20;
+    public static final double DRIVE_SPEED_SCALE = 0.7;
     public static final double BALANCE_MAX_SETPOINT = 0.1;
+    public static final double BALANCE_ZERO_THRESHOLD = 0.025;
+    public static final double BALANCE_ZERO_ADJUST = -0.04;
     // Hood Angle Constants
     public static final double HOOD_ANGLE_MIN = 3.900;
     public static final double HOOD_ANGLE_MAX = 4.850;

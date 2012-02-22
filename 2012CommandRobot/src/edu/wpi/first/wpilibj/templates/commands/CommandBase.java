@@ -34,7 +34,7 @@ public abstract class CommandBase extends Command {
     public static Distance distance = new Distance();
     public static GlobalState globalState = new GlobalState();
     public static Hood hood = new Hood();
-    public static ArmLock armlock= new ArmLock();
+    public static ArmLock armlock = new ArmLock();
 
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
@@ -43,6 +43,9 @@ public abstract class CommandBase extends Command {
         // yet. Thus, their requires() statements may grab null pointers. Bad
         // news. Don't move it.
         oi = new OI();
+
+        SmartDashboard.putData(loader);
+        SmartDashboard.putData(elevator);
     }
 
     public CommandBase(String name) {
