@@ -15,8 +15,8 @@ public class Hood extends PIDSubsystem {
 
     public Hood() {
         super("HoodAngle", RobotMap.HOOD_P_GAIN, RobotMap.HOOD_I_GAIN, RobotMap.HOOD_D_GAIN, RobotMap.HOOD_PID_PERIOD);
-        
-        
+
+
         this.setSetpointRange(RobotMap.HOOD_ANGLE_MIN, RobotMap.HOOD_ANGLE_MAX);
         this.setSetpoint((RobotMap.HOOD_ANGLE_MIN + RobotMap.HOOD_ANGLE_MAX) / 2);
         this.getPIDController().setTolerance(RobotMap.HOOD_PID_TOLERANCE);
@@ -31,17 +31,17 @@ public class Hood extends PIDSubsystem {
     }
 
     protected void usePIDOutput(double output) {
-        SmartDashboard.putDouble("Hood Command Speed", output);
+        SmartDashboard.putDouble("Hood Calculated Speed", output);
         SmartDashboard.putDouble("Hood Setpoint", this.getSetpoint());
-        SmartDashboard.putDouble("Hood Update Time", Utility.getFPGATime());
 
         // Prevent hood overruns
         // The mistmatch bewteen MAX and command direction is intentional -- the hood runs backwards with respect to the pot
         if ((CommandBase.globalState.getHoodAngle() >= RobotMap.HOOD_ANGLE_MAX && output < 0)
-                || (CommandBase.globalState.getHoodAngle() <= RobotMap.HOOD_ANGLE_MIN && output < 0)) {
+                || (CommandBase.globalState.getHoodAngle() <= RobotMap.HOOD_ANGLE_MIN && output > 0)) {
             output = 0;
         }
         hood.set(output);
+        SmartDashboard.putDouble("Hood Command Speed", output);
     }
 
     public void adjustSetpoint(double delta) {
