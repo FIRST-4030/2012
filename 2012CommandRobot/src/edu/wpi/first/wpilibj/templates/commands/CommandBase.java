@@ -43,19 +43,6 @@ public abstract class CommandBase extends Command {
         // yet. Thus, their requires() statements may grab null pointers. Bad
         // news. Don't move it.
         oi = new OI();
-
-        // Show what command your subsystem is running on the SmartDashboard
-        SmartDashboard.putData(drive);
-        SmartDashboard.putData(elevator);
-        SmartDashboard.putData(shooter);
-        SmartDashboard.putData(loader);
-        SmartDashboard.putData(switches);
-        SmartDashboard.putData(gravity);
-        SmartDashboard.putData(heading);
-        SmartDashboard.putData(arm);
-        SmartDashboard.putData(vin);
-        SmartDashboard.putData(distance);
-        SmartDashboard.putData(hood);
     }
 
     public CommandBase(String name) {
