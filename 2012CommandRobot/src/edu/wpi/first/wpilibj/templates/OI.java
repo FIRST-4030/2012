@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.templates.commands.*;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.templates.subsystems.ArmLock;
 
 public class OI {
     // Input interfaces
@@ -22,7 +21,6 @@ public class OI {
     private JoystickButton hoodDown;
     private JoystickButton ballup;
     private JoystickButton balldown;
-    private JoystickButton armlock;
 
     public OI() {
         // Map the joysticks
