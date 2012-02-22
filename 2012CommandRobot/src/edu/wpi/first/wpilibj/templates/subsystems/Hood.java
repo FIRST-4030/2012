@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Hood extends PIDSubsystem {
@@ -34,7 +33,7 @@ public class Hood extends PIDSubsystem {
 
         // Prevent hood overruns
         if (CommandBase.globalState.getHoodAngle() >= RobotMap.HOOD_ANGLE_MAX
-                || RobotMap.HOOD_ANGLE_MAX <= RobotMap.HOOD_ANGLE_MIN) {
+                || CommandBase.globalState.getHoodAngle() <= RobotMap.HOOD_ANGLE_MIN) {
             output = 0;
         }
         hood.set(output);
