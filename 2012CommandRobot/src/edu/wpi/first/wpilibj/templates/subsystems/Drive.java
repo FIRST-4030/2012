@@ -18,10 +18,11 @@ public class Drive extends PIDSubsystem {
     }
 
     public Drive() {
-        super("drive", RobotMap.BALANCE_P_GAIN, RobotMap.BALANCE_I_GAIN,
+        super("Drive", RobotMap.BALANCE_P_GAIN, RobotMap.BALANCE_I_GAIN,
                 RobotMap.BALANCE_D_GAIN);
 
         this.setSetpointRange(-1.0 * RobotMap.BALANCE_MAX_SETPOINT, RobotMap.BALANCE_MAX_SETPOINT);
+        this.getPIDController().setOutputRange(-1.0 * RobotMap.BALANCE_MAX_SPEED_HIGH, RobotMap.BALANCE_MAX_SPEED_HIGH);
 
         left = new Jaguar(RobotMap.MOTOR_DRIVE_LEFT);
         right = new Jaguar(RobotMap.MOTOR_DRIVE_RIGHT);
