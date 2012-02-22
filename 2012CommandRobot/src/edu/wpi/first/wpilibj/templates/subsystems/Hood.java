@@ -1,12 +1,12 @@
 package edu.wpi.first.wpilibj.templates.subsystems;
 
+import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 //import edu.wpi.first.wpilibj.templates.commands.MoveHood;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SendablePIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Hood extends PIDSubsystem {
@@ -14,7 +14,9 @@ public class Hood extends PIDSubsystem {
     Victor hood;
 
     public Hood() {
-        super("HoodAngle", RobotMap.HOOD_P_GAIN, RobotMap.HOOD_I_GAIN, RobotMap.HOOD_D_GAIN);
+        super("HoodAngle", RobotMap.HOOD_P_GAIN, RobotMap.HOOD_I_GAIN, RobotMap.HOOD_D_GAIN, RobotMap.HOOD_PID_PERIOD);
+        
+        
         this.setSetpointRange(RobotMap.HOOD_ANGLE_MIN, RobotMap.HOOD_ANGLE_MAX);
         this.setSetpoint((RobotMap.HOOD_ANGLE_MIN + RobotMap.HOOD_ANGLE_MAX) / 2);
         this.getPIDController().setTolerance(RobotMap.HOOD_PID_TOLERANCE);
@@ -31,10 +33,12 @@ public class Hood extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         SmartDashboard.putDouble("Hood Command Speed", output);
         SmartDashboard.putDouble("Hood Setpoint", this.getSetpoint());
+        SmartDashboard.putDouble("Hood Update Time", Utility.getFPGATime());
 
         // Prevent hood overruns
-        if (CommandBase.globalState.getHoodAngle() >= RobotMap.HOOD_ANGLE_MAX
-                || RobotMap.HOOD_ANGLE_MAX <= RobotMap.HOOD_ANGLE_MIN) {
+        // The mistmatch bewteen MAX and command direction is intentional -- the hood runs backwards with respect to the pot
+        if ((CommandBase.globalState.getHoodAngle() >= RobotMap.HOOD_ANGLE_MAX && output < 0)
+                || (CommandBase.globalState.getHoodAngle() <= RobotMap.HOOD_ANGLE_MIN && output < 0)) {
             output = 0;
         }
         hood.set(output);
@@ -47,7 +51,6 @@ public class Hood extends PIDSubsystem {
         } else if (this.getSetpoint() < RobotMap.HOOD_ANGLE_MIN) {
             this.setSetpoint(RobotMap.HOOD_ANGLE_MIN);
         }
-        SmartDashboard.putDouble("newsetpoint", delta);
         start();
     }
 

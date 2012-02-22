@@ -72,6 +72,7 @@ public class RobotMap {
     public static final double HOOD_ANGLE_MAX = 4.850;
     public static final double HOOD_ADJUST_RATE = 0.05;
     public static final double HOOD_PID_TOLERANCE = 0.01;
+    public static final double HOOD_PID_PERIOD = 0.1;
     public static final double HOOD_P_GAIN = -2.0;
     public static final double HOOD_I_GAIN = -0.08;
     public static final double HOOD_D_GAIN = 0;

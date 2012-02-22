@@ -1,7 +1,6 @@
 package edu.wpi.first.wpilibj.templates.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogChannel;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,10 +15,7 @@ public class Distance extends Subsystem {
     
     public Distance(){
         
-        range = new AnalogChannel(RobotMap.RANGEFINDER);
-       //ultra =new Ultrasonic();
-        //range.initAccumulator();
-        
+        range = new AnalogChannel(RobotMap.RANGEFINDER);        
     }
 
     protected void initDefaultCommand() {
