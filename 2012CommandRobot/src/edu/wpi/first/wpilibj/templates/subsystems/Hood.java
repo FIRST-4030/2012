@@ -13,7 +13,9 @@ public class Hood extends PIDSubsystem {
     Victor hood;
 
     public Hood() {
-        super("HoodAngle", RobotMap.HOOD_P_GAIN, RobotMap.HOOD_I_GAIN, RobotMap.HOOD_D_GAIN);
+        super("HoodAngle", RobotMap.HOOD_P_GAIN, RobotMap.HOOD_I_GAIN, RobotMap.HOOD_D_GAIN, RobotMap.HOOD_PID_PERIOD);
+        
+        
         this.setSetpointRange(RobotMap.HOOD_ANGLE_MIN, RobotMap.HOOD_ANGLE_MAX);
         this.setSetpoint((RobotMap.HOOD_ANGLE_MIN + RobotMap.HOOD_ANGLE_MAX) / 2);
         this.getPIDController().setTolerance(RobotMap.HOOD_PID_TOLERANCE);
@@ -47,7 +49,6 @@ public class Hood extends PIDSubsystem {
         } else if (this.getSetpoint() < RobotMap.HOOD_ANGLE_MIN) {
             this.setSetpoint(RobotMap.HOOD_ANGLE_MIN);
         }
-        SmartDashboard.putDouble("newsetpoint", delta);
         start();
     }
 
