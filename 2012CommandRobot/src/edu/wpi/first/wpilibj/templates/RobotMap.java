@@ -35,6 +35,8 @@ public class RobotMap {
     public static final int RELAY_ARM = 1;
     // Ball handling constants
     public static final double SHOOTER_SPEED = 1000;
+    public static final double SHOOTER_CMD_SPEED_MAX = 1.0;
+    public static final double SHOOTER_CMD_SPEED_MIN = 0.0;
     public static final double SHOOTER_P_GAIN = 0.1;
     public static final double SHOOTER_I_GAIN = 0.01;
     public static final double SHOOTER_D_GAIN = 0.0;

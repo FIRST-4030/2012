@@ -16,6 +16,9 @@ public class Shooter extends PIDSubsystem {
                 RobotMap.SHOOTER_D_GAIN);
         this.setSetpoint(RobotMap.SHOOTER_SPEED);
 
+        //this.setSetpointRange(-1.0 * RobotMap.BALANCE_MAX_SETPOINT, RobotMap.BALANCE_MAX_SETPOINT);
+        this.getPIDController().setOutputRange(RobotMap.SHOOTER_CMD_SPEED_MIN, RobotMap.SHOOTER_CMD_SPEED_MAX);
+
         shooter = new Jaguar(RobotMap.MOTOR_SHOOTER);
     }
 
@@ -32,11 +35,12 @@ public class Shooter extends PIDSubsystem {
     protected void initDefaultCommand() {
         setDefaultCommand(null);
     }
-    
+
     public void start() {
+        shooter.set(0.1);
         this.enable();
     }
-    
+
     public void stop() {
         this.disable();
         shooter.stopMotor();
