@@ -65,7 +65,7 @@ public class RobotMap {
     public static final double BALANCE_I_GAIN = 0.01;
     public static final double BALANCE_D_GAIN = 0.00;
     public static final double BALANCE_MAX_SPEED = 0.1;
-    public static final double DRIVE_SPEED_SCALE = 0.90;
+    public static final double DRIVE_SPEED_SCALE = 1.0;
     public static final double BALANCE_MAX_SETPOINT = 0.1;
     // Hood Angle Constants
     public static final double HOOD_ANGLE_MIN = 3.900;
