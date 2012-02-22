@@ -79,4 +79,6 @@ public class RobotMap {
     // Arm Constants
     public static final double ARM_TIMEOUT = 0.75;
     public static final double ARMLOCK_MOD = .5;
+    // Encoder Constants
+    public static final double ENCODER_UPDATE_PERIOD = 0.5;
 }
