@@ -17,23 +17,24 @@ public class Gravity extends Subsystem {
 
     public Gravity() {
         accel = new ADXL345_I2C(RobotMap.ACCELEROMETER, ADXL345_I2C.DataFormat_Range.k16G);
-        
+
     }
 
     public double readGravity() {
-        
-        double grav = accel.getAcceleration(ADXL345_I2C.Axes.kZ);
+        double grav = accel.getAcceleration(ADXL345_I2C.Axes.kY);
         SmartDashboard.putDouble("Gravity Reading", grav);
         return grav;
     }
-    public double readAccelX(){
+
+    public double readAccelX() {
         double accelX = accel.getAcceleration(ADXL345_I2C.Axes.kX);
         SmartDashboard.putDouble("accel X", accelX);
         return accelX;
     }
-    public double readAccelY(){
-        double accelY = accel.getAcceleration(ADXL345_I2C.Axes.kY);
-        SmartDashboard.putDouble("accel Y", accelY);
-        return accelY;
+
+    public double readAccelZ() {
+        double accelZ = accel.getAcceleration(ADXL345_I2C.Axes.kZ);
+        SmartDashboard.putDouble("accel Y", accelZ);
+        return accelZ;
     }
 }

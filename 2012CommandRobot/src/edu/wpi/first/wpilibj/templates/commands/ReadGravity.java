@@ -12,7 +12,7 @@ public class ReadGravity extends CommandBase {
     protected void execute() {
         globalState.setGravity(gravity.readGravity());
         globalState.setAccelX(gravity.readAccelX());
-        globalState.setAccelY(gravity.readAccelY());
+        globalState.setAccelY(gravity.readAccelZ());
     }
 
     protected boolean isFinished() {
