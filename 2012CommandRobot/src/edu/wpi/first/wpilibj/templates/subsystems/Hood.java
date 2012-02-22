@@ -1,5 +1,6 @@
 package edu.wpi.first.wpilibj.templates.subsystems;
 
+import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 //import edu.wpi.first.wpilibj.templates.commands.MoveHood;
@@ -32,6 +33,7 @@ public class Hood extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         SmartDashboard.putDouble("Hood Command Speed", output);
         SmartDashboard.putDouble("Hood Setpoint", this.getSetpoint());
+        SmartDashboard.putDouble("Hood Update Time", Utility.getFPGATime());
 
         // Prevent hood overruns
         // The mistmatch bewteen MAX and command direction is intentional -- the hood runs backwards with respect to the pot
