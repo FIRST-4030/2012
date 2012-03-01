@@ -13,6 +13,8 @@ public class Drive extends PIDSubsystem {
     private Jaguar left;
     private Jaguar right;
     private double grav = 0;
+    private boolean onRamp = false;
+    private boolean nearLevel = false;
 
     protected void initDefaultCommand() {
         setDefaultCommand(null);
@@ -39,7 +41,18 @@ public class Drive extends PIDSubsystem {
         }
         grav = tempGrav;
 
-        if (Math.abs(grav) < RobotMap.BALANCE_FALL_STARTS) {
+        // Do not engage the near-level detection until we are fully on the ramp
+        // Disengage the near-level behavior anytime the ramp is fully tilted
+        if (Math.abs(grav) > RobotMap.BALANCE_FALL_STARTS) {
+            onRamp = true;
+            nearLevel = false;
+        } else if (onRamp && Math.abs(grav) < RobotMap.BALANCE_NEAR_LEVEL) {
+            nearLevel = true;
+        }
+
+
+        // Reduce our travel speed when we're near-level
+        if (nearLevel) {
             this.getPIDController().setOutputRange(-1.0 * RobotMap.BALANCE_MAX_SPEED_LOW, RobotMap.BALANCE_MAX_SPEED_LOW);
         } else {
             this.getPIDController().setOutputRange(-1.0 * RobotMap.BALANCE_MAX_SPEED_HIGH, RobotMap.BALANCE_MAX_SPEED_HIGH);
@@ -56,12 +69,21 @@ public class Drive extends PIDSubsystem {
     }
 
     protected void usePIDOutput(double output) {
-        if (grav < RobotMap.BALANCE_FALL_STARTS
-                && grav > RobotMap.BALANCE_NEAR_LEVEL) {
-            this.set(-1.0 * RobotMap.BALANCE_NEAR_LEVEL_SPEED, RobotMap.BALANCE_NEAR_LEVEL_SPEED);
-        } else if (grav > -1.0 * RobotMap.BALANCE_FALL_STARTS
-                && grav < -1.0 * RobotMap.BALANCE_NEAR_LEVEL) {
-            this.set(RobotMap.BALANCE_NEAR_LEVEL_SPEED, -1.0 * RobotMap.BALANCE_NEAR_LEVEL_SPEED);
+        // Always drive uphill if we are not yet fully on the ramp
+        if (onRamp) {
+            // If we are on the ramp but near level, drive backwards (i.e. downhill)
+            // Otherwise keep driving uphill
+            // Drive speed is regulated in the returnPIDInput() method
+            if (nearLevel) {
+                if (grav < 0) {
+                    this.set(-1.0 * RobotMap.BALANCE_NEAR_LEVEL_SPEED, RobotMap.BALANCE_NEAR_LEVEL_SPEED);
+
+                } else {
+                    this.set(RobotMap.BALANCE_NEAR_LEVEL_SPEED, -1.0 * RobotMap.BALANCE_NEAR_LEVEL_SPEED);
+                }
+            } else {
+                this.set(-1.0 * output, output);
+            }
         } else {
             this.set(-1.0 * output, output);
         }
@@ -80,6 +102,11 @@ public class Drive extends PIDSubsystem {
     }
 
     public void stop() {
+        // Reset our balance indicators whenever we stop
+        onRamp = false;
+        nearLevel = false;
+
+        // Stop the PID regulation and both motors
         this.disable();
         left.stopMotor();
         right.stopMotor();
