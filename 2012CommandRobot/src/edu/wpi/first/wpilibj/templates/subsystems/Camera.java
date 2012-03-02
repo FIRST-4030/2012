@@ -91,9 +91,15 @@ public class Camera extends Subsystem {
     //For x, a positive number means the target is clockwise (right), while a negative means counterclockwise (left).
     //Returns 1000 if no target can be found
     //Also note that if only part of the target is in view, this will return the angle to the center of the partial target
-    public double getAngleToTarget() throws NIVisionException{
-        ParticleAnalysisReport target = this.getTarget(thresholdHSLImage);
+    public double getAngleToTarget(ParticleAnalysisReport target) throws NIVisionException{
         if(target == null)return 1000;
         return (target.center_mass_x/image.getWidth())*RobotMap.CAMERA_VA - RobotMap.CAMERA_VA*0.5;
+    }
+    
+    //Returns the distance from the camera to the target in inches
+    public double getTargetDistance(ParticleAnalysisReport target) throws NIVisionException{
+        double targetWidth = 1.0* target.boundingRectHeight * (RobotMap.TARGET_W/RobotMap.TARGET_H);
+        double targetViewingAngle = 1.0* (RobotMap.CAMERA_VA) * targetWidth/image.getWidth();
+        return (targetWidth * 0.5) / Math.tan(targetViewingAngle * 0.5);
     }
 }

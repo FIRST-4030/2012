@@ -97,4 +97,7 @@ public class RobotMap {
     public static final int SAT_HIGH=255;
     public static final int LUM_LOW=127;
     public static final int LUM_HIGH=255;
+    //Constants for target dimensions
+    public static final int TARGET_H=18;//18 inches
+    public static final int TARGET_W=24;//24 inches
 }
