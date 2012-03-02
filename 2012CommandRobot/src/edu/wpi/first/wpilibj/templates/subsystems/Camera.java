@@ -25,6 +25,13 @@ public class Camera extends Subsystem {
     private AxisCamera camera = AxisCamera.getInstance();
     
     public Camera(){
+        try {
+            this.refreshImages();
+        } catch (AxisCameraException ex) {
+            ex.printStackTrace();
+        } catch (NIVisionException ex) {
+            ex.printStackTrace();
+        }
     }
     
     private class Point{
@@ -42,9 +49,14 @@ public class Camera extends Subsystem {
         setDefaultCommand(new RefreshCameraImage());
     }
     
-    public void refreshImage() throws AxisCameraException, NIVisionException{
+    public void refreshImages() throws AxisCameraException, NIVisionException{
         image=(HSLImage) camera.getImage();
         thresholdHSLImage=this.HSLThreshold();
+    }
+    
+    public void flushImages() throws NIVisionException{
+        image.free();
+        thresholdHSLImage.free();
     }
     
     public HSLImage getImage(){

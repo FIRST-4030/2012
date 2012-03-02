@@ -26,7 +26,8 @@ public class RefreshCameraImage extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         try {
-            camera.refreshImage();
+            camera.flushImages();
+            camera.refreshImages();
         } catch (AxisCameraException ex) {
             ex.printStackTrace();
         } catch (NIVisionException ex) {
@@ -41,10 +42,16 @@ public class RefreshCameraImage extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
+        try {
+            camera.flushImages();
+        } catch (NIVisionException ex) {
+            ex.printStackTrace();
+        }
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        this.end();
     }
 }
