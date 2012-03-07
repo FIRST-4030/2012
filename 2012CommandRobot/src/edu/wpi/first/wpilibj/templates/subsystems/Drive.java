@@ -51,11 +51,11 @@ public class Drive extends PIDSubsystem {
             onRamp = true;
             nearLevel = false;
             pastLevel = false;
-        } else if (onRamp && !nearLevel && Math.abs(grav) < RobotMap.BALANCE_NEAR_LEVEL) {
+        } else if (onRamp && !nearLevel && !pastLevel && Math.abs(grav) < RobotMap.BALANCE_NEAR_LEVEL) {
             nearLevel = true;
             pastLevel = false;
             nearLevelGrav = grav;
-        } else if (onRamp && nearLevel && (nearLevelGrav * grav < 0)) {
+        } else if (onRamp && nearLevel && !pastLevel && (nearLevelGrav * grav < 0)) {
             pastLevel = true;
             nearLevel = false;
         }
@@ -82,7 +82,7 @@ public class Drive extends PIDSubsystem {
         // Also drive uphill if we are not near-level or are past-level
         // If we are near-level (i.e. starting to fall) drive downhill at a fixed rate
         // (PID drive speed is adjusted in the returnPIDInput() method)
-        if (onRamp && nearLevel) {
+        if (nearLevel) {
             if (grav < 0) {
                 this.set(-1.0 * RobotMap.BALANCE_NEAR_LEVEL_SPEED, RobotMap.BALANCE_NEAR_LEVEL_SPEED);
 
