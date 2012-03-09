@@ -7,10 +7,8 @@ package edu.wpi.first.wpilibj.templates.subsystems;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.image.BinaryImage;
-import edu.wpi.first.wpilibj.image.HSLImage;
-import edu.wpi.first.wpilibj.image.NIVisionException;
-import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
+import edu.wpi.first.wpilibj.image.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 import edu.wpi.first.wpilibj.templates.commands.RefreshCameraImage;
 
@@ -19,21 +17,11 @@ import edu.wpi.first.wpilibj.templates.commands.RefreshCameraImage;
  * @author Ingyram
  */
 public class Camera extends Subsystem {
-    private HSLImage image;
+    private ColorImage image;
     private BinaryImage thresholdHSLImage;
     // Create and set up a camera instance 
-    private AxisCamera camera = AxisCamera.getInstance();
-    
-    public Camera(){
-        try {
-            this.refreshImages();
-        } catch (AxisCameraException ex) {
-            ex.printStackTrace();
-        } catch (NIVisionException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
+    private AxisCamera camera = AxisCamera.getInstance("10.40.30.11");
+
     private class Point{
         public double x=0;
         public double y=0;
@@ -50,21 +38,32 @@ public class Camera extends Subsystem {
     }
     
     public void refreshImages() throws AxisCameraException, NIVisionException{
-        image=(HSLImage) camera.getImage();
-        thresholdHSLImage=this.HSLThreshold();
+        flushImages();
+        SmartDashboard.putBoolean("is camera derp", camera==null);
+        try{image= camera.getImage();
+        thresholdHSLImage=this.HSLThreshold();}catch(Exception e){System.out.println("I AM DER{PER{EPRESPSREP");}
+    }
+
+    public BinaryImage getThresholdHSLImage() {
+        return thresholdHSLImage;
     }
     
     public void flushImages() throws NIVisionException{
-        image.free();
-        thresholdHSLImage.free();
+        if(image!=null){
+            image.free();
+        }
+        if(thresholdHSLImage!=null){
+            thresholdHSLImage.free();
+        }
     }
     
-    public HSLImage getImage(){
+    public ColorImage getImage(){
         return image;
     }
     
     //Does an HSL threshold detection to find pixels of the target
     public BinaryImage HSLThreshold() throws NIVisionException{
+        if(image==null)return null;
         return image.thresholdHSL(RobotMap.HUE_LOW, RobotMap.HUE_HIGH, RobotMap.SAT_LOW, RobotMap.SAT_HIGH, RobotMap.LUM_LOW, RobotMap.LUM_HIGH);
     }
     
@@ -93,7 +92,8 @@ public class Camera extends Subsystem {
     //Also note that if only part of the target is in view, this will return the angle to the center of the partial target
     public double getAngleToTarget(ParticleAnalysisReport target) throws NIVisionException{
         if(target == null)return 1000;
-        return (target.center_mass_x/image.getWidth())*RobotMap.CAMERA_VA - RobotMap.CAMERA_VA*0.5;
+        double mid=target.boundingRectLeft+target.boundingRectWidth/2.;
+        return (mid/image.getWidth())*RobotMap.CAMERA_VA - RobotMap.CAMERA_VA*0.5;
     }
     
     //Returns the distance from the camera to the target in inches

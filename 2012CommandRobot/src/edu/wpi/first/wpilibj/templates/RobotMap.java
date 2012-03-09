@@ -91,11 +91,11 @@ public class RobotMap {
     //Camera Constants
     public static final double CAMERA_VA = 47; //Horizontal viewing angle in degrees
     //HSL limits for target square
-    public static final int HUE_LOW = 85;
-    public static final int HUE_HIGH = 127;
-    public static final int SAT_LOW = 190;
+    public static final int HUE_LOW = 100;
+    public static final int HUE_HIGH = 140;
+    public static final int SAT_LOW = 200;
     public static final int SAT_HIGH = 255;
-    public static final int LUM_LOW = 127;
+    public static final int LUM_LOW = 175;
     public static final int LUM_HIGH = 255;
     public static final int TARGET_W = 24;
     public static final int TARGET_H = 18;

@@ -6,6 +6,7 @@ package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.image.NIVisionException;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -26,12 +27,15 @@ public class RefreshCameraImage extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         try {
-            camera.flushImages();
             camera.refreshImages();
+            if(camera.getImage()!=null)
+            SmartDashboard.putDouble("ANGLETOTARGET", camera.getAngleToTarget(camera.getTarget(camera.getThresholdHSLImage())));
         } catch (AxisCameraException ex) {
             ex.printStackTrace();
         } catch (NIVisionException ex) {
             ex.printStackTrace();
+        }catch(Exception E){
+            System.out.println("WARNING ERROR, but stopping with this error is fucking retarded");
         }
     }
 
