@@ -31,7 +31,7 @@ public class Camera extends Subsystem {
             ex.printStackTrace();
         } catch (NIVisionException ex) {
             ex.printStackTrace();
-        }
+        } 
     }
     
     private class Point{

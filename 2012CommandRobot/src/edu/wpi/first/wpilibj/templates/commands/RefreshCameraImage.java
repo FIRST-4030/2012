@@ -6,6 +6,7 @@ package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.image.NIVisionException;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -28,6 +29,7 @@ public class RefreshCameraImage extends CommandBase {
         try {
             camera.flushImages();
             camera.refreshImages();
+            SmartDashboard.putDouble("ANGLETOTARGET", camera.getAngleToTarget(camera.getTarget(camera.HSLThreshold())));
         } catch (AxisCameraException ex) {
             ex.printStackTrace();
         } catch (NIVisionException ex) {
