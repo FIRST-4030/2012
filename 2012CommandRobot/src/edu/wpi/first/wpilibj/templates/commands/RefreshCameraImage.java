@@ -28,8 +28,10 @@ public class RefreshCameraImage extends CommandBase {
     protected void execute() {
         try {
             camera.refreshImages();
-            if(camera.getImage()!=null)
-            SmartDashboard.putDouble("ANGLETOTARGET", camera.getAngleToTarget(camera.getTarget(camera.getThresholdHSLImage())));
+            if(camera.getImage()!=null){
+                SmartDashboard.putDouble("ANGLE TO TARGET", camera.getAngleToTarget(camera.getTarget(camera.getThresholdHSLImage())));
+                SmartDashboard.putDouble("DISTANCE TO TARGET", camera.getTargetDistance(camera.getTarget(camera.getThresholdHSLImage())));
+            }
         } catch (AxisCameraException ex) {
             ex.printStackTrace();
         } catch (NIVisionException ex) {

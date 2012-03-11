@@ -40,8 +40,11 @@ public class Camera extends Subsystem {
     public void refreshImages() throws AxisCameraException, NIVisionException{
         flushImages();
         SmartDashboard.putBoolean("is camera derp", camera==null);
-        try{image= camera.getImage();
-        thresholdHSLImage=this.HSLThreshold();}catch(Exception e){System.out.println("I AM DER{PER{EPRESPSREP");}
+        try{
+            image= camera.getImage();
+            thresholdHSLImage=this.HSLThreshold();
+            //thresholdHSLImage.
+        }catch(Exception e){System.out.println("I AM DER{PER{EPRESPSREP");}
     }
 
     public BinaryImage getThresholdHSLImage() {
