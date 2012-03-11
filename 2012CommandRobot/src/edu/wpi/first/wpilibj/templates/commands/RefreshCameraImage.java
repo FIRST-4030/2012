@@ -20,6 +20,7 @@ public class RefreshCameraImage extends CommandBase {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(camera);
+        requires(ledring);
     }
 
     // Called just before this Command runs the first time
@@ -29,6 +30,7 @@ public class RefreshCameraImage extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         try {
+            ledring.on();
             camera.refreshImages();
             if(camera.getImage()!=null){
                 ParticleAnalysisReport target = camera.getTarget(camera.getThresholdHSLImage());
@@ -41,7 +43,7 @@ public class RefreshCameraImage extends CommandBase {
             ex.printStackTrace();
         }catch(Exception E){
             System.out.println("WARNING ERROR, but stopping with this error is fucking retarded");
-        }
+        }ledring.off();
     }
 
     // Make this return true when this Command no longer needs to run execute()

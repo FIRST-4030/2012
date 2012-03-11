@@ -33,6 +33,7 @@ public class RobotMap {
     public static final int MOTOR_LOADER = 6;
     // Relay Bus
     public static final int RELAY_ARM = 1;
+    public static final int LED_RING = 1;
     // Ball handling constants
     public static final double SHOOTER_SPEED = 1000;
     public static final double SHOOTER_CMD_SPEED_MAX = 1.0;
@@ -88,6 +89,8 @@ public class RobotMap {
     public static final double ARMLOCK_MOD = .5;
     // Encoder Constants
     public static final double ENCODER_UPDATE_PERIOD = 0.5;
+    // LED ring constants
+    
     //Camera Constants
     public static final double CAMERA_VA = 47; //Horizontal viewing angle in degrees
     //HSL limits for target square

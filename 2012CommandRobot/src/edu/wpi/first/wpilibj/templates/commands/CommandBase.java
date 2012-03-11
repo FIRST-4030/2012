@@ -36,6 +36,7 @@ public abstract class CommandBase extends Command {
     public static Hood hood = new Hood();
     public static ArmLock armlock = new ArmLock();
     public static Camera camera = new Camera();
+    public static LEDRing ledring = new LEDRing();
 
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
