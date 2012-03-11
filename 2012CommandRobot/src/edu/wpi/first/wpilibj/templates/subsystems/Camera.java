@@ -114,6 +114,17 @@ public class Camera extends Subsystem {
     public double getTargetDistance(ParticleAnalysisReport target) throws NIVisionException{
         double targetWidth = 1.0* target.boundingRectHeight * (RobotMap.TARGET_W/RobotMap.TARGET_H);
         double targetViewingAngle = 1.0* (RobotMap.CAMERA_VA) * targetWidth/image.getWidth();
-        return (targetWidth * 0.5) / Math.tan(targetViewingAngle * 0.5) * 4.0;
+        return /*/getdist(target);/*/ (RobotMap.TARGET_W * 0.5) / Math.tan(Math.toRadians(targetViewingAngle*.5));/**/
+    }
+    public double getdist(ParticleAnalysisReport target) throws NIVisionException{
+        double width=target.boundingRectWidth/2;
+        double angle=(RobotMap.CAMERA_VA*width/image.getWidth())/2;
+        SmartDashboard.putDouble("ANGLE OF TAG", angle);
+        
+        double sideAngle=(90-angle);
+        SmartDashboard.putDouble("SIDEANGLE", sideAngle);
+        
+        double ret=(RobotMap.TARGET_W/Math.sin(Math.toRadians(angle)))*Math.sin(Math.toRadians(sideAngle));
+        return ret/3.93;
     }
 }

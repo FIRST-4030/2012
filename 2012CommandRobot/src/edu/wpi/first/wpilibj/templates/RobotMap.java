@@ -100,6 +100,6 @@ public class RobotMap {
     public static final int SAT_HIGH = 255;
     public static final int LUM_LOW = 120;
     public static final int LUM_HIGH = 255;
-    public static final int TARGET_W = 24;
-    public static final int TARGET_H = 18;
+    public static final double TARGET_W = 24;
+    public static final double TARGET_H = 18;
 }
