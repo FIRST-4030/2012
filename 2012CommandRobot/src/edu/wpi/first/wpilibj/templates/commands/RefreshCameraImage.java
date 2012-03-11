@@ -5,7 +5,9 @@
 package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
+import edu.wpi.first.wpilibj.image.BinaryImage;
 import edu.wpi.first.wpilibj.image.NIVisionException;
+import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -29,8 +31,9 @@ public class RefreshCameraImage extends CommandBase {
         try {
             camera.refreshImages();
             if(camera.getImage()!=null){
-                SmartDashboard.putDouble("ANGLE TO TARGET", camera.getAngleToTarget(camera.getTarget(camera.getThresholdHSLImage())));
-                SmartDashboard.putDouble("DISTANCE TO TARGET", camera.getTargetDistance(camera.getTarget(camera.getThresholdHSLImage())));
+                ParticleAnalysisReport target = camera.getTarget(camera.getThresholdHSLImage());
+                SmartDashboard.putDouble("ANGLE TO TARGET", camera.getAngleToTarget(target));
+                SmartDashboard.putDouble("DISTANCE TO TARGET", camera.getTargetDistance(target));
             }
         } catch (AxisCameraException ex) {
             ex.printStackTrace();
