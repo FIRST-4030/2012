@@ -114,6 +114,6 @@ public class Camera extends Subsystem {
     public double getTargetDistance(ParticleAnalysisReport target) throws NIVisionException{
         double targetWidth = 1.0* target.boundingRectHeight * (RobotMap.TARGET_W/RobotMap.TARGET_H);
         double targetViewingAngle = 1.0* (RobotMap.CAMERA_VA) * targetWidth/image.getWidth();
-        return (targetWidth * 0.5) / Math.tan(targetViewingAngle * 0.5);
+        return (targetWidth * 0.5) / Math.tan(targetViewingAngle * 0.5) * 4.0;
     }
 }
