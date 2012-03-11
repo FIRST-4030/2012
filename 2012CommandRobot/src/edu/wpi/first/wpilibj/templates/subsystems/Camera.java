@@ -38,10 +38,14 @@ public class Camera extends Subsystem {
     }
     
     public void refreshImages() throws AxisCameraException, NIVisionException{
+        //System.out.println("flshing images");
         flushImages();
+        //System.out.println("down the drain");
         SmartDashboard.putBoolean("is camera derp", camera==null);
         try{
+            //System.out.println("getting image");
             image= camera.getImage();
+            //System.out.println("got image");
             thresholdHSLImage=this.HSLThreshold();
             //thresholdHSLImage.
         }catch(Exception e){System.out.println("I AM DER{PER{EPRESPSREP");}
@@ -59,15 +63,22 @@ public class Camera extends Subsystem {
             thresholdHSLImage.free();
         }
     }
+    public void saveimage() throws NIVisionException{
+        System.out.println("savine der pictuers");
+        thresholdHSLImage.write("/DESU_"+imagenumber+++".png");
+    }
     
     public ColorImage getImage(){
         return image;
     }
-    
+    int imagenumber=0;
     //Does an HSL threshold detection to find pixels of the target
     public BinaryImage HSLThreshold() throws NIVisionException{
         if(image==null)return null;
-        return image.thresholdHSL(RobotMap.HUE_LOW, RobotMap.HUE_HIGH, RobotMap.SAT_LOW, RobotMap.SAT_HIGH, RobotMap.LUM_LOW, RobotMap.LUM_HIGH);
+        //System.out.println("got to hsl");
+        BinaryImage ret= image.thresholdHSL(RobotMap.HUE_LOW, RobotMap.HUE_HIGH, RobotMap.SAT_LOW, RobotMap.SAT_HIGH, RobotMap.LUM_LOW, RobotMap.LUM_HIGH);
+        
+        return ret;
     }
     
     //Does a particle analysis of a binary image of the target

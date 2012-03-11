@@ -33,9 +33,13 @@ public class RefreshCameraImage extends CommandBase {
             ledring.on();
             camera.refreshImages();
             if(camera.getImage()!=null){
+                //System.out.println("reporting");
                 ParticleAnalysisReport target = camera.getTarget(camera.getThresholdHSLImage());
-                SmartDashboard.putDouble("ANGLE TO TARGET", camera.getAngleToTarget(target));
-                SmartDashboard.putDouble("DISTANCE TO TARGET", camera.getTargetDistance(target));
+                //System.out.println("reported");
+                if(target!=null){
+                    SmartDashboard.putDouble("ANGLE TO TARGET", camera.getAngleToTarget(target));
+                    SmartDashboard.putDouble("DISTANCE TO TARGET", camera.getTargetDistance(target));
+                }
             }
         } catch (AxisCameraException ex) {
             ex.printStackTrace();
