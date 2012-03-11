@@ -32,7 +32,7 @@ public class RobotMap {
     public static final int MOTOR_ELEVATOR = 5;
     public static final int MOTOR_LOADER = 6;
     // Relay Bus
-    public static final int RELAY_ARM = 1;
+    public static final int RELAY_ARM = 2;
     public static final int LED_RING = 1;
     // Ball handling constants
     public static final double SHOOTER_SPEED = 1000;

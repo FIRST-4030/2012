@@ -43,7 +43,7 @@ public class RefreshCameraImage extends CommandBase {
             ex.printStackTrace();
         }catch(Exception E){
             System.out.println("WARNING ERROR, but stopping with this error is fucking retarded");
-        }ledring.off();
+        }//ledring.off();
     }
 
     // Make this return true when this Command no longer needs to run execute()
