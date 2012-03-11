@@ -21,6 +21,7 @@ public class OI {
     private JoystickButton hoodDown;
     private JoystickButton ballup;
     private JoystickButton balldown;
+    private JoystickButton picture;
 
     public OI() {
         // Map the joysticks
@@ -31,6 +32,8 @@ public class OI {
         shoot = new JoystickButton(ballStick, RobotMap.BUTTON_SHOOT);
         shoot.whenPressed(new Shoot());
 
+        shoot = new JoystickButton(driveStick, 9);
+        shoot.whenPressed(new TakePicture());
         // Toggle joystick driving mode
         driveEnabled = new JoystickButton(driveStick, RobotMap.BUTTON_DRIVE);
         driveBackwards = new JoystickButton(driveStick, RobotMap.BUTTON_BACKWARDS);
