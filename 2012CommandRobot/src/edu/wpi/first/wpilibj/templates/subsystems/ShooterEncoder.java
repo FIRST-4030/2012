@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.templates.commands.ReadShooterEncoder;
 public class ShooterEncoder extends Subsystem {
 
     private double lastTime = 0;
-    private double rate = 0.0;
+    private long lastCount = 0;
     private Counter encoder;
     DigitalInput a = new DigitalInput(RobotMap.ENCODER_CHANNEL_A);
 
@@ -25,18 +25,15 @@ public class ShooterEncoder extends Subsystem {
     }
 
     public double getRate() {
-        double time = (Utility.getFPGATime() / 1000000);
-        if (time > lastTime + RobotMap.ENCODER_UPDATE_PERIOD) {
-            rate = (double) encoder.get() / (time - lastTime);
-            SmartDashboard.putDouble("Shooter Count", (double) encoder.get());
-            encoder.reset();
-            lastTime = time;
-            SmartDashboard.putDouble("Shooter Time", time);
-            SmartDashboard.putDouble("Shooter Last Time", lastTime);
-            SmartDashboard.putDouble("Shooter Time Diff", time - lastTime);
-        }
+        double time = Utility.getFPGATime();
+        long count = encoder.get();
+        double rate = (count - lastCount) / ((time - lastTime) / 1000000);
+
         SmartDashboard.putDouble("Shooter Rate", rate);
-        SmartDashboard.putBoolean("Shooter A", a.get());
-        return 0;
+        SmartDashboard.putInt("Shooter Count", (int) count);
+
+        lastTime = time;
+        lastCount = count;
+        return rate;
     }
 }

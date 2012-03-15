@@ -22,8 +22,10 @@ public class RobotMap {
     public static final int ARM_LOCK = 5;
     public static final int BUTTON_HOOD_UP = 6;
     public static final int BUTTON_HOOD_DOWN = 7;
-    public static final int MANUAL_BALL_INC = 11;
+    public static final int BUTTON_SHOOTER_UP = 8;
+    public static final int BUTTON_SHOOTER_DOWN = 9;
     public static final int MANUAL_BALL_DEC = 10;
+    public static final int MANUAL_BALL_INC = 11;
     // PWM Bus
     public static final int MOTOR_DRIVE_LEFT = 1;
     public static final int MOTOR_DRIVE_RIGHT = 2;
@@ -35,7 +37,8 @@ public class RobotMap {
     public static final int RELAY_ARM = 2;
     public static final int LED_RING = 1;
     // Ball handling constants
-    public static final double SHOOTER_SPEED = 1000;
+    public static final double SHOOTER_SPEED_DEFAULT = 25;
+    public static final double SHOOTER_ADJUST_RATE = 1.0;
     public static final double SHOOTER_CMD_SPEED_MAX = 1.0;
     public static final double SHOOTER_CMD_SPEED_MIN = 0.0;
     public static final double SHOOTER_P_GAIN = 0.1;
@@ -87,8 +90,6 @@ public class RobotMap {
     // Arm Constants
     public static final double ARM_TIMEOUT = 0.75;
     public static final double ARMLOCK_MOD = .5;
-    // Encoder Constants
-    public static final double ENCODER_UPDATE_PERIOD = 0.5;
     // LED ring constants
     
     //Camera Constants

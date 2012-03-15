@@ -37,9 +37,9 @@ public class GlobalState {
     private double hoodAngle = 0;
     // Rangefinder reading (in inches)
     private int distance = 0;
-    // Rotational rate of the shooter wheel (in blips/second)
+    // Current rotational rate of the shooter wheel (in blips/second)
     private double shooterRate = 0;
-    
+
     private double accelX=0;
 
     public double getAccelX() {

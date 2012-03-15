@@ -2,33 +2,23 @@ package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.templates.RobotMap;
 
-public class SpinShooter extends CommandBase {
+public class ShooterRateUp extends CommandBase {
 
-    private double speed;
-
-    public SpinShooter() {
-        requires(shooter);
+    public ShooterRateUp() {
     }
 
     protected void initialize() {
-        shooter.start();
     }
 
     protected void execute() {
+        shooter.adjustSetpoint(1.0 * RobotMap.SHOOTER_ADJUST_RATE);
     }
 
     protected boolean isFinished() {
-        if (!globalState.isShootMode()) {
-            return true;
-        }
-        if (globalState.ballsInControl() < 1) {
-            return true;
-        }
         return false;
     }
 
     protected void end() {
-        shooter.stop();
     }
 
     protected void interrupted() {

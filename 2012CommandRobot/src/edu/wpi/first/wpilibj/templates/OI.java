@@ -22,6 +22,8 @@ public class OI {
     private JoystickButton ballup;
     private JoystickButton balldown;
     private JoystickButton picture;
+    private JoystickButton shooterUp;
+    private JoystickButton shooterDown;
 
     public OI() {
         // Map the joysticks
@@ -51,6 +53,12 @@ public class OI {
         hoodUp.whileHeld(new HoodUp());
         hoodDown = new JoystickButton(ballStick, RobotMap.BUTTON_HOOD_DOWN);
         hoodDown.whileHeld(new HoodDown());
+        
+        // Shooter adjust
+        shooterUp = new JoystickButton(ballStick, RobotMap.BUTTON_SHOOTER_UP);
+        shooterUp.whenPressed(new ShooterRateUp());
+        shooterDown = new JoystickButton(ballStick, RobotMap.BUTTON_SHOOTER_DOWN);
+        shooterDown.whenPressed(new ShooterRateDown());
         
         ballup = new JoystickButton(ballStick, RobotMap.MANUAL_BALL_INC);
         ballup.whenPressed(new ManualBallCountControl(true));
