@@ -37,13 +37,16 @@ public class RobotMap {
     public static final int RELAY_ARM = 2;
     public static final int LED_RING = 1;
     // Ball handling constants
-    public static final double SHOOTER_SPEED_DEFAULT = 25;
     public static final double SHOOTER_ADJUST_RATE = 1.0;
     public static final double SHOOTER_CMD_SPEED_MAX = 1.0;
     public static final double SHOOTER_CMD_SPEED_MIN = 0.0;
-    public static final double SHOOTER_P_GAIN = 0.1;
-    public static final double SHOOTER_I_GAIN = 0.01;
+    public static final int SHOOTER_RATE_MAX = 52;
+    public static final int SHOOTER_RATE_MIN = 0;
+    public static final double SHOOTER_SPEED_DEFAULT = SHOOTER_RATE_MAX * 0.80;
+    public static final double SHOOTER_P_GAIN = 0.05;
+    public static final double SHOOTER_I_GAIN = 0.001;
     public static final double SHOOTER_D_GAIN = 0.0;
+    public static final long ENCODER_INTERVAL = 100000;
     public static final double ELEVATOR_SPEED_SHOOT = 1.0;
     public static final double ELEVATOR_SPEED_LOAD = 1.0;
     public static final double LOADER_SPEED = -1.0;
@@ -51,8 +54,7 @@ public class RobotMap {
     // Digital Bus
     public static final int ELEVATOR_MID_SWITCH = 2;
     public static final int ELEVATOR_TOP_SWITCH = 3;
-    public static final int ENCODER_CHANNEL_A = 5;
-    public static final int ENCODER_CHANNEL_B = 6;
+    public static final int ENCODER = 5;
     public static final int ELEVATOR_BOTTOM_SWITCH = 8;
     // Analog Bus
     public static final int GYRO = 1;
@@ -91,7 +93,6 @@ public class RobotMap {
     public static final double ARM_TIMEOUT = 0.75;
     public static final double ARMLOCK_MOD = .5;
     // LED ring constants
-    
     //Camera Constants
     public static final double CAMERA_VA = 47; //Horizontal viewing angle in degrees
     //HSL limits for target square
