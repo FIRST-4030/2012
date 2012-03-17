@@ -42,9 +42,17 @@ public class Camera extends Subsystem {
         //setDefaultCommand(new RefreshCameraImage());
     }
     public void refreshImages() throws AxisCameraException, NIVisionException{
+        System.out.println("memory colection");
         flushImages();
+        System.out.println("getting image");
         image= camera.getImage();
+        
+        System.out.println("getting threshold :"+image==null);
+        try{
         thresholdHSLImage=this.HSLThreshold();
+        }catch (Exception e){
+            System.out.print("threshold failed");
+        }
     }
     public BinaryImage getThresholdHSLImage() {
         return thresholdHSLImage;
@@ -74,18 +82,29 @@ public class Camera extends Subsystem {
     }
     public void IDTargets() throws NIVisionException{
         targetDetected=thresholdHSLImage.getNumberParticles()!=0;
+        
         ParticleAnalysisReport[] reports = thresholdHSLImage.getOrderedParticleAnalysisReports(4);
-        for(int i=reports.length-1;i>1;i--){
-            if(!(reports[0].particleArea*RobotMap.TARGET_MIN_RATIO>reports[i].particleArea)){
+        for(int i=reports.length-1;i>=0;i--){
+            System.out.println("testing: "+i);
+            if((reports[0].particleArea*RobotMap.TARGET_MIN_RATIO<reports[i].particleArea)){
+                System.out.println(i+" is the last one that fits");
                 targets=subArray(reports,i);
-            };
+                return;
+            }else{
+                System.out.println(i+"was too small");
+            }
         }
+        System.out.println(thresholdHSLImage.getNumberParticles());
         targets= null;//this shouldn't be possible
     }
     
     
     //Does a particle analysis of a binary image of the target
-    public ParticleAnalysisReport getTarget(BinaryImage image) throws NIVisionException{
+    public ParticleAnalysisReport[] getTarget() throws NIVisionException{
+        
+        IDTargets();
+        return targets;
+                /*
         int numParticles = image.getNumberParticles();
         if(numParticles==0){
             return null;
@@ -101,7 +120,7 @@ public class Camera extends Subsystem {
             }
             return largestParticle;
         }
-        return image.getParticleAnalysisReport(0);
+        return image.getParticleAnalysisReport(0);*/
     }
     
     
@@ -125,7 +144,7 @@ public class Camera extends Subsystem {
     public double getdist(ParticleAnalysisReport target) throws NIVisionException{
         double width=target.boundingRectWidth/2;
         double angle=(RobotMap.CAMERA_VA*width/image.getWidth())/2;
-        SmartDashboard.putDouble("ANGLE OF TAG", angle);
+        SmartDashboard.putDouble("ANGLE OF TARG", angle);
         
         double sideAngle=(90-angle);
         SmartDashboard.putDouble("SIDEANGLE", sideAngle);
@@ -135,8 +154,10 @@ public class Camera extends Subsystem {
     }
     
     private ParticleAnalysisReport[] subArray(ParticleAnalysisReport[] array,int lastIndex){
-        if(array.length>lastIndex)throw new ArrayIndexOutOfBoundsException();
+        if(array.length<=lastIndex+1)throw new ArrayIndexOutOfBoundsException();
+        System.out.println("shortening array");
         ParticleAnalysisReport[] ret=new ParticleAnalysisReport[lastIndex+1];
+        System.out.println("array is now of length "+ret.length);
         for(int i=0;i<=lastIndex;i++){
             ret[i]=array[i];
         }

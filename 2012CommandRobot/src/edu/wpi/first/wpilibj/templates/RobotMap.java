@@ -98,9 +98,9 @@ public class RobotMap {
     //HSL limits for target square
     public static final int HUE_LOW = 40;
     public static final int HUE_HIGH = 150;
-    public static final int SAT_LOW = 120;
+    public static final int SAT_LOW = 60;
     public static final int SAT_HIGH = 255;
-    public static final int LUM_LOW = 120;
+    public static final int LUM_LOW = 60;
     public static final int LUM_HIGH = 255;
     public static final double TARGET_W = 24;
     public static final double TARGET_H = 18;
