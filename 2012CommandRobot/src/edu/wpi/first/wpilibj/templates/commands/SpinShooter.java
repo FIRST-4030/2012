@@ -18,6 +18,9 @@ public class SpinShooter extends CommandBase {
     }
 
     protected boolean isFinished() {
+        if (!globalState.isBallHandlingEnabled()) {
+            return true;
+        }
         if (!globalState.isShootMode()) {
             return true;
         }
