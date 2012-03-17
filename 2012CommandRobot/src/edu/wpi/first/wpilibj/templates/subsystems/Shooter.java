@@ -3,6 +3,7 @@ package edu.wpi.first.wpilibj.templates.subsystems;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 
 import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
@@ -37,10 +38,10 @@ public class Shooter extends PIDSubsystem {
 
     public void adjustSetpoint(double delta) {
         double newSetpoint = this.getSetpoint() + delta;
-        if (newSetpoint > 1) {
-            newSetpoint = 1;
-        } else if (newSetpoint < 0) {
-            newSetpoint = 0;
+        if (newSetpoint > RobotMap.SHOOTER_RATE_MAX) {
+            newSetpoint = RobotMap.SHOOTER_RATE_MAX;
+        } else if (newSetpoint < RobotMap.SHOOTER_RATE_MIN) {
+            newSetpoint = RobotMap.SHOOTER_RATE_MIN;
         }
         this.setSetpoint(newSetpoint);
     }

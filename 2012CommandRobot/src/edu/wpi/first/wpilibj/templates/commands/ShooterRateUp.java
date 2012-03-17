@@ -15,7 +15,7 @@ public class ShooterRateUp extends CommandBase {
     }
 
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     protected void end() {

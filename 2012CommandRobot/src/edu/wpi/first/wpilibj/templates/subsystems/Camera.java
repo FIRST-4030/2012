@@ -39,7 +39,7 @@ public class Camera extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new RefreshCameraImage());
+        //setDefaultCommand(new RefreshCameraImage());
     }
     public void refreshImages() throws AxisCameraException, NIVisionException{
         flushImages();
