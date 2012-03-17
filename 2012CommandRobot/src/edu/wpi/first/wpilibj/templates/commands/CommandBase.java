@@ -46,8 +46,7 @@ public abstract class CommandBase extends Command {
         // news. Don't move it.
         oi = new OI();
 
-        SmartDashboard.putData(loader);
-        SmartDashboard.putData(elevator);
+        SmartDashboard.putData(camera);
     }
 
     public CommandBase(String name) {
