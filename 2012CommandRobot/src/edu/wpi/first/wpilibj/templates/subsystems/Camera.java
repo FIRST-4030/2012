@@ -4,6 +4,7 @@
  */
 package edu.wpi.first.wpilibj.templates.subsystems;
 
+import com.sun.squawk.util.Arrays;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,8 +20,13 @@ import edu.wpi.first.wpilibj.templates.commands.RefreshCameraImage;
 public class Camera extends Subsystem {
     private ColorImage image;
     private BinaryImage thresholdHSLImage;
+    private int imagenumber=0;//keeps track of images being saved
     // Create and set up a camera instance 
     private AxisCamera camera = AxisCamera.getInstance("10.40.30.11");
+    
+    private ParticleAnalysisReport[] targets;
+    private boolean targetDetected=false;
+    
 
     private class Point{
         public double x=0;
@@ -30,32 +36,22 @@ public class Camera extends Subsystem {
             this.y=y;
         }
     }
-    
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
         setDefaultCommand(new RefreshCameraImage());
     }
-    
     public void refreshImages() throws AxisCameraException, NIVisionException{
-        //System.out.println("flshing images");
         flushImages();
-        //System.out.println("down the drain");
-        SmartDashboard.putBoolean("is camera derp", camera==null);
-        try{
-            //System.out.println("getting image");
-            image= camera.getImage();
-            //System.out.println("got image");
-            thresholdHSLImage=this.HSLThreshold();
-            //thresholdHSLImage.
-        }catch(Exception e){System.out.println("I AM DER{PER{EPRESPSREP");}
+        image= camera.getImage();
+        thresholdHSLImage=this.HSLThreshold();
     }
-
     public BinaryImage getThresholdHSLImage() {
         return thresholdHSLImage;
     }
-    
-    public void flushImages() throws NIVisionException{
+    private void flushImages() throws NIVisionException{
+        targets=null;
+        targetDetected=false;
         if(image!=null){
             image.free();
         }
@@ -64,22 +60,29 @@ public class Camera extends Subsystem {
         }
     }
     public void saveimage() throws NIVisionException{
-        System.out.println("savine der pictuers");
-        thresholdHSLImage.write("/DESU_"+imagenumber+++".png");
-    }
-    
+        String pic="/Test_Capture";
+        System.out.println("Saveing picture to"+pic+imagenumber);
+        thresholdHSLImage.write("/Test_Capture"+imagenumber+++".png");
+    } 
     public ColorImage getImage(){
         return image;
     }
-    int imagenumber=0;
     //Does an HSL threshold detection to find pixels of the target
-    public BinaryImage HSLThreshold() throws NIVisionException{
+    private BinaryImage HSLThreshold() throws NIVisionException{
         if(image==null)return null;
-        //System.out.println("got to hsl");
-        BinaryImage ret= image.thresholdHSL(RobotMap.HUE_LOW, RobotMap.HUE_HIGH, RobotMap.SAT_LOW, RobotMap.SAT_HIGH, RobotMap.LUM_LOW, RobotMap.LUM_HIGH);
-        
-        return ret;
+        return image.thresholdHSL(RobotMap.HUE_LOW, RobotMap.HUE_HIGH, RobotMap.SAT_LOW, RobotMap.SAT_HIGH, RobotMap.LUM_LOW, RobotMap.LUM_HIGH);
     }
+    public void IDTargets() throws NIVisionException{
+        targetDetected=thresholdHSLImage.getNumberParticles()!=0;
+        ParticleAnalysisReport[] reports = thresholdHSLImage.getOrderedParticleAnalysisReports(4);
+        for(int i=reports.length-1;i>1;i--){
+            if(!(reports[0].particleArea*RobotMap.TARGET_MIN_RATIO>reports[i].particleArea)){
+                targets=subArray(reports,i);
+            };
+        }
+        targets= null;//this shouldn't be possible
+    }
+    
     
     //Does a particle analysis of a binary image of the target
     public ParticleAnalysisReport getTarget(BinaryImage image) throws NIVisionException{
@@ -88,6 +91,7 @@ public class Camera extends Subsystem {
             return null;
         }
         if(numParticles>1){
+            //image.ge
             ParticleAnalysisReport[] reports = image.getOrderedParticleAnalysisReports();
             ParticleAnalysisReport largestParticle = reports[0];
             for(int i=0;i<reports.length;i++){
@@ -99,6 +103,8 @@ public class Camera extends Subsystem {
         }
         return image.getParticleAnalysisReport(0);
     }
+    
+    
     
     //Returns the angle to the target between -24 and +24 degrees.
     //For x, a positive number means the target is clockwise (right), while a negative means counterclockwise (left).
@@ -126,5 +132,14 @@ public class Camera extends Subsystem {
         
         double ret=(RobotMap.TARGET_W/Math.sin(Math.toRadians(angle)))*Math.sin(Math.toRadians(sideAngle));
         return ret/3.93;
+    }
+    
+    private ParticleAnalysisReport[] subArray(ParticleAnalysisReport[] array,int lastIndex){
+        if(array.length>lastIndex)throw new ArrayIndexOutOfBoundsException();
+        ParticleAnalysisReport[] ret=new ParticleAnalysisReport[lastIndex+1];
+        for(int i=0;i<=lastIndex;i++){
+            ret[i]=array[i];
+        }
+        return ret;
     }
 }

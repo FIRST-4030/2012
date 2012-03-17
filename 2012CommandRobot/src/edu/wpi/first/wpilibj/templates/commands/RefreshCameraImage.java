@@ -31,23 +31,29 @@ public class RefreshCameraImage extends CommandBase {
     protected void execute() {
         try {
             ledring.on();
+            
             camera.refreshImages();
+            
             if(camera.getImage()!=null){
-                //System.out.println("reporting");
-                ParticleAnalysisReport target = camera.getTarget(camera.getThresholdHSLImage());
-                //System.out.println("reported");
-                if(target!=null){
-                    SmartDashboard.putDouble("ANGLE TO TARGET", camera.getAngleToTarget(target));
-                    SmartDashboard.putDouble("DISTANCE TO TARGET", camera.getTargetDistance(target));
-                }
+                ParticleAnalysisReport[] target = camera.getTargets();
+                
+                /*
+                if(target[0]!=null){
+                    SmartDashboard.putDouble("ANGLE TO TARGET", camera.getAngleToTarget(target[0]));
+                    SmartDashboard.putDouble("DISTANCE TO TARGET", camera.getTargetDistance(target[0]));
+                }*/
             }
+            
         } catch (AxisCameraException ex) {
             ex.printStackTrace();
         } catch (NIVisionException ex) {
             ex.printStackTrace();
-        }catch(Exception E){
-            System.out.println("WARNING ERROR, but stopping with this error is fucking retarded");
-        }//ledring.off();
+        }catch(NullPointerException e){
+            //System.err.println("WARNING: at some point the image wasn't proccessed");
+            e.printStackTrace();
+        }catch(Exception e){
+        System.err.println("unknown exception happen in camera(non essential so continuing)");
+    }
     }
 
     // Make this return true when this Command no longer needs to run execute()
