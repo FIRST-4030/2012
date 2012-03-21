@@ -11,7 +11,7 @@ public class Autoshoot extends CommandBase {
     private int STATE = STATE_CAMERA;
     private Turn turn = new Turn();
     private Command shoot = new Shoot();
-    private Command camera = new RefreshCameraImage();
+    private Command image = new RefreshCameraImage();
     private boolean failed = false;
 
     public Autoshoot() {
@@ -25,12 +25,12 @@ public class Autoshoot extends CommandBase {
         switch (STATE) {
             // Request a new image analysis
             case STATE_CAMERA:
-                camera.start();
+                image.start();
                 STATE = STATE_TURN;
 
             // Wait for the camera to return target data, then turn
             case STATE_TURN:
-                if (camera.isRunning()) {
+                if (image.isRunning()) {
                     return;
                 }
                 if (!globalState.targetVisible()) {
@@ -77,7 +77,7 @@ public class Autoshoot extends CommandBase {
     protected void end() {
         turn.cancel();
         shoot.cancel();
-        camera.cancel();
+        image.cancel();
         failed = false;
     }
 
