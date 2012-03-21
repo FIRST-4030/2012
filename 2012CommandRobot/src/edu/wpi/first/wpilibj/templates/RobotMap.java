@@ -43,6 +43,7 @@ public class RobotMap {
     public static final int SHOOTER_RATE_MAX = 52;
     public static final int SHOOTER_RATE_MIN = 0;
     public static final double SHOOTER_SPEED_DEFAULT = SHOOTER_RATE_MAX * 0.80;
+    public static final double SHOOTER_ZERO_THRESHOLD = SHOOTER_RATE_MAX / 10;
     public static final double SHOOTER_P_GAIN = 0.05;
     public static final double SHOOTER_I_GAIN = 0.001;
     public static final double SHOOTER_D_GAIN = 0.0;

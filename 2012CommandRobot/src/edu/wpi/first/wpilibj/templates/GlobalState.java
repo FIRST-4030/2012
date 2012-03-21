@@ -16,8 +16,6 @@ public class GlobalState {
     private ToggleButtonState shootMode = new ToggleButtonState(ToggleButtonState.OFF);
     // Do we have the target in sight?
     private boolean targetVisible = false;
-    // Are we in position to shoot?
-    private boolean targetLocked = false;
     // Track loaded balls
     private int ballsInControl = 0;
     private int ballsInQueue = 0;
@@ -77,6 +75,14 @@ public class GlobalState {
 
     public void dequeuedBall() {
         ballsInQueue--;
+    }
+    
+    public void setDriveEnabled(boolean enabled) {
+        if (enabled) {
+            drive.set(ToggleButtonState.ON);
+        } else {
+            drive.set(ToggleButtonState.OFF);            
+        }
     }
 
     public void updateDriveEnabled(boolean pressed) {
@@ -138,21 +144,10 @@ public class GlobalState {
 
     public void setTargetVisible(boolean visible) {
         this.targetVisible = visible;
-        if (!visible) {
-            this.setTargetLocked(false);
-        }
     }
 
     public boolean targetVisible() {
         return this.targetVisible;
-    }
-
-    public void setTargetLocked(boolean locked) {
-        this.targetLocked = locked;
-    }
-
-    public boolean targetLocked() {
-        return this.targetLocked;
     }
 
     public boolean readyToShoot() {
@@ -249,5 +244,13 @@ public class GlobalState {
 
     public void deincrementBallCount() {
         ballsInControl--;
+    }
+    
+    public int distanceToTarget() {
+        return 100;
+    }
+    
+    public double angleToTarget() {
+        return 0.0;
     }
 }

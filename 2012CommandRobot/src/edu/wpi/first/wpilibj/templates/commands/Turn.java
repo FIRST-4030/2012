@@ -21,7 +21,9 @@ public class Turn extends CommandBase {
     }
 
     protected boolean isFinished() {
-        if (started) {
+        if (!CommandBase.globalState.isDriveEnabled()) {
+            return true;
+        } else if (started) {
             return drive.pidComplete();
         }
         return false;
