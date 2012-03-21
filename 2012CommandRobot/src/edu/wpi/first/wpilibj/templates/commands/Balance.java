@@ -7,10 +7,10 @@ public class Balance extends CommandBase {
     }
 
     protected void initialize() {
+        drive.balance();
     }
 
     protected void execute() {
-        drive.balance();
     }
 
     protected boolean isFinished() {
