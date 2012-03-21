@@ -47,7 +47,11 @@ public class Drive extends PIDSubsystem {
     protected double returnPIDInput() {
         switch (PID_MODE) {
             case PID_MODE_TURN:
-                heading = CommandBase.globalState.getHeading();
+                double tempHeading = CommandBase.globalState.getHeading();
+                if (Math.abs(tempHeading - this.getSetpoint()) < RobotMap.TURN_ZERO_THRESHOLD) {
+                    tempHeading = this.getSetpoint();
+                }
+                heading = tempHeading;
                 return heading;
 
             default:
@@ -115,6 +119,25 @@ public class Drive extends PIDSubsystem {
                 }
                 break;
         }
+    }
+
+    // Return true if the current PID action is complete (i.e. within the zero threshold)
+    public boolean pidComplete() {
+        if (!this.getPIDController().isEnable()) {
+            return false;
+        }
+
+        switch (PID_MODE) {
+            case PID_MODE_TURN:
+                if (this.getSetpoint() == heading) {
+                    return true;
+                }
+            default:
+                if (this.getSetpoint() == grav) {
+                    return true;
+                }
+        }
+        return false;
     }
 
     public void balance() {
