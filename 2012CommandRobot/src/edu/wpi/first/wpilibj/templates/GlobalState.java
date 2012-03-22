@@ -14,6 +14,8 @@ public class GlobalState {
     private ToggleButtonState ballHandling = new ToggleButtonState(ToggleButtonState.OFF);
     // Are we shooting or loading
     private ToggleButtonState shootMode = new ToggleButtonState(ToggleButtonState.OFF);
+    // Are we running the autoshoot sequence?
+    private boolean autoshoot = false;
     // Do we have the target in sight?
     private boolean targetVisible = false;
     // Track loaded balls
@@ -140,6 +142,14 @@ public class GlobalState {
 
     public boolean isBalanceEnabled() {
         return balanceMode.isOn();
+    }
+    
+    public void setAutoshoot(boolean enable) {
+        autoshoot = enable;
+    }
+
+    public boolean isAutoshootEnabled() {
+        return autoshoot;
     }
 
     public void setTargetVisible(boolean visible) {

@@ -62,16 +62,22 @@ public class Autoshoot extends CommandBase {
     }
 
     protected boolean isFinished() {
+        boolean done = false;
         if (!globalState.isDriveEnabled()) {
-            return true;
+            done = true;
         } else if (!globalState.isBallHandlingEnabled()) {
-            return true;
+            done = true;
         } else if (globalState.ballsInControl() < 1) {
-            return true;
+            done = true;
         } else if (failed) {
-            return true;
+            done = true;
         }
-        return false;
+
+        // Disable the autoshoot mode when we're finished
+        if (done) {
+            globalState.setAutoshoot(false);
+        }
+        return done;
     }
 
     protected void end() {

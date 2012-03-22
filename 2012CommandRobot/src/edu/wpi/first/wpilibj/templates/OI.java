@@ -21,9 +21,10 @@ public class OI {
     private JoystickButton hoodDown;
     private JoystickButton ballup;
     private JoystickButton balldown;
-    private JoystickButton picture;
+    private JoystickButton image;
     private JoystickButton shooterUp;
     private JoystickButton shooterDown;
+    private JoystickButton autoshoot;
 
     public OI() {
         // Map the joysticks
@@ -41,9 +42,10 @@ public class OI {
         driveBackwards = new JoystickButton(driveStick, RobotMap.BUTTON_BACKWARDS);
         balanceEnabled = new JoystickButton(driveStick, RobotMap.BUTTON_BALANCE);
 
-        // Toggle the shoot/load mode
+        // Toggle the shoot/load/autoshoot mode
         ballHandlingEnabled = new JoystickButton(ballStick, RobotMap.BUTTON_BALL_HANDLING);
         shootMode = new JoystickButton(ballStick, RobotMap.BUTTON_SHOOT_MODE);
+        autoshoot = new JoystickButton(ballStick, RobotMap.BUTTON_AUTOSHOOT);
         
         // Balance arm
         arm = new JoystickButton(ballStick, RobotMap.BUTTON_ARM);
@@ -89,5 +91,9 @@ public class OI {
 
     public boolean isBallHandlingEnablePressed() {
         return ballHandlingEnabled.get();
+    }
+    
+    public boolean isAutoshootPressed() {
+        return autoshoot.get();
     }
 }
