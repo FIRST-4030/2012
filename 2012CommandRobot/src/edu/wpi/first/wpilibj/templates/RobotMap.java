@@ -74,7 +74,7 @@ public class RobotMap {
     public static final double BALANCE_MAX_SPEED_LOW = 0.20;
     public static final double BALANCE_MAX_SPEED_HIGH = 0.45;
     public static final double BALANCE_SPEED_THRESHOLD = 0.20;
-    public static final double DRIVE_SPEED_SCALE = 0.7;
+    public static final double DRIVE_SPEED_SCALE = 0.8;
     public static final double BALANCE_MAX_SETPOINT = 0.1;
     public static final double BALANCE_ZERO_THRESHOLD = 0.025;
     public static final double BALANCE_ZERO_ADJUST = -0.04;
