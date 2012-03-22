@@ -111,6 +111,7 @@ public class RobotTemplate extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        CommandBase.globalState.setDriveEnabled(true);
 
         // Enable/disable drive
         if (CommandBase.globalState.isDriveEnabled()) {
