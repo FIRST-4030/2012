@@ -21,28 +21,36 @@ import edu.wpi.first.wpilibj.templates.commands.*;
  */
 public class RobotTemplate extends IterativeRobot {
 
-    //Command autonomousCommand;
+    //private Command autonomousCommand;
     private Command joystick;
     private Command balance;
-    private Command load;
+    private Load load;
     private Command shoot;
     private Command elevator;
     private Command shooter;
+    private Command autoshoot;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-        // instantiate the command used for the autonomous period
         //autonomousCommand = new ExampleCommand();
 
         // Initialize all subsystems
         CommandBase.init();
+
+        // Setup our top-level commands
+        joystick = new DriveJoystick();
+        balance = new Balance();
+        load = new Load();
+        shooter = new SpinShooter();
+        shoot = new Shoot();
+        elevator = new ElevatorCmd();
+        autoshoot = new Autoshoot();
     }
 
     public void autonomousInit() {
-        // schedule the autonomous command (example)
         //autonomousCommand.start();
     }
 
@@ -54,18 +62,19 @@ public class RobotTemplate extends IterativeRobot {
     }
 
     public void teleopInit() {
-        // This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
         //autonomousCommand.cancel();
+    }
 
-        joystick = new DriveJoystick();
-        balance = new Balance();
-        load = new Load();
-        shooter = new SpinShooter();
-        shoot = new Shoot();
-        elevator = new ElevatorCmd();
+    private void cancelIfRunning(Command cmd) {
+        if (cmd.isRunning()) {
+            cmd.cancel();
+        }
+    }
+
+    private void startIfNotRunning(Command cmd) {
+        if (!cmd.isRunning()) {
+            cmd.start();
+        }
     }
 
     /**
@@ -76,50 +85,66 @@ public class RobotTemplate extends IterativeRobot {
 
         // Enable/disable drive
         if (CommandBase.globalState.isDriveEnabled()) {
-            // Mode switch between joystick and balance
-            if (CommandBase.globalState.isBalanceEnabled()) {
-                if (!balance.isRunning()) {
-                    joystick.cancel();
-                    balance.start();
-                }
+            // Disable manual drive & balance when in autoshoot
+            // (Autoshoot itself is contolled in the ball-handling section)
+            if (CommandBase.globalState.isAutoshootEnabled()) {
+                cancelIfRunning(joystick);
+                cancelIfRunning(balance);
+
+                // Disable joystick when balancing
+            } else if (CommandBase.globalState.isBalanceEnabled()) {
+                cancelIfRunning(joystick);
+                startIfNotRunning(balance);
+
+                // Disable balance when under manual control
             } else {
-                if (!joystick.isRunning()) {
-                    balance.cancel();
-                    joystick.start();
-                }
+                cancelIfRunning(balance);
+                startIfNotRunning(joystick);
             }
         } else {
-            balance.cancel();
-            joystick.cancel();
+            cancelIfRunning(balance);
+            cancelIfRunning(joystick);
         }
 
         // Enable/disable ball handling
         if (CommandBase.globalState.isBallHandlingEnabled()) {
-            // Mode swtich between shooting and loading
-            if (CommandBase.globalState.isShootMode()) {
-                // Shoot (but not until the load elevator is done)
-                if (load.isRunning() && !((Load) load).isElevatorRunning()) {
-                    load.cancel();
+            // Shoot (manually or automatically
+            if (CommandBase.globalState.isShootMode()
+                    || CommandBase.globalState.isAutoshootEnabled()) {
+                // Enable autoshoot mode as needed
+                if (!autoshoot.isRunning() && CommandBase.globalState.isAutoshootEnabled() && CommandBase.globalState.ballsInControl() > 0) {
+                    autoshoot.start();
                 }
-                if (!shooter.isRunning() && !((Load) load).isElevatorRunning() && CommandBase.globalState.ballsInControl() > 0) {
-                    shooter.start();
+
+                // Disable loading (but not until the load elevator is done)
+                if (!load.isElevatorRunning()) {
+                    cancelIfRunning(load);
                 }
-                // Restart the elevator anytime we have balls and no shoot-mode balls handler is running
+                // Run the shooter anytime we have balls (and the loader is done)
+                if (!load.isElevatorRunning() && CommandBase.globalState.ballsInControl() > 0) {
+                    startIfNotRunning(shooter);
+                }
+                // Restart the elevator anytime we have balls and no shoot-mode ball handler is running
                 if (!shoot.isRunning() && !elevator.isRunning() && !CommandBase.globalState.readyToShoot() && CommandBase.globalState.ballsInControl() > 0) {
                     elevator.start();
                 }
             } else {
-                // Load
-                if (!load.isRunning() && !CommandBase.globalState.readyToShoot() && CommandBase.globalState.canLoadMoreBalls()) {
-                    shooter.cancel();
-                    elevator.cancel();
-                    load.start();
+                // Cancel all shoot-mode commands
+                cancelIfRunning(autoshoot);
+                cancelIfRunning(shooter);
+                cancelIfRunning(elevator);
+
+                // Load if we can take more balls
+                if (!CommandBase.globalState.readyToShoot()
+                        && CommandBase.globalState.canLoadMoreBalls()) {
+                    startIfNotRunning(load);
                 }
             }
         } else {
-            shooter.cancel();
-            elevator.cancel();
-            load.cancel();
+            cancelIfRunning(autoshoot);
+            cancelIfRunning(shooter);
+            cancelIfRunning(elevator);
+            cancelIfRunning(load);
         }
     }
 }

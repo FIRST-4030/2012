@@ -10,8 +10,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends PIDSubsystem {
 
+    final private static int PID_MODE_BALANCE = 0;
+    final private static int PID_MODE_TURN = 1;
+    final private static double HEADING_MIN = 0;
+    final private static double HEADING_MAX = 360;
+    final private static double GRAV_MIN = -1.0;
+    final private static double GRAV_MAX = 1.0;
     private Jaguar left;
     private Jaguar right;
+    private int PID_MODE = PID_MODE_BALANCE;
+    private double heading = 0.0;
     private double grav = 0.0;
     private boolean onRamp = false;
     private boolean nearLevel = false;
@@ -37,61 +45,99 @@ public class Drive extends PIDSubsystem {
     }
 
     protected double returnPIDInput() {
-        double tempGrav = CommandBase.globalState.getGravity();
-        if (Math.abs(tempGrav) < RobotMap.BALANCE_ZERO_THRESHOLD) {
-            tempGrav = 0;
-        }
-        grav = tempGrav;
+        switch (PID_MODE) {
+            case PID_MODE_TURN:
+                double tempHeading = CommandBase.globalState.getHeading();
+                if (Math.abs(tempHeading - this.getSetpoint()) < RobotMap.TURN_ZERO_THRESHOLD) {
+                    tempHeading = this.getSetpoint();
+                }
+                heading = tempHeading;
+                return heading;
 
-        // Do not engage the near-level detection until we are fully on the ramp
-        // Disengage the near-level behavior anytime the ramp is fully tilted
-        // Start past-level behavior if we were near-level and the sign of the gravity reading changes
-        // 
-        if (Math.abs(grav) > RobotMap.BALANCE_FALL_STARTS) {
-            onRamp = true;
-            nearLevel = false;
-            pastLevel = false;
-        } else if (onRamp && !nearLevel && !pastLevel && Math.abs(grav) < RobotMap.BALANCE_NEAR_LEVEL) {
-            nearLevel = true;
-            pastLevel = false;
-            nearLevelGrav = grav;
-        } else if (onRamp && nearLevel && !pastLevel && (nearLevelGrav * grav < 0)) {
-            pastLevel = true;
-            nearLevel = false;
-        }
+            default:
+                double tempGrav = CommandBase.globalState.getGravity();
+                if (Math.abs(tempGrav) < RobotMap.BALANCE_ZERO_THRESHOLD) {
+                    tempGrav = 0;
+                }
+                grav = tempGrav;
 
-        // Reduce our travel speed when we're near-level or past-level
-        if (nearLevel || pastLevel) {
-            this.getPIDController().setOutputRange(-1.0 * RobotMap.BALANCE_MAX_SPEED_LOW, RobotMap.BALANCE_MAX_SPEED_LOW);
-        } else {
-            this.getPIDController().setOutputRange(-1.0 * RobotMap.BALANCE_MAX_SPEED_HIGH, RobotMap.BALANCE_MAX_SPEED_HIGH);
-        }
+                // Do not engage the near-level detection until we are fully on the ramp
+                // Disengage the near-level behavior anytime the ramp is fully tilted
+                // Start past-level behavior if we were near-level and the sign of the gravity reading changes
+                // 
+                if (Math.abs(grav) > RobotMap.BALANCE_FALL_STARTS) {
+                    onRamp = true;
+                    nearLevel = false;
+                    pastLevel = false;
+                } else if (onRamp && !nearLevel && !pastLevel && Math.abs(grav) < RobotMap.BALANCE_NEAR_LEVEL) {
+                    nearLevel = true;
+                    pastLevel = false;
+                    nearLevelGrav = grav;
+                } else if (onRamp && nearLevel && !pastLevel && (nearLevelGrav * grav < 0)) {
+                    pastLevel = true;
+                    nearLevel = false;
+                }
 
-        // Reset the PID control as we pass through 0
-        // This isn't stickly necessary for PID in general,
-        // but given our particular system it's a good plan
-        if (grav == 0) {
-            this.getPIDController().reset();
-        }
+                // Reduce our travel speed when we're near-level or past-level
+                if (nearLevel || pastLevel) {
+                    this.getPIDController().setOutputRange(-1.0 * RobotMap.BALANCE_MAX_SPEED_LOW, RobotMap.BALANCE_MAX_SPEED_LOW);
+                } else {
+                    this.getPIDController().setOutputRange(-1.0 * RobotMap.BALANCE_MAX_SPEED_HIGH, RobotMap.BALANCE_MAX_SPEED_HIGH);
+                }
 
-        return grav;
+                // Reset the PID control as we pass through 0
+                // This isn't stickly necessary for PID in general,
+                // but given our particular system it's a good plan
+                if (grav == 0) {
+                    this.getPIDController().reset();
+                }
+
+                return grav;
+        }
     }
 
     protected void usePIDOutput(double output) {
-        // Drive uphill if we are not yet fully on the ramp
-        // Also drive uphill if we are not near-level or are past-level
-        // If we are near-level (i.e. starting to fall) drive downhill at a fixed rate
-        // (PID drive speed is adjusted in the returnPIDInput() method)
-        if (nearLevel) {
-            if (grav < 0) {
-                this.set(-1.0 * RobotMap.BALANCE_NEAR_LEVEL_SPEED, RobotMap.BALANCE_NEAR_LEVEL_SPEED);
+        switch (PID_MODE) {
+            case PID_MODE_TURN:
+                this.set(output, -1.0 * output);
+                break;
 
-            } else {
-                this.set(RobotMap.BALANCE_NEAR_LEVEL_SPEED, -1.0 * RobotMap.BALANCE_NEAR_LEVEL_SPEED);
-            }
-        } else {
-            this.set(-1.0 * output, output);
+            default:
+                // Drive uphill if we are not yet fully on the ramp
+                // Also drive uphill if we are not near-level or are past-level
+                // If we are near-level (i.e. starting to fall) drive downhill at a fixed rate
+                // (PID drive speed is adjusted in the returnPIDInput() method)
+                if (nearLevel) {
+                    if (grav < 0) {
+                        this.set(-1.0 * RobotMap.BALANCE_NEAR_LEVEL_SPEED, RobotMap.BALANCE_NEAR_LEVEL_SPEED);
+
+                    } else {
+                        this.set(RobotMap.BALANCE_NEAR_LEVEL_SPEED, -1.0 * RobotMap.BALANCE_NEAR_LEVEL_SPEED);
+                    }
+                } else {
+                    this.set(-1.0 * output, output);
+                }
+                break;
         }
+    }
+
+    // Return true if the current PID action is complete (i.e. within the zero threshold)
+    public boolean pidComplete() {
+        if (!this.getPIDController().isEnable()) {
+            return false;
+        }
+
+        switch (PID_MODE) {
+            case PID_MODE_TURN:
+                if (this.getSetpoint() == heading) {
+                    return true;
+                }
+            default:
+                if (this.getSetpoint() == grav) {
+                    return true;
+                }
+        }
+        return false;
     }
 
     public void balance() {
@@ -99,7 +145,23 @@ public class Drive extends PIDSubsystem {
         this.stop();
 
         // Then enable the PID control
+        PID_MODE = PID_MODE_BALANCE;
+        this.getPIDController().setInputRange(GRAV_MIN, GRAV_MAX);
+        this.getPIDController().setContinuous(false);
         this.setSetpoint(0);
+        this.enable();
+    }
+
+    public void turn(double angle) {
+        // Stop to get everything reset
+        this.stop();
+
+        // Then enable the PID control
+        PID_MODE = PID_MODE_TURN;
+        this.getPIDController().setOutputRange(-1.0 * RobotMap.TURN_SPEED_MAX, RobotMap.TURN_SPEED_MAX);
+        this.getPIDController().setInputRange(HEADING_MIN, HEADING_MAX);
+        this.getPIDController().setContinuous(true);
+        this.setSetpoint(angle % HEADING_MAX);
         this.enable();
     }
 

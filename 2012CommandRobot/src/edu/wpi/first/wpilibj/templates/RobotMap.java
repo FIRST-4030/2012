@@ -19,7 +19,7 @@ public class RobotMap {
     public static final int BUTTON_SHOOT_MODE = 2;
     public static final int BUTTON_BALL_HANDLING = 3;
     public static final int BUTTON_ARM = 4;
-    public static final int ARM_LOCK = 5;
+    public static final int BUTTON_AUTOSHOOT = 5;
     public static final int BUTTON_HOOD_UP = 6;
     public static final int BUTTON_HOOD_DOWN = 7;
     public static final int BUTTON_SHOOTER_UP = 8;
@@ -43,6 +43,7 @@ public class RobotMap {
     public static final int SHOOTER_RATE_MAX = 52;
     public static final int SHOOTER_RATE_MIN = 0;
     public static final double SHOOTER_SPEED_DEFAULT = SHOOTER_RATE_MAX * 0.80;
+    public static final double SHOOTER_ZERO_THRESHOLD = SHOOTER_RATE_MAX / 10;
     public static final double SHOOTER_P_GAIN = 0.05;
     public static final double SHOOTER_I_GAIN = 0.001;
     public static final double SHOOTER_D_GAIN = 0.0;
@@ -80,6 +81,8 @@ public class RobotMap {
     public static final double BALANCE_FALL_STARTS = 0.20;
     public static final double BALANCE_NEAR_LEVEL = 0.10;
     public static final double BALANCE_NEAR_LEVEL_SPEED = 0.10;
+    public static final double TURN_SPEED_MAX = 0.4;
+    public static final double TURN_ZERO_THRESHOLD = 0.5;
     // Hood Angle Constants
     public static final double HOOD_ANGLE_MIN = 3.900;
     public static final double HOOD_ANGLE_MAX = 4.850;

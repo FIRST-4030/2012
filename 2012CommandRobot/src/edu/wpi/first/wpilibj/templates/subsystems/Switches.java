@@ -57,6 +57,15 @@ public class Switches extends Subsystem {
         }
         SmartDashboard.putBoolean("Shoot Mode Enabled", CommandBase.globalState.isShootMode());
 
+        // Start an autoshoot sequence
+        if (CommandBase.globalState.isDriveEnabled() && CommandBase.globalState.isBalanceEnabled()
+                && CommandBase.globalState.ballsInControl() > 0) {
+            if (! CommandBase.globalState.isAutoshootEnabled() && CommandBase.oi.isAutoshootPressed()) {
+                CommandBase.globalState.setAutoshoot(true);
+            }
+        }
+        SmartDashboard.putBoolean("Autoshoot Mode Enabled", CommandBase.globalState.isAutoshootEnabled());
+
         // Is a ball ready to be raised by the elevator?
         // On leading edge, count the ball as raised
         // On trailing edge, add to ballsQueued

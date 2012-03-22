@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 public class Shooter extends PIDSubsystem {
 
     private Jaguar shooter;
+    private boolean adjusting;
 
     public Shooter() {
         super("shooter", RobotMap.SHOOTER_P_GAIN, RobotMap.SHOOTER_I_GAIN,
@@ -43,7 +44,27 @@ public class Shooter extends PIDSubsystem {
         } else if (newSetpoint < RobotMap.SHOOTER_RATE_MIN) {
             newSetpoint = RobotMap.SHOOTER_RATE_MIN;
         }
-        this.setSetpoint(newSetpoint);
+        this.setSpeed(newSetpoint);
+    }
+
+    public void setSpeed(double speed) {
+        this.setSetpoint(speed);
+        adjusting = true;
+    }
+
+    // Adjust the spinner rate to hit the top target at the specified distance
+    public void setDistance(int distance) {
+        this.setSetpoint(0);
+    }
+
+    // Return true once we've reached the desired speed
+    public boolean atSpeed() {
+        if (adjusting
+                && Math.abs(this.getSetpoint() - this.getPosition())
+                < RobotMap.SHOOTER_ZERO_THRESHOLD) {
+            adjusting = false;
+        }
+        return adjusting;
     }
 
     public void start() {

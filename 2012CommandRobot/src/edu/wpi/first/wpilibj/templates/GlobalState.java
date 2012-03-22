@@ -14,10 +14,10 @@ public class GlobalState {
     private ToggleButtonState ballHandling = new ToggleButtonState(ToggleButtonState.OFF);
     // Are we shooting or loading
     private ToggleButtonState shootMode = new ToggleButtonState(ToggleButtonState.OFF);
+    // Are we running the autoshoot sequence?
+    private boolean autoshoot = false;
     // Do we have the target in sight?
     private boolean targetVisible = false;
-    // Are we in position to shoot?
-    private boolean targetLocked = false;
     // Track loaded balls
     private int ballsInControl = 0;
     private int ballsInQueue = 0;
@@ -78,6 +78,14 @@ public class GlobalState {
     public void dequeuedBall() {
         ballsInQueue--;
     }
+    
+    public void setDriveEnabled(boolean enabled) {
+        if (enabled) {
+            drive.set(ToggleButtonState.ON);
+        } else {
+            drive.set(ToggleButtonState.OFF);            
+        }
+    }
 
     public void updateDriveEnabled(boolean pressed) {
         drive.update(pressed);
@@ -135,24 +143,21 @@ public class GlobalState {
     public boolean isBalanceEnabled() {
         return balanceMode.isOn();
     }
+    
+    public void setAutoshoot(boolean enable) {
+        autoshoot = enable;
+    }
+
+    public boolean isAutoshootEnabled() {
+        return autoshoot;
+    }
 
     public void setTargetVisible(boolean visible) {
         this.targetVisible = visible;
-        if (!visible) {
-            this.setTargetLocked(false);
-        }
     }
 
     public boolean targetVisible() {
         return this.targetVisible;
-    }
-
-    public void setTargetLocked(boolean locked) {
-        this.targetLocked = locked;
-    }
-
-    public boolean targetLocked() {
-        return this.targetLocked;
     }
 
     public boolean readyToShoot() {
@@ -249,5 +254,13 @@ public class GlobalState {
 
     public void deincrementBallCount() {
         ballsInControl--;
+    }
+    
+    public int distanceToTarget() {
+        return 100;
+    }
+    
+    public double angleToTarget() {
+        return 0.0;
     }
 }
