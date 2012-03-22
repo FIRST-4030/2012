@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Ingyram
  */
 public class RefreshCameraImage extends CommandBase {
-    
+    private boolean isfinished=false;
     public RefreshCameraImage() {
         System.out.println("camera in use");
         // Use requires() here to declare subsystem dependencies
@@ -54,13 +54,13 @@ public class RefreshCameraImage extends CommandBase {
         }catch(Exception e){
         System.err.println("unknown exception happen in camera(non essential so continuing)");
         }finally{
-            //TODO
+            isfinished=true;
         }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return isfinished;
     }
 
     // Called once after isFinished returns true
