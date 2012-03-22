@@ -42,6 +42,18 @@ public class GlobalState {
     
     private double azimuth=0;
     private double cameraDistance=0;
+    private double targetAngle=0;
+    
+    public double getTargetAngle()
+    {
+        return targetAngle;
+    }
+
+    public void setTargetAngle(double azimuth)
+    {
+        this.targetAngle = targetAngle;
+    }
+    
 
     public double getAzimuth()
     {
