@@ -36,17 +36,16 @@ public class RefreshCameraImage extends CommandBase {
             camera.refreshImages();
             
             if(camera.getImage()!=null){
-                System.out.println("starting targetreport");
                 ParticleAnalysisReport[] target = camera.getTarget();
-                System.out.println(target[0]);
-                SmartDashboard.putString("Target", target[0].center_mass_x+","+target[0].center_mass_y);
-                
+                                
                 if(target[0]!=null){
-                    SmartDashboard.putDouble("ANGLE TO TARGET", camera.getAngleToTarget(target[0]));
+                    globalState.setAzimuth(camera.getAzimuth(target[0]));
+                    SmartDashboard.putDouble("ANGLE TO TARGET", globalState.getAzimuth());
+                    globalState.setCameraDistance(camera.getTargetDistance());
                     SmartDashboard.putDouble("DISTANCE TO TARGET", camera.getTargetDistance());
                 }
             }else{
-                System.out.println("No Image");
+                System.err.println("No Image");
             }
             
         } catch (AxisCameraException ex) {
@@ -58,7 +57,9 @@ public class RefreshCameraImage extends CommandBase {
             //e.printStackTrace();
         }catch(Exception e){
         System.err.println("unknown exception happen in camera(non essential so continuing)");
-    }
+        }finally{
+            
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
