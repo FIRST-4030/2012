@@ -32,20 +32,16 @@ public class RefreshCameraImage extends CommandBase {
     protected void execute() {
         try {
             ledring.on();
-            System.out.println();
-            camera.refreshImages();
             
-            if(camera.getImage()!=null){
-                ParticleAnalysisReport[] target = camera.getTarget();
-                                
-                if(target[0]!=null){
-                    globalState.setAzimuth(camera.getAzimuth(target[0]));
-                    SmartDashboard.putDouble("ANGLE TO TARGET", globalState.getAzimuth());
-                    globalState.setCameraDistance(camera.getTargetDistance());
-                    SmartDashboard.putDouble("DISTANCE TO TARGET", camera.getTargetDistance());
-                }
-            }else{
-                System.err.println("No Image");
+            camera.refreshImages();
+                   
+            if(camera.hasTarget()){
+                globalState.setAzimuth(camera.getAzimuth());
+                SmartDashboard.putDouble("AZIMUTH OF TARGET", globalState.getAzimuth());
+                globalState.setCameraDistance(camera.getTargetDistance());
+                SmartDashboard.putDouble("DISTANCE TO TARGET", globalState.getCameraDistance());
+                globalState.setTargetAngle(camera.getTargetAngle());
+                SmartDashboard.putDouble("ANGLE TO TARGET", camera.getTargetDistance());
             }
             
         } catch (AxisCameraException ex) {
