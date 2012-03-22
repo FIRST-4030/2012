@@ -15,6 +15,7 @@ public class MoveArm extends CommandBase {
     }
 
     protected void initialize() {
+        armlock.unlock();
         double mod = RobotMap.ARMLOCK_MOD;
         if (arm.isArmUp()) {
             mod = 0;
@@ -23,7 +24,7 @@ public class MoveArm extends CommandBase {
     }
 
     protected void execute() {
-        armlock.unlock();
+        
         if (forceDown){
         arm.down();    
         }else if (!arm.isArmUp()) {
