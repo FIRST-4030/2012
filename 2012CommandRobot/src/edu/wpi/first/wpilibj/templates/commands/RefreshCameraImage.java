@@ -42,7 +42,9 @@ public class RefreshCameraImage extends CommandBase {
                 SmartDashboard.putString("Target", target[0].center_mass_x+","+target[0].center_mass_y);
                 
                 if(target[0]!=null){
-                    SmartDashboard.putDouble("ANGLE TO TARGET", camera.getAngleToTarget(target[0]));
+                    globalState.setAzimuth(camera.getAngleToTarget(target[0]));
+                    SmartDashboard.putDouble("ANGLE TO TARGET", globalState.getAzimuth());
+                    globalState.setCameraDistance(camera.getTargetDistance());
                     SmartDashboard.putDouble("DISTANCE TO TARGET", camera.getTargetDistance());
                 }
             }else{

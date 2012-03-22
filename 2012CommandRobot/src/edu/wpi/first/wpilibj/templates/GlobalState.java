@@ -39,6 +39,31 @@ public class GlobalState {
     private int distance = 0;
     // Current rotational rate of the shooter wheel (in blips/second)
     private double shooterRate = 0;
+    
+    private double azimuth=0;
+    private double cameraDistance=0;
+
+    public double getAzimuth()
+    {
+        return azimuth;
+    }
+
+    public void setAzimuth(double azimuth)
+    {
+        this.azimuth = azimuth;
+    }
+
+    public double getCameraDistance()
+    {
+        return cameraDistance;
+    }
+
+    public void setCameraDistance(double cameraDistance)
+    {
+        this.cameraDistance = cameraDistance;
+    }
+    
+    
 
     private double accelX=0;
 
