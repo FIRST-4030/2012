@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RefreshCameraImage extends CommandBase {
     
     public RefreshCameraImage() {
+        System.out.println("camera in use");
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(camera);
@@ -31,37 +32,47 @@ public class RefreshCameraImage extends CommandBase {
     protected void execute() {
         try {
             ledring.on();
+            System.out.println();
             camera.refreshImages();
+            
             if(camera.getImage()!=null){
-                //System.out.println("reporting");
-                ParticleAnalysisReport target = camera.getTarget(camera.getThresholdHSLImage());
-                //System.out.println("reported");
-                if(target!=null){
-                    SmartDashboard.putDouble("ANGLE TO TARGET", camera.getAngleToTarget(target));
-                    SmartDashboard.putDouble("DISTANCE TO TARGET", camera.getTargetDistance(target));
+                System.out.println("starting targetreport");
+                ParticleAnalysisReport[] target = camera.getTarget();
+                System.out.println(target[0]);
+                SmartDashboard.putString("Target", target[0].center_mass_x+","+target[0].center_mass_y);
+                
+                if(target[0]!=null){
+                    SmartDashboard.putDouble("ANGLE TO TARGET", camera.getAngleToTarget(target[0]));
+                    SmartDashboard.putDouble("DISTANCE TO TARGET", camera.getTargetDistance());
                 }
+            }else{
+                System.out.println("No Image");
             }
+            
         } catch (AxisCameraException ex) {
             ex.printStackTrace();
         } catch (NIVisionException ex) {
             ex.printStackTrace();
-        }catch(Exception E){
-            System.out.println("WARNING ERROR, but stopping with this error is fucking retarded");
-        }//ledring.off();
+        }catch(NullPointerException e){
+            System.err.println("WARNING: at some point the image wasn't proccessed");
+            //e.printStackTrace();
+        }catch(Exception e){
+        System.err.println("unknown exception happen in camera(non essential so continuing)");
+    }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        try {
-            camera.flushImages();
+       /*try {
+            //camera.flushImages();
         } catch (NIVisionException ex) {
             ex.printStackTrace();
-        }
+        }*/
     }
 
     // Called when another command which requires one or more of the same

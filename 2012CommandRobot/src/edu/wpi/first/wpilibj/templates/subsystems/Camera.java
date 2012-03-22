@@ -4,6 +4,7 @@
  */
 package edu.wpi.first.wpilibj.templates.subsystems;
 
+import com.sun.squawk.util.Arrays;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,8 +20,13 @@ import edu.wpi.first.wpilibj.templates.commands.RefreshCameraImage;
 public class Camera extends Subsystem {
     private ColorImage image;
     private BinaryImage thresholdHSLImage;
+    private int imagenumber=0;//keeps track of images being saved
     // Create and set up a camera instance 
     private AxisCamera camera = AxisCamera.getInstance("10.40.30.11");
+    
+    private ParticleAnalysisReport[] targets;
+    private boolean targetDetected=false;
+    
 
     private class Point{
         public double x=0;
@@ -30,32 +36,30 @@ public class Camera extends Subsystem {
             this.y=y;
         }
     }
-    
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
         //setDefaultCommand(new RefreshCameraImage());
     }
-    
     public void refreshImages() throws AxisCameraException, NIVisionException{
-        //System.out.println("flshing images");
+        System.out.println("memory colection");
         flushImages();
-        //System.out.println("down the drain");
-        SmartDashboard.putBoolean("is camera derp", camera==null);
+        System.out.println("getting image");
+        image= camera.getImage();
+        
+        System.out.println("getting threshold :"+image==null);
         try{
-            //System.out.println("getting image");
-            image= camera.getImage();
-            //System.out.println("got image");
-            thresholdHSLImage=this.HSLThreshold();
-            //thresholdHSLImage.
-        }catch(Exception e){System.out.println("I AM DER{PER{EPRESPSREP");}
+        thresholdHSLImage=this.HSLThreshold();
+        }catch (Exception e){
+            System.out.print("threshold failed");
+        }
     }
-
     public BinaryImage getThresholdHSLImage() {
         return thresholdHSLImage;
     }
-    
-    public void flushImages() throws NIVisionException{
+    private void flushImages() throws NIVisionException{
+        targets=null;
+        targetDetected=false;
         if(image!=null){
             image.free();
         }
@@ -64,30 +68,49 @@ public class Camera extends Subsystem {
         }
     }
     public void saveimage() throws NIVisionException{
-        System.out.println("savine der pictuers");
-        thresholdHSLImage.write("/DESU_"+imagenumber+++".png");
-    }
-    
+        String pic="/Test_Capture";
+        System.out.println("Saveing picture to"+pic+imagenumber);
+        thresholdHSLImage.write("/Test_Capture"+imagenumber+++".png");
+    } 
     public ColorImage getImage(){
         return image;
     }
-    int imagenumber=0;
     //Does an HSL threshold detection to find pixels of the target
-    public BinaryImage HSLThreshold() throws NIVisionException{
+    private BinaryImage HSLThreshold() throws NIVisionException{
         if(image==null)return null;
-        //System.out.println("got to hsl");
-        BinaryImage ret= image.thresholdHSL(RobotMap.HUE_LOW, RobotMap.HUE_HIGH, RobotMap.SAT_LOW, RobotMap.SAT_HIGH, RobotMap.LUM_LOW, RobotMap.LUM_HIGH);
-        
-        return ret;
+        return image.thresholdHSL(RobotMap.HUE_LOW, RobotMap.HUE_HIGH, RobotMap.SAT_LOW, RobotMap.SAT_HIGH, RobotMap.LUM_LOW, RobotMap.LUM_HIGH);
+    }
+    public void IDTargets() throws NIVisionException{
+        targetDetected=thresholdHSLImage.getNumberParticles()!=0;
+        thresholdHSLImage.removeSmallObjects(true, 2);
+        ParticleAnalysisReport[] reports = thresholdHSLImage.getOrderedParticleAnalysisReports(4);
+        for(int i=reports.length-1;i>=0;i--){
+            System.out.println("testing: "+i);
+            if((reports[0].particleArea*RobotMap.TARGET_MIN_RATIO<reports[i].particleArea)){
+                System.out.println(i+" is the last one that fits");
+                targets=subArray(reports,i);
+                return;
+            }else{
+                System.out.println(i+"was too small");
+            }
+        }
+        System.out.println(thresholdHSLImage.getNumberParticles());
+        targets= null;//this shouldn't be possible
     }
     
+    
     //Does a particle analysis of a binary image of the target
-    public ParticleAnalysisReport getTarget(BinaryImage image) throws NIVisionException{
+    public ParticleAnalysisReport[] getTarget() throws NIVisionException{
+        
+        IDTargets();
+        return targets;
+                /*
         int numParticles = image.getNumberParticles();
         if(numParticles==0){
             return null;
         }
         if(numParticles>1){
+            //image.ge
             ParticleAnalysisReport[] reports = image.getOrderedParticleAnalysisReports();
             ParticleAnalysisReport largestParticle = reports[0];
             for(int i=0;i<reports.length;i++){
@@ -97,8 +120,10 @@ public class Camera extends Subsystem {
             }
             return largestParticle;
         }
-        return image.getParticleAnalysisReport(0);
+        return image.getParticleAnalysisReport(0);*/
     }
+    
+    
     
     //Returns the angle to the target between -24 and +24 degrees.
     //For x, a positive number means the target is clockwise (right), while a negative means counterclockwise (left).
@@ -111,20 +136,47 @@ public class Camera extends Subsystem {
     }
     
     //Returns the distance from the camera to the target in inches
-    public double getTargetDistance(ParticleAnalysisReport target) throws NIVisionException{
-        double targetWidth = 1.0* target.boundingRectHeight * (RobotMap.TARGET_W/RobotMap.TARGET_H);
+    public double getTargetDistance() throws NIVisionException{
+        
+        
+        double targetWidth = 1.0* targets[0].boundingRectHeight * (RobotMap.TARGET_W/RobotMap.TARGET_H);
         double targetViewingAngle = 1.0* (RobotMap.CAMERA_VA) * targetWidth/image.getWidth();
-        return /*/getdist(target);/*/ (RobotMap.TARGET_W * 0.5) / Math.tan(Math.toRadians(targetViewingAngle*.5));/**/
-    }
+        double Distance=(RobotMap.TARGET_W * 0.5) / Math.tan(Math.toRadians(targetViewingAngle*.5));
+        /*if(Distance>160){
+            SmartDashboard.getBoolean("using large target", true);
+            double bottom=-5000,top=5000;
+            for(int i=targets.length-1;i>=0;i--){
+                if(targets[i].boundingRectTop<top)top=targets[i].boundingRectTop;
+                if(targets[i].boundingRectTop+targets[i].boundingRectHeight>bottom)bottom=targets[i].boundingRectTop+targets[i].boundingRectHeight;
+                targetWidth = 1.0* bottom-top * (RobotMap.TARGET_W/RobotMap.TARGET_H);
+                targetViewingAngle = 1.0* (RobotMap.CAMERA_VA) * targetWidth/image.getWidth();
+                Distance=(RobotMap.TOP_TO_BOTTOM_H*(RobotMap.TARGET_W/RobotMap.TARGET_H) * 0.5) / Math.tan(Math.toRadians(targetViewingAngle*.5));
+                Distance/=4.90;
+            }
+        }else SmartDashboard.getBoolean("using large target", false);
+        */
+        return Distance; 
+    }/*
     public double getdist(ParticleAnalysisReport target) throws NIVisionException{
         double width=target.boundingRectWidth/2;
         double angle=(RobotMap.CAMERA_VA*width/image.getWidth())/2;
-        SmartDashboard.putDouble("ANGLE OF TAG", angle);
+        SmartDashboard.putDouble("ANGLE OF TARG", angle);
         
         double sideAngle=(90-angle);
         SmartDashboard.putDouble("SIDEANGLE", sideAngle);
         
         double ret=(RobotMap.TARGET_W/Math.sin(Math.toRadians(angle)))*Math.sin(Math.toRadians(sideAngle));
         return ret/3.93;
+    }
+    */
+    private ParticleAnalysisReport[] subArray(ParticleAnalysisReport[] array,int lastIndex){
+        if(array.length<=lastIndex+1)throw new ArrayIndexOutOfBoundsException();
+        System.out.println("shortening array");
+        ParticleAnalysisReport[] ret=new ParticleAnalysisReport[lastIndex+1];
+        System.out.println("array is now of length "+ret.length);
+        for(int i=0;i<=lastIndex;i++){
+            ret[i]=array[i];
+        }
+        return ret;
     }
 }

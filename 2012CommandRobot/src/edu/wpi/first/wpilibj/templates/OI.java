@@ -30,7 +30,8 @@ public class OI {
         // Map the joysticks
         driveStick = new Joystick(RobotMap.JOYSTICK_DRIVE);
         ballStick = new Joystick(RobotMap.JOYSTICK_BALL);
-
+        JoystickButton img=new JoystickButton(driveStick,1);
+        img.whenPressed(new RefreshCameraImage());
         // Shoot when the trigger is pulled
         shoot = new JoystickButton(ballStick, RobotMap.BUTTON_SHOOT);
         shoot.whenPressed(new Shoot());
