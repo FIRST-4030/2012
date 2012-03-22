@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.templates.commands.*;
  */
 public class RobotTemplate extends IterativeRobot {
 
+    private final static boolean AUTONOMOUS_ENABLED = false;
     private Command findTarget;
     private Command joystick;
     private Command balance;
@@ -31,7 +32,7 @@ public class RobotTemplate extends IterativeRobot {
     private Command autoshoot;
     private Command autoaim;
     private Command autoknockdown;
-    private boolean knockers=true;
+    private boolean knockers = true;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -57,7 +58,9 @@ public class RobotTemplate extends IterativeRobot {
     }
 
     public void autonomousInit() {
-        findTarget.start();
+        if (AUTONOMOUS_ENABLED) {
+            findTarget.start();
+        }
     }
 
     /**
@@ -66,25 +69,29 @@ public class RobotTemplate extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
 
-        if (CommandBase.globalState.targetVisible()) {
-            cancelIfRunning(findTarget);
-            startIfNotRunning(autoaim);
-            if(!autoaim.isRunning()){
-                if(CommandBase.globalState.getTargetAngle()<=5&&knockers){
-                    startIfNotRunning(autoknockdown);
-                    knockers=false;
-                }
-                if(!autoknockdown.isRunning()){
-                    startIfNotRunning(autoshoot);
-                    runShooter();
-                    runElevator();
+        if (AUTONOMOUS_ENABLED) {
+            if (CommandBase.globalState.targetVisible()) {
+                cancelIfRunning(findTarget);
+                startIfNotRunning(autoaim);
+                if (!autoaim.isRunning()) {
+                    if (CommandBase.globalState.getTargetAngle() <= 5 && knockers) {
+                        startIfNotRunning(autoknockdown);
+                        knockers = false;
+                    }
+                    if (!autoknockdown.isRunning()) {
+                        startIfNotRunning(autoshoot);
+                        runShooter();
+                        runElevator();
+                    }
                 }
             }
         }
     }
 
     public void teleopInit() {
-        findTarget.cancel();
+        if (AUTONOMOUS_ENABLED) {
+            findTarget.cancel();
+        }
     }
 
     private void cancelIfRunning(Command cmd) {
