@@ -18,20 +18,73 @@ import edu.wpi.first.wpilibj.templates.commands.RefreshCameraImage;
  * @author Ingyram
  */
 public class Camera extends Subsystem {
-    private ColorImage image;
-    private BinaryImage thresholdHSLImage;
+    private ColorImage image=null;
+    private BinaryImage thresholdHSLImage=null;
     private int imagenumber=0;//keeps track of images being saved
     // Create and set up a camera instance 
     private AxisCamera camera = AxisCamera.getInstance("10.40.30.11");
-    private ParticleAnalysisReport[] targets;
-    private ParticleAnalysisReport mainTarget=null;
+    private Target[] targets=null;
+    private Target mainTarget=null;
+
+   
+    
+    private class Target{
+        private double height;
+        private double width;
+        private double x;
+        private double y;
+        private double centerX;
+        private double centerY;
+
+        private Target(ParticleAnalysisReport report)
+        {
+            height=report.boundingRectHeight;
+            width=report.boundingRectWidth;
+            x=report.boundingRectLeft;
+            y=report.boundingRectHeight;
+            centerX=x+width/2;
+            centerY=y+height/2;
+        }
+
+        public double getHeight()
+        {
+            return height;
+        }
+
+        public double getCenterX()
+        {
+            return centerX;
+        }
+
+        public double getCenterY()
+        {
+            return centerY;
+        }
+
+        public double getWidth()
+        {
+            return width;
+        }
+
+        public double getX()
+        {
+            return x;
+        }
+
+        public double getY()
+        {
+            return y;
+        }
+        
+    }
+    
     
     public void initDefaultCommand() {
     }
     
     /********getters**********/
     public boolean hasTarget(){
-        
+        return targets!=null;
     }
     public ColorImage getImage(){
         return image;
@@ -57,6 +110,9 @@ public class Camera extends Subsystem {
         try{
             thresholdHSLImage=this.HSLThreshold();
         }catch (Exception e){System.err.print("threshold failed");}
+        try{
+            IDTargets();
+        }catch(Exception e){System.err.println("Couldn't ID target");}
     }
     private void flushImages() throws NIVisionException{
         targets=null;
@@ -67,76 +123,86 @@ public class Camera extends Subsystem {
             thresholdHSLImage.free();
         }
     }
-    
     private BinaryImage HSLThreshold() throws NIVisionException{
         if(image==null)return null;
         return image.thresholdHSL(RobotMap.HUE_LOW, RobotMap.HUE_HIGH, RobotMap.SAT_LOW, RobotMap.SAT_HIGH, RobotMap.LUM_LOW, RobotMap.LUM_HIGH);
     }
-    
-    
-    
-    /*************evaluations***********/
-    
     private void IDTargets() throws NIVisionException{
-        //targetDetected=thresholdHSLImage.getNumberParticles()!=0;
         thresholdHSLImage.removeSmallObjects(true, 2);
         ParticleAnalysisReport[] reports = thresholdHSLImage.getOrderedParticleAnalysisReports(4);
+        
         for(int i=reports.length-1;i>=0;i--){
             if((reports[0].particleArea*RobotMap.TARGET_MIN_RATIO<reports[i].particleArea)){
-                targets=subArray(reports,i);
+                targets=refineTargets(reports,i);
                 return;
             }
         }
         targets= null;//this shouldn't be possible
     }
-    private ParticleAnalysisReport getTarget(){
-        if(targets==null){
-            try{
-                IDTargets();
-            }catch(Exception e){System.err.println("Couldn't ID target");}
+    
+    
+    /*************evaluations***********/
+    
+    
+    private Target getTarget(){
+        double prop=targets[0].getHeight()*.75;
+        Target l,r,u,d;
+        l=r=u=d=targets[0];
+        for(int i=1;i<targets.length;i++){
+            if(targets[i].centerX < l.centerX)l=targets[i];
+            if(targets[i].centerX > r.centerX)r=targets[i];
+            if(targets[i].centerY < u.centerY)u=targets[i];
+            if(targets[i].centerY > d.centerY)d=targets[i];
         }
+        switch(targets.length){
+            case 3:
+                if(u.getCenterY()<r.getCenterY()-prop||u.getCenterY()<l.getCenterY()-prop)return u;
+                return d;
+            case 2:
+                return u;
+            case 4:
+            case 1:
+                return u;
+    }
+        
+        
             return null;
     }
     
     
     //wrappers for important methods
     public double getAzimuth() throws NIVisionException{
-        ParticleAnalysisReport target=null;
-        return getAzimuth(target);
+        return getAzimuth(getTarget());
     }
     public double getTargetDistance() throws NIVisionException{
-        ParticleAnalysisReport target =null;
-        return getTargetDistance(target);
+        return getTargetDistance(getTarget());
     }
     public double getTargetAngle(){
-        ParticleAnalysisReport target =null;
-        return getTargetAngle(target);
+        return getTargetAngle(getTarget());
     }
     
     //important methods
-    private double getAzimuth(ParticleAnalysisReport target) throws NIVisionException{
+    private double getAzimuth(Target target) throws NIVisionException{
         if(target == null)return 1000;
-        double mid=target.boundingRectLeft+target.boundingRectWidth/2.;
-        return (mid/image.getWidth())*RobotMap.CAMERA_VA - RobotMap.CAMERA_VA*0.5;
+        //double mid=target.boundingRectLeft+target.boundingRectWidth/2.;
+        return (target.getCenterX()/image.getWidth())*RobotMap.CAMERA_VA - RobotMap.CAMERA_VA*0.5;
     }
-    private double getTargetDistance(ParticleAnalysisReport target) throws NIVisionException{
-        double targetWidth = 1.0* target.boundingRectHeight * (RobotMap.TARGET_W/RobotMap.TARGET_H);
+    private double getTargetDistance(Target target) throws NIVisionException{
+        double targetWidth = 1.0* target.getHeight() * (RobotMap.TARGET_W/RobotMap.TARGET_H);
         double targetViewingAngle = 1.0* (RobotMap.CAMERA_VA) * targetWidth/image.getWidth();
         double Distance=(RobotMap.TARGET_W * 0.5) / Math.tan(Math.toRadians(targetViewingAngle*.5));
         return Distance; 
     }
-    private double getTargetAngle(ParticleAnalysisReport target){
-        return 0;
+    private double getTargetAngle(Target target){
+        return com.sun.squawk.util.MathUtils.acos(target.width/(target.height*(RobotMap.TARGET_W/RobotMap.TARGET_H)));
     }
     
     
-    
-    
-    private ParticleAnalysisReport[] subArray(ParticleAnalysisReport[] array,int lastIndex){
-        if(array.length<=lastIndex+1)throw new ArrayIndexOutOfBoundsException("wrong size for the Array!");
-        ParticleAnalysisReport[] ret=new ParticleAnalysisReport[lastIndex+1];
+    private Target[] refineTargets(ParticleAnalysisReport[] array,int lastIndex){
+        if(array.length<lastIndex+1)throw new ArrayIndexOutOfBoundsException("wrong size for the Array!");
+        Target[] ret=new Target[lastIndex+1];
         for(int i=0;i<=lastIndex;i++){
-            ret[i]=array[i];
+            ret[i]=new Target(array[i]);
         }
         return ret;
     }
