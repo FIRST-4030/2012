@@ -86,6 +86,7 @@ public class RobotMap {
     public static final double TURN_P_GAIN = TURN_SPEED_MAX / 15.0;
     public static final double TURN_I_GAIN = TURN_P_GAIN / 10.0;
     public static final double TURN_D_GAIN = 0.0;
+    public static final int FIND_TARGET_TURN = 15;
     // Hood Angle Constants
     public static final double HOOD_ANGLE_MIN = 3.900;
     public static final double HOOD_ANGLE_MAX = 4.850;

@@ -19,6 +19,13 @@ public class Shoot extends CommandBase {
         }
     }
 
+    public boolean isElevatorRunning() {
+        if (elevator.isRunning()) {
+            return true;
+        }
+        return false;
+    }
+
     protected boolean isFinished() {
         return !globalState.readyToShoot();
     }
@@ -31,5 +38,3 @@ public class Shoot extends CommandBase {
         this.end();
     }
 }
-
-

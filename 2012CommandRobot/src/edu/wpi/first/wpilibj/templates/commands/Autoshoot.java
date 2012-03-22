@@ -9,16 +9,20 @@ public class Autoshoot extends CommandBase {
     private final static int STATE_SPIN = 2;
     private final static int STATE_SHOOT = 3;
     private int STATE = STATE_CAMERA;
-    private Turn turn = new Turn();
-    private Command shoot = new Shoot();
-    private Command image = new RefreshCameraImage();
     private boolean failed = false;
+    private Turn turn;
+    private Command shoot;
+    private Command image;
 
     public Autoshoot() {
     }
 
     protected void initialize() {
+        turn = new Turn();
+        shoot = new Shoot();
+        image = new RefreshCameraImage();
         this.end();
+        globalState.setAutoshoot(true);
     }
 
     protected void execute() {
@@ -62,22 +66,16 @@ public class Autoshoot extends CommandBase {
     }
 
     protected boolean isFinished() {
-        boolean done = false;
         if (!globalState.isDriveEnabled()) {
-            done = true;
+            return true;
         } else if (!globalState.isBallHandlingEnabled()) {
-            done = true;
+            return true;
         } else if (globalState.ballsInControl() < 1) {
-            done = true;
+            return true;
         } else if (failed) {
-            done = true;
+            return true;
         }
-
-        // Disable the autoshoot mode when we're finished
-        if (done) {
-            globalState.setAutoshoot(false);
-        }
-        return done;
+        return false;
     }
 
     protected void end() {
@@ -85,6 +83,7 @@ public class Autoshoot extends CommandBase {
         shoot.cancel();
         image.cancel();
         failed = false;
+        globalState.setAutoshoot(false);
     }
 
     protected void interrupted() {
