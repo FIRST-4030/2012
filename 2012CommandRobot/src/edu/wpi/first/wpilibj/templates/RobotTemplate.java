@@ -92,6 +92,7 @@ public class RobotTemplate extends IterativeRobot {
         if (AUTONOMOUS_ENABLED) {
             findTarget.cancel();
         }
+        CommandBase.globalState.setDriveEnabled(true);
     }
 
     private void cancelIfRunning(Command cmd) {
@@ -111,7 +112,6 @@ public class RobotTemplate extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        CommandBase.globalState.setDriveEnabled(true);
 
         // Enable/disable drive
         if (CommandBase.globalState.isDriveEnabled()) {
