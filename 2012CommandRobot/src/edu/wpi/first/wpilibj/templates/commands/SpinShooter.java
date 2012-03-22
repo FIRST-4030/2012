@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.templates.RobotMap;
 
 public class SpinShooter extends CommandBase {
 
-    private double speed;
-
     public SpinShooter() {
         requires(shooter);
     }
