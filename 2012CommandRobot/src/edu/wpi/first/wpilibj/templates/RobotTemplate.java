@@ -29,6 +29,9 @@ public class RobotTemplate extends IterativeRobot {
     private Command elevator;
     private Command shooter;
     private Command autoshoot;
+    private Command autoaim;
+    private Command autoknockdown;
+    private boolean knockers=true;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -49,6 +52,8 @@ public class RobotTemplate extends IterativeRobot {
         shoot = new Shoot();
         elevator = new ElevatorCmd();
         autoshoot = new Autoshoot();
+        autoaim = new Autoaim();
+        autoknockdown = new AutoRampKnockdown();
     }
 
     public void autonomousInit() {
@@ -63,9 +68,18 @@ public class RobotTemplate extends IterativeRobot {
 
         if (CommandBase.globalState.targetVisible()) {
             cancelIfRunning(findTarget);
-            startIfNotRunning(autoshoot);
-            runShooter();
-            runElevator();
+            startIfNotRunning(autoaim);
+            if(!autoaim.isRunning()){
+                if(CommandBase.globalState.getTargetAngle()<=5&&knockers){
+                    startIfNotRunning(autoknockdown);
+                    knockers=false;
+                }
+                if(!autoknockdown.isRunning()){
+                    startIfNotRunning(autoshoot);
+                    runShooter();
+                    runElevator();
+                }
+            }
         }
     }
 

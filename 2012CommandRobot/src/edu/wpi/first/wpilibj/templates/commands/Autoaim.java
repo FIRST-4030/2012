@@ -2,7 +2,7 @@ package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Autoshoot extends CommandBase {
+public class Autoaim extends CommandBase {
 
     private final static int STATE_CAMERA = 0;
     private final static int STATE_TURN = 1;
@@ -14,7 +14,7 @@ public class Autoshoot extends CommandBase {
     private Command shoot;
     private Command image;
 
-    public Autoshoot() {
+    public Autoaim() {
     }
 
     protected void initialize() {
@@ -56,12 +56,7 @@ public class Autoshoot extends CommandBase {
 
             // Wait for the shooter to get up-to-speed, then shoot as long as there are balls available
             case STATE_SHOOT:
-                if (!shooter.atSpeed()) {
-                    return;
-                }
-                if (globalState.readyToShoot()) {
-                    shoot.start();
-                }
+                failed = true;
         }
     }
 

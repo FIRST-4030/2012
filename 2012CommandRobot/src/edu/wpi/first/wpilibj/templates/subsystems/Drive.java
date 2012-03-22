@@ -216,6 +216,9 @@ public class Drive extends PIDSubsystem {
         }
         return value;
     }
+    public void drive(double moveValue){
+        drive(moveValue,0,1,false);
+    }
 
     private void drive(double moveValue, double rotateValue, int sensitivity, boolean reverse) {
         // local variables to hold the computed PWM values for the motors
@@ -260,5 +263,9 @@ public class Drive extends PIDSubsystem {
 
         // Feed raw left/right motor speeds
         this.set(leftMotorSpeed, rightMotorSpeed);
+    }
+    
+    public boolean isOnRamp(){
+        return onRamp;
     }
 }

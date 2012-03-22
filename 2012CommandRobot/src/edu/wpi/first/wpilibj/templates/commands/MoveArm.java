@@ -3,10 +3,15 @@ package edu.wpi.first.wpilibj.templates.commands;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 
 public class MoveArm extends CommandBase {
-
+    private boolean forceDown=false;
     public MoveArm() {
         requires(arm);
         requires(armlock);
+    }
+    public MoveArm(boolean forceDown){
+        this();
+        this.forceDown=forceDown;
+        
     }
 
     protected void initialize() {
@@ -18,8 +23,10 @@ public class MoveArm extends CommandBase {
     }
 
     protected void execute() {
-        if (!arm.isArmUp()) {
-            armlock.unlock();
+        armlock.unlock();
+        if (forceDown){
+        arm.down();    
+        }else if (!arm.isArmUp()) {
             if (timeSinceInitialized() > RobotMap.ARMLOCK_MOD) {
                 arm.toggle();
             }
@@ -34,10 +41,10 @@ public class MoveArm extends CommandBase {
     }
 
     protected void end() {
-
         arm.stop();
-        if (!arm.isArmUp()) {
+        if (!arm.isArmUp()||forceDown) {
             armlock.lock();
+            forceDown=false;
         }
 
     }

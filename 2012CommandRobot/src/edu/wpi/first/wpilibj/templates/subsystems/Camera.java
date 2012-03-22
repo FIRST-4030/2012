@@ -194,7 +194,7 @@ public class Camera extends Subsystem {
         return Distance; 
     }
     private double getTargetAngle(Target target){
-        return com.sun.squawk.util.MathUtils.acos(target.width/(target.height*(RobotMap.TARGET_W/RobotMap.TARGET_H)));
+        return Math.toDegrees(com.sun.squawk.util.MathUtils.acos(target.width/(target.height*(RobotMap.TARGET_W/RobotMap.TARGET_H))));
     }
     
     

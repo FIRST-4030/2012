@@ -16,6 +16,18 @@ public class GlobalState {
     private ToggleButtonState shootMode = new ToggleButtonState(ToggleButtonState.OFF);
     // Are we running the autoshoot sequence?
     private boolean autoshoot = false;
+    // Are we running the autoRampKnockdown sequence?
+    private boolean autoknockdown = false;
+
+    public boolean isAutoknockdown()
+    {
+        return autoknockdown;
+    }
+
+    public void setAutoknockdown(boolean autoknockdown)
+    {
+        this.autoknockdown = autoknockdown;
+    }
     // Do we have the target in sight?
     private boolean targetVisible = false;
     // Track loaded balls
@@ -49,7 +61,7 @@ public class GlobalState {
         return targetAngle;
     }
 
-    public void setTargetAngle(double azimuth)
+    public void setTargetAngle(double targetAngle)
     {
         this.targetAngle = targetAngle;
     }
@@ -293,11 +305,5 @@ public class GlobalState {
         ballsInControl--;
     }
     
-    public int distanceToTarget() {
-        return 100;
-    }
-    
-    public double angleToTarget() {
-        return 0.0;
-    }
+
 }

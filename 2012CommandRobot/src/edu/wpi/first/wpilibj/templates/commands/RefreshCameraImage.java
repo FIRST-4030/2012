@@ -36,12 +36,16 @@ public class RefreshCameraImage extends CommandBase {
             camera.refreshImages();
                    
             if(camera.hasTarget()){
+                globalState.setTargetVisible(true);
                 globalState.setAzimuth(camera.getAzimuth());
                 SmartDashboard.putDouble("AZIMUTH OF TARGET", globalState.getAzimuth());
                 globalState.setCameraDistance(camera.getTargetDistance());
                 SmartDashboard.putDouble("DISTANCE TO TARGET", globalState.getCameraDistance());
                 globalState.setTargetAngle(camera.getTargetAngle());
                 SmartDashboard.putDouble("ANGLE TO TARGET", camera.getTargetDistance());
+            }else{
+                globalState.setTargetVisible(false);
+
             }
             
         } catch (AxisCameraException ex) {
