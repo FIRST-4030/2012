@@ -34,8 +34,6 @@ public class Drive extends PIDSubsystem {
         super("drive", RobotMap.BALANCE_P_GAIN, RobotMap.BALANCE_I_GAIN,
                 RobotMap.BALANCE_D_GAIN);
 
-        this.setSetpointRange(-1.0 * RobotMap.BALANCE_MAX_SETPOINT, RobotMap.BALANCE_MAX_SETPOINT);
-
         left = new Jaguar(RobotMap.MOTOR_DRIVE_LEFT);
         right = new Jaguar(RobotMap.MOTOR_DRIVE_RIGHT);
     }
@@ -146,9 +144,13 @@ public class Drive extends PIDSubsystem {
 
         // Then enable the PID control
         PID_MODE = PID_MODE_BALANCE;
+        this.getPIDController().setPID(RobotMap.BALANCE_P_GAIN, RobotMap.BALANCE_I_GAIN,
+                RobotMap.BALANCE_D_GAIN);
+        this.setSetpointRange(-1.0 * RobotMap.BALANCE_MAX_SETPOINT, RobotMap.BALANCE_MAX_SETPOINT);
         this.getPIDController().setInputRange(GRAV_MIN, GRAV_MAX);
         this.getPIDController().setContinuous(false);
         this.setSetpoint(0);
+        this.getPIDController().reset();
         this.enable();
     }
 
@@ -158,10 +160,14 @@ public class Drive extends PIDSubsystem {
 
         // Then enable the PID control
         PID_MODE = PID_MODE_TURN;
+        this.getPIDController().setPID(RobotMap.TURN_P_GAIN, RobotMap.TURN_I_GAIN,
+                RobotMap.TURN_D_GAIN);
+        this.setSetpointRange(-1.0 * HEADING_MIN, HEADING_MAX);
         this.getPIDController().setOutputRange(-1.0 * RobotMap.TURN_SPEED_MAX, RobotMap.TURN_SPEED_MAX);
         this.getPIDController().setInputRange(HEADING_MIN, HEADING_MAX);
         this.getPIDController().setContinuous(true);
         this.setSetpoint(angle % HEADING_MAX);
+        this.getPIDController().reset();
         this.enable();
     }
 
