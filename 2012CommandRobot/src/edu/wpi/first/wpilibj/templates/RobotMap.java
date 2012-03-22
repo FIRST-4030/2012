@@ -104,5 +104,6 @@ public class RobotMap {
     public static final int LUM_HIGH = 255;
     public static final double TARGET_W = 24;
     public static final double TARGET_H = 18;
+    public static final double TOP_TO_BOTTOM_H=88;
     public static final double TARGET_MIN_RATIO=.75;
 }

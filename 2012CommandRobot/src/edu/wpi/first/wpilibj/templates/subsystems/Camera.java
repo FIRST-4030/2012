@@ -82,7 +82,7 @@ public class Camera extends Subsystem {
     }
     public void IDTargets() throws NIVisionException{
         targetDetected=thresholdHSLImage.getNumberParticles()!=0;
-        
+        thresholdHSLImage.removeSmallObjects(true, 2);
         ParticleAnalysisReport[] reports = thresholdHSLImage.getOrderedParticleAnalysisReports(4);
         for(int i=reports.length-1;i>=0;i--){
             System.out.println("testing: "+i);
@@ -136,11 +136,27 @@ public class Camera extends Subsystem {
     }
     
     //Returns the distance from the camera to the target in inches
-    public double getTargetDistance(ParticleAnalysisReport target) throws NIVisionException{
-        double targetWidth = 1.0* target.boundingRectHeight * (RobotMap.TARGET_W/RobotMap.TARGET_H);
+    public double getTargetDistance() throws NIVisionException{
+        
+        
+        double targetWidth = 1.0* targets[0].boundingRectHeight * (RobotMap.TARGET_W/RobotMap.TARGET_H);
         double targetViewingAngle = 1.0* (RobotMap.CAMERA_VA) * targetWidth/image.getWidth();
-        return /*/getdist(target);/*/ (RobotMap.TARGET_W * 0.5) / Math.tan(Math.toRadians(targetViewingAngle*.5));/**/
-    }
+        double Distance=(RobotMap.TARGET_W * 0.5) / Math.tan(Math.toRadians(targetViewingAngle*.5));
+        /*if(Distance>160){
+            SmartDashboard.getBoolean("using large target", true);
+            double bottom=-5000,top=5000;
+            for(int i=targets.length-1;i>=0;i--){
+                if(targets[i].boundingRectTop<top)top=targets[i].boundingRectTop;
+                if(targets[i].boundingRectTop+targets[i].boundingRectHeight>bottom)bottom=targets[i].boundingRectTop+targets[i].boundingRectHeight;
+                targetWidth = 1.0* bottom-top * (RobotMap.TARGET_W/RobotMap.TARGET_H);
+                targetViewingAngle = 1.0* (RobotMap.CAMERA_VA) * targetWidth/image.getWidth();
+                Distance=(RobotMap.TOP_TO_BOTTOM_H*(RobotMap.TARGET_W/RobotMap.TARGET_H) * 0.5) / Math.tan(Math.toRadians(targetViewingAngle*.5));
+                Distance/=4.90;
+            }
+        }else SmartDashboard.getBoolean("using large target", false);
+        */
+        return Distance; 
+    }/*
     public double getdist(ParticleAnalysisReport target) throws NIVisionException{
         double width=target.boundingRectWidth/2;
         double angle=(RobotMap.CAMERA_VA*width/image.getWidth())/2;
@@ -152,7 +168,7 @@ public class Camera extends Subsystem {
         double ret=(RobotMap.TARGET_W/Math.sin(Math.toRadians(angle)))*Math.sin(Math.toRadians(sideAngle));
         return ret/3.93;
     }
-    
+    */
     private ParticleAnalysisReport[] subArray(ParticleAnalysisReport[] array,int lastIndex){
         if(array.length<=lastIndex+1)throw new ArrayIndexOutOfBoundsException();
         System.out.println("shortening array");

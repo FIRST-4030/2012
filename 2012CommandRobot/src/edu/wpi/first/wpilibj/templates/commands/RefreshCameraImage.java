@@ -43,7 +43,7 @@ public class RefreshCameraImage extends CommandBase {
                 
                 if(target[0]!=null){
                     SmartDashboard.putDouble("ANGLE TO TARGET", camera.getAngleToTarget(target[0]));
-                    SmartDashboard.putDouble("DISTANCE TO TARGET", camera.getTargetDistance(target[0]));
+                    SmartDashboard.putDouble("DISTANCE TO TARGET", camera.getTargetDistance());
                 }
             }else{
                 System.out.println("No Image");
