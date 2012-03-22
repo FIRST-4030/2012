@@ -52,11 +52,6 @@ public class Shooter extends PIDSubsystem {
         adjusting = true;
     }
 
-    // Adjust the spinner rate to hit the top target at the specified distance
-    public void setDistance(int distance) {
-        this.setSetpoint(0);
-    }
-
     // Return true once we've reached the desired speed
     public boolean atSpeed() {
         if (adjusting
@@ -65,6 +60,50 @@ public class Shooter extends PIDSubsystem {
             adjusting = false;
         }
         return adjusting;
+    }
+
+    // Adjust the spinner rate to hit the top target at the specified distance
+    public void setDistance(int distance) {
+        // These constants should be someplace else, and in a real data structure,
+        // but for ease-of-setup let's not. These lists must be the same length
+        // and must be strictly ordered from shortest distance to longest
+        int distances[] = {50, 100, 150, 200, 250, 300};
+        int speeds[] = {30, 35, 40, 45, 50, 55};
+
+        if (distances.length != speeds.length) {
+            System.err.println("Invalid speed/distance data");
+            return;
+        }
+
+        double speed = RobotMap.SHOOTER_SPEED_DEFAULT;
+
+        // Max distance == max speed
+        if (distance >= distances[distances.length - 1]) {
+            speed = distances[distances.length - 1];
+            // Min distance == min speed
+        } else if (distance <= distances[0]) {
+            speed = speeds[0];
+            // Distance is somewhere inside our chart
+        } else {
+            // Find the first distance that meets or exceeds our target distance
+            int i = 0;
+            while (distances[i] < distance) {
+                i++;
+            }
+
+            // Calculate distance and speed differences about our target
+            int targetDiff = distances[i] - distance;
+            int distanceDiff = distances[i + 1] - distances[i];
+            int speedDiff = speeds[i + 1] - speeds[i];
+
+            // Determine the ratio of differences
+            double diffRatio = (targetDiff / distanceDiff);
+
+            // Base speed + (difference ratio * speed difference)
+            speed = speeds[i] + (diffRatio * speedDiff);
+        }
+
+        this.setSpeed(speed);
     }
 
     public void start() {
