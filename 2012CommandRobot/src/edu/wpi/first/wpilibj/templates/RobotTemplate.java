@@ -21,11 +21,11 @@ import edu.wpi.first.wpilibj.templates.commands.*;
  */
 public class RobotTemplate extends IterativeRobot {
 
-    //private Command autonomousCommand;
+    private Command findTarget;
     private Command joystick;
     private Command balance;
     private Load load;
-    private Command shoot;
+    private Shoot shoot;
     private Command elevator;
     private Command shooter;
     private Command autoshoot;
@@ -41,6 +41,7 @@ public class RobotTemplate extends IterativeRobot {
         CommandBase.init();
 
         // Setup our top-level commands
+        findTarget = new FindTarget();
         joystick = new DriveJoystick();
         balance = new Balance();
         load = new Load();
@@ -51,7 +52,7 @@ public class RobotTemplate extends IterativeRobot {
     }
 
     public void autonomousInit() {
-        //autonomousCommand.start();
+        findTarget.start();
     }
 
     /**
@@ -59,10 +60,17 @@ public class RobotTemplate extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+
+        if (CommandBase.globalState.targetVisible()) {
+            cancelIfRunning(findTarget);
+            startIfNotRunning(autoshoot);
+            runShooter();
+            runElevator();
+        }
     }
 
     public void teleopInit() {
-        //autonomousCommand.cancel();
+        findTarget.cancel();
     }
 
     private void cancelIfRunning(Command cmd) {
@@ -120,14 +128,11 @@ public class RobotTemplate extends IterativeRobot {
                 if (!load.isElevatorRunning()) {
                     cancelIfRunning(load);
                 }
-                // Run the shooter anytime we have balls (and the loader is done)
-                if (!load.isElevatorRunning() && CommandBase.globalState.ballsInControl() > 0) {
-                    startIfNotRunning(shooter);
-                }
-                // Restart the elevator anytime we have balls and no shoot-mode ball handler is running
-                if (!shoot.isRunning() && !elevator.isRunning() && !CommandBase.globalState.readyToShoot() && CommandBase.globalState.ballsInControl() > 0) {
-                    elevator.start();
-                }
+
+                // Run the shooter and elevator as needed
+                runShooter();
+                runElevator();
+
             } else {
                 // Cancel all shoot-mode commands
                 cancelIfRunning(autoshoot);
@@ -145,6 +150,20 @@ public class RobotTemplate extends IterativeRobot {
             cancelIfRunning(shooter);
             cancelIfRunning(elevator);
             cancelIfRunning(load);
+        }
+    }
+
+    // Restart the elevator anytime we have balls and no shoot-mode ball handler is running
+    private void runElevator() {
+        if (!shoot.isElevatorRunning() && !CommandBase.globalState.readyToShoot() && CommandBase.globalState.ballsInControl() > 0) {
+            startIfNotRunning(elevator);
+        }
+    }
+
+    // Run the shooter anytime we have balls (and the loader is done)
+    private void runShooter() {
+        if (!load.isElevatorRunning() && CommandBase.globalState.ballsInControl() > 0) {
+            startIfNotRunning(shooter);
         }
     }
 }
