@@ -3,7 +3,6 @@ package edu.wpi.first.wpilibj.templates.subsystems;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 
 import edu.wpi.first.wpilibj.Jaguar;
-import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
@@ -75,16 +74,16 @@ public class Shooter extends PIDSubsystem {
             return;
         }
 
-        double speed = RobotMap.SHOOTER_SPEED_DEFAULT;
 
-        // Max distance == max speed
+        double speed;
         if (distance >= distances[distances.length - 1]) {
+            // Max distance == max speed
             speed = distances[distances.length - 1];
-            // Min distance == min speed
         } else if (distance <= distances[0]) {
+            // Min distance == min speed
             speed = speeds[0];
-            // Distance is somewhere inside our chart
         } else {
+            // Distance is somewhere inside our chart
             // Find the first distance that meets or exceeds our target distance
             int i = 0;
             while (distances[i] < distance) {
