@@ -14,8 +14,14 @@ public class Autoshoot extends CommandBase {
     private Turn turn;
     private Command shoot;
     private Command image;
+    private boolean noShoot;
 
     public Autoshoot() {
+        this(false);
+    }
+    
+    public Autoshoot(boolean noShoot) {
+        this.noShoot = noShoot;
     }
 
     protected void initialize() {
@@ -59,6 +65,9 @@ public class Autoshoot extends CommandBase {
 
             // Wait for the shooter to get up-to-speed, then shoot as long as there are balls available
             case STATE_SHOOT:
+                if (noShoot) {
+                    return;
+                }
                 if (!shooter.atSpeed()) {
                     return;
                 }
@@ -77,6 +86,8 @@ public class Autoshoot extends CommandBase {
             return true;
         } else if (failed) {
             return true;
+        } else if (STATE == STATE_SHOOT) {
+            return noShoot;
         }
         return false;
     }
