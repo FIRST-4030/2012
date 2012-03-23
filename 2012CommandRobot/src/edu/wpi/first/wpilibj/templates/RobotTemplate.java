@@ -7,8 +7,10 @@
 package edu.wpi.first.wpilibj.templates;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.templates.commands.CommandBase;
 import edu.wpi.first.wpilibj.templates.commands.*;
 
@@ -57,6 +59,8 @@ public class RobotTemplate extends IterativeRobot {
 
         if (AUTONOMOUS_ENABLED) {
             //startIfNotRunning(findTarget);
+            CommandBase.globalState.setDriveEnabled(true);
+            CommandBase.globalState.setBallHandlingEnabled(true);
         }
     }
 
@@ -81,6 +85,7 @@ public class RobotTemplate extends IterativeRobot {
             cancelIfRunning(findTarget);
         }
         CommandBase.globalState.setDriveEnabled(true);
+        CommandBase.globalState.setBallHandlingEnabled(true);
     }
 
     /**

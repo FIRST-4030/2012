@@ -139,6 +139,14 @@ public class GlobalState {
         return driveBackwards.isOn();
     }
 
+    public void setBallHandlingEnabled(boolean enable) {
+        if (enable) {
+            ballHandling.set(ToggleButtonState.ON);
+        } else {
+            ballHandling.set(ToggleButtonState.OFF);
+        }
+    }
+
     public void updateBallHandlingEnabled(boolean pressed) {
         ballHandling.update(pressed);
     }
