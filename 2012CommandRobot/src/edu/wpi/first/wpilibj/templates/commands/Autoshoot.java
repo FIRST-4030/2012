@@ -1,6 +1,7 @@
 package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Autoshoot extends CommandBase {
 
@@ -26,6 +27,8 @@ public class Autoshoot extends CommandBase {
     }
 
     protected void execute() {
+        SmartDashboard.putInt("Autoshoot Mode", STATE);
+        
         switch (STATE) {
             // Request a new image analysis
             case STATE_CAMERA:

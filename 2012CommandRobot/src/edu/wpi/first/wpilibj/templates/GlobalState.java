@@ -182,6 +182,7 @@ public class GlobalState {
 
     public void setAutoshoot(boolean enable) {
         autoshoot = enable;
+        SmartDashboard.putBoolean("Autoshoot Enabled", isAutoshootEnabled());
     }
 
     public boolean isAutoshootEnabled() {
