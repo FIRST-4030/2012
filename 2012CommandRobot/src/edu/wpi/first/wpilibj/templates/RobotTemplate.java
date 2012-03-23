@@ -51,6 +51,10 @@ public class RobotTemplate extends IterativeRobot {
     }
 
     public void autonomousInit() {
+        // When running in competition mode, assume we start with two balls
+        CommandBase.globalState.incrementBallCount();
+        CommandBase.globalState.incrementBallCount();
+
         if (AUTONOMOUS_ENABLED) {
             //startIfNotRunning(findTarget);
         }
@@ -64,10 +68,10 @@ public class RobotTemplate extends IterativeRobot {
 
         if (AUTONOMOUS_ENABLED) {
             //if (CommandBase.globalState.targetVisible()) {
-                cancelIfRunning(findTarget);
-                runShooter();
-                runElevator();
-                startIfNotRunning(autoshoot);
+            cancelIfRunning(findTarget);
+            runShooter();
+            runElevator();
+            startIfNotRunning(autoshoot);
             //}
         }
     }
@@ -77,18 +81,6 @@ public class RobotTemplate extends IterativeRobot {
             cancelIfRunning(findTarget);
         }
         CommandBase.globalState.setDriveEnabled(true);
-    }
-
-    private void cancelIfRunning(Command cmd) {
-        if (cmd.isRunning()) {
-            cmd.cancel();
-        }
-    }
-
-    private void startIfNotRunning(Command cmd) {
-        if (!cmd.isRunning()) {
-            cmd.start();
-        }
     }
 
     /**
@@ -171,6 +163,20 @@ public class RobotTemplate extends IterativeRobot {
     private void runShooter() {
         if (!load.isElevatorRunning() && CommandBase.globalState.ballsInControl() > 0) {
             startIfNotRunning(shooter);
+        }
+    }
+
+    // Macro for command state control
+    private void cancelIfRunning(Command cmd) {
+        if (cmd.isRunning()) {
+            cmd.cancel();
+        }
+    }
+
+    // Macro for command state control
+    private void startIfNotRunning(Command cmd) {
+        if (!cmd.isRunning()) {
+            cmd.start();
         }
     }
 }
