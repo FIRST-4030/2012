@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.templates.commands.*;
  */
 public class RobotTemplate extends IterativeRobot {
 
-    private final static boolean AUTONOMOUS_ENABLED = false;
+    private final static boolean AUTONOMOUS_ENABLED = true;
     private Command findTarget;
     private Command joystick;
     private Command balance;
@@ -30,17 +30,12 @@ public class RobotTemplate extends IterativeRobot {
     private Command elevator;
     private Command shooter;
     private Command autoshoot;
-    private Command autoaim;
-    private Command autoknockdown;
-    private boolean knockers = true;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-        //autonomousCommand = new ExampleCommand();
-
         // Initialize all subsystems
         CommandBase.init();
 
@@ -53,13 +48,11 @@ public class RobotTemplate extends IterativeRobot {
         shoot = new Shoot();
         elevator = new ElevatorCmd();
         autoshoot = new Autoshoot();
-        autoaim = new Autoaim();
-        autoknockdown = new AutoRampKnockdown();
     }
 
     public void autonomousInit() {
         if (AUTONOMOUS_ENABLED) {
-            findTarget.start();
+            //startIfNotRunning(findTarget);
         }
     }
 
@@ -72,25 +65,16 @@ public class RobotTemplate extends IterativeRobot {
         if (AUTONOMOUS_ENABLED) {
             if (CommandBase.globalState.targetVisible()) {
                 cancelIfRunning(findTarget);
-                startIfNotRunning(autoaim);
-                if (!autoaim.isRunning()) {
-                    if (CommandBase.globalState.getTargetAngle() <= 5 && knockers) {
-                        startIfNotRunning(autoknockdown);
-                        knockers = false;
-                    }
-                    if (!autoknockdown.isRunning()) {
-                        startIfNotRunning(autoshoot);
-                        runShooter();
-                        runElevator();
-                    }
-                }
+                runShooter();
+                runElevator();
+                startIfNotRunning(autoshoot);
             }
         }
     }
 
     public void teleopInit() {
         if (AUTONOMOUS_ENABLED) {
-            findTarget.cancel();
+            cancelIfRunning(findTarget);
         }
         CommandBase.globalState.setDriveEnabled(true);
     }
@@ -142,8 +126,9 @@ public class RobotTemplate extends IterativeRobot {
             if (CommandBase.globalState.isShootMode()
                     || CommandBase.globalState.isAutoshootEnabled()) {
                 // Enable autoshoot mode as needed
-                if (!autoshoot.isRunning() && CommandBase.globalState.isAutoshootEnabled() && CommandBase.globalState.ballsInControl() > 0) {
-                    autoshoot.start();
+                if (CommandBase.globalState.isAutoshootEnabled()
+                        && CommandBase.globalState.ballsInControl() > 0) {
+                    startIfNotRunning(autoshoot);
                 }
 
                 // Disable loading (but not until the load elevator is done)
