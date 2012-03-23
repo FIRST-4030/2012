@@ -22,8 +22,8 @@ public class RobotMap {
     public static final int BUTTON_AUTOSHOOT = 5;
     public static final int BUTTON_HOOD_UP = 6;
     public static final int BUTTON_HOOD_DOWN = 7;
-    public static final int BUTTON_SHOOTER_UP = 8;
-    public static final int BUTTON_SHOOTER_DOWN = 9;
+    public static final int BUTTON_SHOOTER_DOWN = 8;
+    public static final int BUTTON_SHOOTER_UP = 9;
     public static final int MANUAL_BALL_DEC = 10;
     public static final int MANUAL_BALL_INC = 11;
     // PWM Bus
