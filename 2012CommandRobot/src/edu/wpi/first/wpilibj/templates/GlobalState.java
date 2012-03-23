@@ -19,13 +19,11 @@ public class GlobalState {
     // Are we running the autoRampKnockdown sequence?
     private boolean autoknockdown = false;
 
-    public boolean isAutoknockdown()
-    {
+    public boolean isAutoknockdown() {
         return autoknockdown;
     }
 
-    public void setAutoknockdown(boolean autoknockdown)
-    {
+    public void setAutoknockdown(boolean autoknockdown) {
         this.autoknockdown = autoknockdown;
     }
     // Do we have the target in sight?
@@ -51,45 +49,34 @@ public class GlobalState {
     private int distance = 0;
     // Current rotational rate of the shooter wheel (in blips/second)
     private double shooterRate = 0;
-    
-    private double azimuth=0;
-    private double cameraDistance=0;
-    private double targetAngle=0;
-    
-    public double getTargetAngle()
-    {
+    private double azimuth = 0;
+    private double cameraDistance = 0;
+    private double targetAngle = 0;
+
+    public double getTargetAngle() {
         return targetAngle;
     }
 
-    public void setTargetAngle(double targetAngle)
-    {
+    public void setTargetAngle(double targetAngle) {
         this.targetAngle = targetAngle;
     }
-    
 
-    public double getAzimuth()
-    {
+    public double getAzimuth() {
         return azimuth;
     }
 
-    public void setAzimuth(double azimuth)
-    {
+    public void setAzimuth(double azimuth) {
         this.azimuth = azimuth;
     }
 
-    public double getCameraDistance()
-    {
+    public double getCameraDistance() {
         return cameraDistance;
     }
 
-    public void setCameraDistance(double cameraDistance)
-    {
+    public void setCameraDistance(double cameraDistance) {
         this.cameraDistance = cameraDistance;
     }
-    
-    
-
-    private double accelX=0;
+    private double accelX = 0;
 
     public double getAccelX() {
         return accelX;
@@ -106,7 +93,7 @@ public class GlobalState {
     public void setAccelY(double accelY) {
         this.accelY = accelY;
     }
-    private double accelY=0;
+    private double accelY = 0;
 
     public double getHoodAngle() {
         return hoodAngle;
@@ -127,12 +114,12 @@ public class GlobalState {
     public void dequeuedBall() {
         ballsInQueue--;
     }
-    
+
     public void setDriveEnabled(boolean enabled) {
         if (enabled) {
             drive.set(ToggleButtonState.ON);
         } else {
-            drive.set(ToggleButtonState.OFF);            
+            drive.set(ToggleButtonState.OFF);
         }
     }
 
@@ -192,7 +179,7 @@ public class GlobalState {
     public boolean isBalanceEnabled() {
         return balanceMode.isOn();
     }
-    
+
     public void setAutoshoot(boolean enable) {
         autoshoot = enable;
     }
@@ -216,7 +203,7 @@ public class GlobalState {
     public boolean readyToQueue() {
         return this.readyToQueue;
     }
-    
+
     public boolean readyToDequeue() {
         return this.readyToDequeue;
     }
@@ -262,7 +249,7 @@ public class GlobalState {
         this.readyToQueue = ready;
         SmartDashboard.putBoolean("Ready to Queue", readyToQueue);
     }
-    
+
     public void setReadyToDequeue(boolean ready) {
         this.readyToDequeue = ready;
         SmartDashboard.putBoolean("Ready to Dequeue", readyToDequeue);
@@ -304,6 +291,4 @@ public class GlobalState {
     public void deincrementBallCount() {
         ballsInControl--;
     }
-    
-
 }
