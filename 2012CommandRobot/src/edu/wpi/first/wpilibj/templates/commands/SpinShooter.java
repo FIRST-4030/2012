@@ -13,6 +13,9 @@ public class SpinShooter extends CommandBase {
     }
 
     protected void execute() {
+        if (globalState.ballsInControl() < 1) {
+            setTimeout(RobotMap.SHOOTER_SPINDOWN_TIME);
+        }
     }
 
     protected boolean isFinished() {
@@ -20,7 +23,7 @@ public class SpinShooter extends CommandBase {
             return true;
         } else if (!globalState.isShootMode() && !globalState.isAutoshootEnabled()) {
             return true;
-        } else if (globalState.ballsInControl() < 1) {
+        } else if (isTimedOut()) {            
             return true;
         }
         return false;

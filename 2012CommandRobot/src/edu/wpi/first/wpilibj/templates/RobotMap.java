@@ -42,6 +42,7 @@ public class RobotMap {
     public static final double SHOOTER_CMD_SPEED_MIN = 0.0;
     public static final int SHOOTER_RATE_MAX = 52;
     public static final int SHOOTER_RATE_MIN = 0;
+    public static final int SHOOTER_SPINDOWN_TIME = 2;
     public static final double SHOOTER_SPEED_DEFAULT = SHOOTER_RATE_MAX * 0.80;
     public static final double SHOOTER_ZERO_THRESHOLD = SHOOTER_RATE_MAX / 10;
     public static final double SHOOTER_P_GAIN = 0.05;
@@ -113,6 +114,6 @@ public class RobotMap {
     public static final int LUM_HIGH = 255;
     public static final double TARGET_W = 24;
     public static final double TARGET_H = 18;
-    public static final double TOP_TO_BOTTOM_H=88;
-    public static final double TARGET_MIN_RATIO=.75;
+    public static final double TOP_TO_BOTTOM_H = 88;
+    public static final double TARGET_MIN_RATIO = .75;
 }
