@@ -21,6 +21,13 @@ public class Turn extends CommandBase {
     }
 
     protected boolean isFinished() {
+        // Until we test this, we're always finished
+        // It makes the command useless, but it lets autoshoot fire off balls in autonomous mode
+        // And the if statement is just to make java happy about the early return
+        if (true) {
+            return true;
+        }
+        
         if (!CommandBase.globalState.isDriveEnabled()) {
             return true;
         } else if (started) {
