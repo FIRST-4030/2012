@@ -63,12 +63,12 @@ public class RobotTemplate extends IterativeRobot {
         Scheduler.getInstance().run();
 
         if (AUTONOMOUS_ENABLED) {
-            if (CommandBase.globalState.targetVisible()) {
+            //if (CommandBase.globalState.targetVisible()) {
                 cancelIfRunning(findTarget);
                 runShooter();
                 runElevator();
                 startIfNotRunning(autoshoot);
-            }
+            //}
         }
     }
 
