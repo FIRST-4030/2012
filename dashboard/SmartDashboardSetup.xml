@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+<dashboard>
+	<widget field="Heading Reading" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
+		<location x="746" y="385"/>
+	</widget>
+	<widget field="Shooter Command Rate" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="583" y="267"/>
+	</widget>
+	<widget field="AZIMUTH OF TARGET" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="882" y="34"/>
+	</widget>
+	<widget field="Shooter Updates" type="Integer" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="633" y="296"/>
+	</widget>
+	<widget field="Camera" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="415" y="652"/>
+	</widget>
+	<widget field="Autoshoot Mode Enabled" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="372"/>
+	</widget>
+	<widget field="DISTANCE TO TARGET" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="871" y="68"/>
+	</widget>
+	<widget field="ANGLE TO TARGET" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="628" y="199"/>
+	</widget>
+	<widget field="is camera derp" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="415" y="623"/>
+	</widget>
+	<widget field="Shooter Last Time" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="415" y="536"/>
+	</widget>
+	<widget field="Hood Angle" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="184" y="479"/>
+		<width>182</width>
+	</widget>
+	<widget field="Shooter Count" type="Integer" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="669" y="569"/>
+	</widget>
+	<widget field="Shooter Time" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="415" y="565"/>
+	</widget>
+	<widget field="Shooter Time Diff" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="415" y="594"/>
+	</widget>
+	<widget field="Shooter Count Diff" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="693" y="600"/>
+	</widget>
+	<widget field="Shooter Rate" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="11" y="343"/>
+	</widget>
+	<widget field="Ready to Dequeue" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="464" y="279"/>
+		<width>118</width>
+	</widget>
+	<widget field="Ready to Queue" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="464" y="300"/>
+		<width>104</width>
+	</widget>
+	<widget field="Hood Setpoint" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="203" y="450"/>
+		<width>144</width>
+	</widget>
+	<widget field="Distance" type="Integer" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="670" y="108"/>
+	</widget>
+	<widget field="maxtripped" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="183" y="533"/>
+	</widget>
+	<widget field="mintripped" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="185" y="559"/>
+	</widget>
+	<widget field="Drive Enabled" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="443" y="149"/>
+		<width>144</width>
+	</widget>
+	<widget field="voltsPerInch" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="652" y="138"/>
+	</widget>
+	<widget field="Elevator bottom switch" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="191" y="640"/>
+		<width>140</width>
+	</widget>
+	<widget field="Elevator mid switch" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="191" y="624"/>
+		<width>123</width>
+	</widget>
+	<widget field="Elevator top switch" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="191" y="608"/>
+		<width>119</width>
+	</widget>
+	<widget field="Hood Command Speed" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="463" y="507"/>
+	</widget>
+	<widget field="Balance Mode Enabled" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="443" y="91"/>
+		<width>194</width>
+	</widget>
+	<widget field="Shoot Mode Enabled" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="443" y="111"/>
+		<width>181</width>
+	</widget>
+	<widget field="Ball Handling Enabled" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="443" y="130"/>
+		<width>190</width>
+	</widget>
+	<widget field="raw range volts" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="637" y="49"/>
+	</widget>
+	<widget field="hood Ajusting?" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="188" y="505"/>
+		<width>178</width>
+	</widget>
+	<widget field="accel X" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="495" y="394"/>
+		<property name="Background" value="255.204.204.255"/>
+	</widget>
+	<widget field="accel Y" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="495" y="367"/>
+		<property name="Background" value="255.204.204.255"/>
+	</widget>
+	<widget field="Gravity Reading" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="448" y="340"/>
+		<property name="Background" value="255.204.204.255"/>
+	</widget>
+	<widget field="Drive Backwards" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="436" y="238"/>
+		<width>158</width>
+		<property name="Background" value="204.255.204.255"/>
+	</widget>
+	<widget field="Left Drive Speed" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="438" y="212"/>
+		<width>156</width>
+		<property name="Background" value="204.255.204.255"/>
+	</widget>
+	<widget field="Right Drive Speed" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="429" y="186"/>
+		<width>166</width>
+		<property name="Background" value="204.255.204.255"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="553" y="320"/>
+		<property name="Text" value="Accelerometer"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="546" y="171"/>
+		<property name="Text" value="Drive"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="521" y="67"/>
+		<width>74</width>
+		<height>33</height>
+		<property name="Text" value="Modes"/>
+	</static-widget>
+	<widget field="Ready to Shoot" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="54" y="408"/>
+		<width>173</width>
+	</widget>
+	<widget field="Balls in queue" type="Integer" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="343" y="276"/>
+		<width>115</width>
+		<property name="Background" value="204.255.204.255"/>
+		<property name="Font Size" value="26"/>
+	</widget>
+	<widget field="Balls in control" type="Integer" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="161" y="293"/>
+		<width>143</width>
+		<property name="Background" value="102.255.204.255"/>
+		<property name="Font Size" value="36"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
+		<location x="425" y="7"/>
+		<width>75</width>
+		<height>75</height>
+	</static-widget>
+	<widget field="Loader" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="22" y="483"/>
+	</widget>
+	<widget field="drive" type="PIDSubsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="35" y="537"/>
+	</widget>
+	<widget field="Elevator Command Speed" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="449" y="427"/>
+	</widget>
+	<widget field="Heading" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="16" y="616"/>
+	</widget>
+	<widget field="Switches" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="11" y="457"/>
+	</widget>
+	<widget field="Gravity" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="26" y="590"/>
+	</widget>
+	<widget field="Shooter Command Speed" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="450" y="454"/>
+	</widget>
+	<widget field="shooter" type="PIDSubsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="20" y="510"/>
+		<width>164</width>
+	</widget>
+	<widget field="Elevator" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="17" y="431"/>
+	</widget>
+	<widget field="HoodAngle" type="PIDSubsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="3" y="643"/>
+		<width>166</width>
+	</widget>
+	<widget field="Loader Command Speed" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="454" y="481"/>
+	</widget>
+	<widget field="raw range" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="665" y="77"/>
+	</widget>
+	<widget field="raw range Val" type="Double" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="645" y="21"/>
+	</widget>
+	<widget field="Arm" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="40" y="564"/>
+	</widget>
+	<hidden field="Channel A"/>
+	<hidden field="Hood Pot Vout"/>
+	<hidden field="Channel B"/>
+	<hidden field="Shooter A"/>
+	<hidden field="Hood Pot Vin"/>
+	<hidden field="Arm Moving"/>
+	<hidden field="newsetpoint"/>
+	<hidden field="Hood Pot Voltage"/>
+	<hidden field="Hood Calculated Speed"/>
+	<hidden field="Vin"/>
+	<hidden field="Shooter Raw"/>
+	<hidden field="Hood Update Time"/>
+	<hidden field="Get_Period"/>
+	<hidden field="Arm switch"/>
+	<hidden field="Arm Up"/>
+</dashboard>
