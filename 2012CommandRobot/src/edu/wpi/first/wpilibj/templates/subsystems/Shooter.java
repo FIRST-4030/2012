@@ -96,8 +96,8 @@ public class Shooter extends PIDSubsystem {
 
             // Calculate distance and speed differences about our target
             int targetDiff = distances[i] - distance;
-            int distanceDiff = distances[i + 1] - distances[i];
-            int speedDiff = speeds[i + 1] - speeds[i];
+            int distanceDiff = distances[i] - distances[i - 1];
+            int speedDiff = speeds[i] - speeds[i - 1];
 
             // Determine the ratio of differences
             double diffRatio = (targetDiff / distanceDiff);
