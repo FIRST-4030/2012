@@ -39,6 +39,10 @@ public class Autoshoot extends CommandBase {
                 break;
             case STATE_SPIN:
                 if(!image.isFinished())return;
+                if(!globalState.targetVisible()){
+                    failed=true;
+                    return;
+                }
 
                 shooter.setDistance((int)globalState.getCameraDistance());
                 shooter.start();
@@ -60,8 +64,7 @@ public class Autoshoot extends CommandBase {
             return true;
         } else if (globalState.ballsInControl() < 1) {
             return true;
-        }
-        return false;
+        } else return failed;
     }
 
     
