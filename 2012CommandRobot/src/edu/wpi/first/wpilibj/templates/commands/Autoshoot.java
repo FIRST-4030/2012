@@ -44,8 +44,8 @@ public class Autoshoot extends CommandBase {
                     return;
                 }
 
-                shooter.setDistance((int)globalState.getCameraDistance());
                 shooter.start();
+                shooter.setDistance((int)globalState.getCameraDistance());
                 
                 STATE = STATE_SHOOT;
             case STATE_SHOOT:

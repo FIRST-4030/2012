@@ -58,7 +58,7 @@ public class Shooter extends PIDSubsystem {
                 < RobotMap.SHOOTER_ZERO_THRESHOLD) {
             adjusting = false;
         }
-        return adjusting;
+        return !adjusting;
     }
 
     // Adjust the spinner rate to hit the top target at the specified distance
