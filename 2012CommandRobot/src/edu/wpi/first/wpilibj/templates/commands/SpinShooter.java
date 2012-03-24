@@ -14,7 +14,8 @@ public class SpinShooter extends CommandBase {
 
     protected void execute() {
         if (globalState.ballsInControl() < 1) {
-            setTimeout(RobotMap.SHOOTER_SPINDOWN_TIME);
+            setTimeout(timeSinceInitialized()+RobotMap.SHOOTER_SPINDOWN_TIME);
+            
         }
     }
 

@@ -28,7 +28,7 @@ public class Autoshoot extends CommandBase {
         turn = new Turn();
         shoot = new Shoot();
         image = new RefreshCameraImage();
-        this.end();
+        this.cancelCommands();
         globalState.setAutoshoot(true);
     }
 
@@ -43,7 +43,7 @@ public class Autoshoot extends CommandBase {
 
             // Wait for the camera to return target data, then turn
             case STATE_TURN:
-                if (image.isRunning()) {
+               /* if (image.isRunning()) {
                     return;
                 }
                 if (!globalState.targetVisible()) {
@@ -52,23 +52,28 @@ public class Autoshoot extends CommandBase {
                 }
 
                 turn.start();
-                turn.turnTo(globalState.getHeading() + globalState.getAzimuth());
+                *///turn.turnTo(globalState.getHeading() + globalState.getAzimuth());
                 STATE = STATE_SPIN;
 
             // Wait for the robot to face the target, then get the shooter up-to-speed
             case STATE_SPIN:
-                if (turn.isRunning()) {
+                /*if (turn.isRunning()) {
                     return;
-                }
+                }*/
+                
                 shooter.setDistance((int)globalState.getCameraDistance());
+                shooter.start();
+                
                 STATE = STATE_SHOOT;
 
             // Wait for the shooter to get up-to-speed, then shoot as long as there are balls available
             case STATE_SHOOT:
-                if (noShoot) {
+                /*if (noShoot) {
                     return;
-                }
+                }*/
+                
                 if (!shooter.atSpeed()) {
+                    
                     return;
                 }
                 if (globalState.readyToShoot()) {
@@ -92,11 +97,16 @@ public class Autoshoot extends CommandBase {
         return false;
     }
 
-    protected void end() {
+    
+    protected void cancelCommands(){
         turn.cancel();
         shoot.cancel();
         image.cancel();
+    }
+    protected void end() {
+        cancelCommands();
         failed = false;
+        shooter.stop();
         globalState.setAutoshoot(false);
     }
 

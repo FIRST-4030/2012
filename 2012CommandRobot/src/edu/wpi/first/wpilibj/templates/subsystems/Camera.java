@@ -128,7 +128,7 @@ public class Camera extends Subsystem {
         return image.thresholdHSL(RobotMap.HUE_LOW, RobotMap.HUE_HIGH, RobotMap.SAT_LOW, RobotMap.SAT_HIGH, RobotMap.LUM_LOW, RobotMap.LUM_HIGH);
     }
     private void IDTargets() throws NIVisionException{
-        thresholdHSLImage.removeSmallObjects(true, 2);
+    //    thresholdHSLImage.removeSmallObjects(true, 2);
         ParticleAnalysisReport[] reports = thresholdHSLImage.getOrderedParticleAnalysisReports(4);
         
         for(int i=reports.length-1;i>=0;i--){
@@ -154,6 +154,7 @@ public class Camera extends Subsystem {
             if(targets[i].centerY < u.centerY)u=targets[i];
             if(targets[i].centerY > d.centerY)d=targets[i];
         }
+        SmartDashboard.putInt("TARGETS VISIBLE", targets.length);
         switch(targets.length){
             case 3:
                 if(u.getCenterY()<r.getCenterY()-prop||u.getCenterY()<l.getCenterY()-prop)return u;
@@ -175,7 +176,7 @@ public class Camera extends Subsystem {
         return getAzimuth(getTarget());
     }
     public double getTargetDistance() throws NIVisionException{
-        return getTargetDistance(getTarget());
+        return getTargetDistance(targets[0]);
     }
     public double getTargetAngle(){
         return getTargetAngle(getTarget());

@@ -61,7 +61,7 @@ public class RobotTemplate extends IterativeRobot {
             //startIfNotRunning(findTarget);
             CommandBase.globalState.setDriveEnabled(true);
             CommandBase.globalState.setBallHandlingEnabled(true);
-        }
+        }/**/
     }
 
     /**
@@ -78,7 +78,7 @@ public class RobotTemplate extends IterativeRobot {
             startIfNotRunning(autoshoot);
             //}
         }
-    }
+    /**/}
 
     public void teleopInit() {
         if (AUTONOMOUS_ENABLED) {

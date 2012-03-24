@@ -47,6 +47,7 @@ public class OI {
         ballHandlingEnabled = new JoystickButton(ballStick, RobotMap.BUTTON_BALL_HANDLING);
         shootMode = new JoystickButton(ballStick, RobotMap.BUTTON_SHOOT_MODE);
         autoshoot = new JoystickButton(ballStick, RobotMap.BUTTON_AUTOSHOOT);
+        autoshoot.whenPressed(new Autoshoot());
         
         // Balance arm
         arm = new JoystickButton(ballStick, RobotMap.BUTTON_ARM);

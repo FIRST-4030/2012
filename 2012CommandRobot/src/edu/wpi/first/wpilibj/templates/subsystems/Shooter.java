@@ -66,8 +66,12 @@ public class Shooter extends PIDSubsystem {
         // These constants should be someplace else, and in a real data structure,
         // but for ease-of-setup let's not. These lists must be the same length
         // and must be strictly ordered from shortest distance to longest
-        int distances[] = {126, 158, 161, 204, 225};
-        int speeds[] = {29, 33, 36, 43, 50};
+        //int distances[]=new int[10];
+        //int speeds[]=new int[10];
+        //for(int i=0;i<240;i+=4)
+        
+        int distances[] = {110,122,142,154,197,205};
+        int speeds[] =    { 28, 30, 34, 34, 44, 52};
 
         if (distances.length != speeds.length) {
             System.err.println("Invalid speed/distance data");
