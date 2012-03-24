@@ -58,7 +58,7 @@ public class Switches extends Subsystem {
         SmartDashboard.putBoolean("Shoot Mode Enabled", CommandBase.globalState.isShootMode());
 
         // Start an autoshoot sequence
-        if (CommandBase.globalState.isDriveEnabled() && !CommandBase.globalState.isBalanceEnabled()
+        if (CommandBase.globalState.isDriveEnabled() && CommandBase.globalState.isBallHandlingEnabled()
                 && CommandBase.globalState.ballsInControl() > 0) {
             if (! CommandBase.globalState.isAutoshootEnabled() && CommandBase.oi.isAutoshootPressed()) {
                 CommandBase.globalState.setAutoshoot(true);
