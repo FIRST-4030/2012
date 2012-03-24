@@ -2,6 +2,7 @@ package edu.wpi.first.wpilibj.templates.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.templates.RobotMap;
 
 public class Autoshoot extends CommandBase {
 
@@ -12,7 +13,7 @@ public class Autoshoot extends CommandBase {
     private int STATE = STATE_CAMERA;
     private boolean failed = false;
     private Turn turn;
-    private Command shoot;
+    //private Command shoot;
     private Command image;
     private boolean noShoot;
 
@@ -26,7 +27,7 @@ public class Autoshoot extends CommandBase {
 
     protected void initialize() {
         turn = new Turn();
-        shoot = new Shoot();
+        //shoot = new Shoot();
         image = new RefreshCameraImage();
         this.cancelCommands();
         globalState.setAutoshoot(true);
@@ -73,12 +74,16 @@ public class Autoshoot extends CommandBase {
                 }*/
                 
                 if (!shooter.atSpeed()) {
-                    
+                    elevator.stop();
+                    return;
+                }else{
+                    elevator.run(RobotMap.ELEVATOR_SPEED_SHOOT);
                     return;
                 }
+                /*
                 if (globalState.readyToShoot()) {
                     shoot.start();
-                }
+                }*/
         }
     }
 
@@ -100,7 +105,7 @@ public class Autoshoot extends CommandBase {
     
     protected void cancelCommands(){
         turn.cancel();
-        shoot.cancel();
+        //shoot.cancel();
         image.cancel();
     }
     protected void end() {
