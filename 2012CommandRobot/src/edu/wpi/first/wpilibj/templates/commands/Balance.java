@@ -3,11 +3,12 @@ package edu.wpi.first.wpilibj.templates.commands;
 public class Balance extends CommandBase {
 
     public Balance() {
-        requires(drive);
+        //requires(drive);
     }
 
     protected void initialize() {
-        drive.balance();
+        this.end();
+        //drive.balance();
     }
 
     protected void execute() {

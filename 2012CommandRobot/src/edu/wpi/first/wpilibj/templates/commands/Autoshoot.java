@@ -34,21 +34,46 @@ public class Autoshoot extends CommandBase {
         switch (STATE) {
             // Request a new image analysis
             case STATE_CAMERA:
+                SmartDashboard.putString("state", "camera");
                 image.start();
-                STATE = STATE_SPIN;
-                break;
-            case STATE_SPIN:
+                STATE = STATE_TURN;
+                
+            case STATE_TURN:
                 if(!image.isFinished())return;
-                if(!globalState.targetVisible()){
+                
+                
+                if(!(Math.abs(globalState.getAzimuth())<RobotMap.AZIMUTH_THRESHOLD)){
+                    //last taken image is not aimed
+                    SmartDashboard.putString("state", "turn");
+
+                    if(!drive.isActive()){
+                        drive.turn(globalState.getAzimuth());
+                    }
+                    if(drive.pidComplete()){
+                        drive.stop();
+                        STATE=STATE_CAMERA;
+                        return;
+                    }
+                    
+                    return;
+                }
+                STATE = STATE_SPIN;
+                
+            case STATE_SPIN:
+                drive.stop();
+                SmartDashboard.putString("state", "spin");
+        /*        if(!globalState.targetVisible()){
                     failed=true;
                     return;
                 }
-
+*/
                 shooter.start();
                 shooter.setDistance((int)globalState.getCameraDistance());
                 
                 STATE = STATE_SHOOT;
+                
             case STATE_SHOOT:
+                SmartDashboard.putString("state", "shoot");
                 if (!shooter.atSpeed()) {
                     elevator.stop();
                 }else{

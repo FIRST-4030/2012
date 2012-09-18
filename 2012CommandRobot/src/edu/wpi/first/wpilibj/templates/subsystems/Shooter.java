@@ -29,6 +29,7 @@ public class Shooter extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         SmartDashboard.putDouble("Shooter Command Rate", this.getSetpoint());
         SmartDashboard.putDouble("Shooter Command Speed", output);
+
         shooter.set(-1.0 * output);
     }
 
@@ -53,8 +54,7 @@ public class Shooter extends PIDSubsystem {
 
     // Return true once we've reached the desired speed
     public boolean atSpeed() {
-        if (adjusting
-                && Math.abs(this.getSetpoint() - this.getPosition())
+        if (Math.abs(this.getSetpoint() - this.getPosition())
                 < RobotMap.SHOOTER_ZERO_THRESHOLD) {
             adjusting = false;
         }
@@ -70,6 +70,10 @@ public class Shooter extends PIDSubsystem {
         //int speeds[]=new int[10];
         //for(int i=0;i<240;i+=4)
         
+        //OLD DATA from competition
+        //int distances[] = {110,122,142,154,197,205};
+        //int speeds[] =    { 28, 30, 34, 34, 44, 52};
+        //NEW DATA updated Sept 012
         int distances[] = {110,122,142,154,197,205};
         int speeds[] =    { 28, 30, 34, 34, 44, 52};
 
@@ -110,12 +114,19 @@ public class Shooter extends PIDSubsystem {
     }
 
     public void start() {
-        shooter.set(-0.1);
+        
+        //shooter.set(-0.1);
         this.enable();
     }
 
     public void stop() {
+        
+        System.out.println("stopped");
         this.disable();
         shooter.stopMotor();
+    }
+    public void disable(){
+        System.out.println("dissabled");
+        super.disable();
     }
 }

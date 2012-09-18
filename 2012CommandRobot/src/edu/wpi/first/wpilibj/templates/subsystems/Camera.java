@@ -41,7 +41,7 @@ public class Camera extends Subsystem {
             height=report.boundingRectHeight;
             width=report.boundingRectWidth;
             x=report.boundingRectLeft;
-            y=report.boundingRectHeight;
+            y=report.boundingRectTop;
             centerX=x+width/2;
             centerY=y+height/2;
         }
@@ -105,8 +105,8 @@ public class Camera extends Subsystem {
         
         flushImages();
         try{
-        image= camera.getImage();
-        }catch(Exception e){System.err.println("could not retrieve camera Threshold");}
+            image= camera.getImage();
+        }catch(Exception e){System.err.println("could not retrieve camera Image");}
         try{
             thresholdHSLImage=this.HSLThreshold();
         }catch (Exception e){System.err.print("threshold failed");}
@@ -114,6 +114,7 @@ public class Camera extends Subsystem {
             IDTargets();
         }catch(Exception e){System.err.println("Couldn't ID target");}
     }
+    
     private void flushImages() throws NIVisionException{
         targets=null;
         if(image!=null){
@@ -123,20 +124,32 @@ public class Camera extends Subsystem {
             thresholdHSLImage.free();
         }
     }
+    
     private BinaryImage HSLThreshold() throws NIVisionException{
         if(image==null)return null;
         return image.thresholdHSL(RobotMap.HUE_LOW, RobotMap.HUE_HIGH, RobotMap.SAT_LOW, RobotMap.SAT_HIGH, RobotMap.LUM_LOW, RobotMap.LUM_HIGH);
     }
+    
     private void IDTargets() throws NIVisionException{
-    //    thresholdHSLImage.removeSmallObjects(true, 2);
-        ParticleAnalysisReport[] reports = thresholdHSLImage.getOrderedParticleAnalysisReports(4);
+        //thresholdHSLImage.removeSmallObjects(true, 2);
+        ParticleAnalysisReport[] reports = thresholdHSLImage.getOrderedParticleAnalysisReports();
+        if (reports[0].particleArea <600){
+         targets=null;
+         SmartDashboard.putInt("numTargets", 0);
+         return;
+        }
         
+        
+        //assuming its organized by size remove everything below a certian size
         for(int i=reports.length-1;i>=0;i--){
             if((reports[0].particleArea*RobotMap.TARGET_MIN_RATIO<reports[i].particleArea)){
                 targets=refineTargets(reports,i);
+                SmartDashboard.putInt("numTargets", targets.length);
+                SmartDashboard.putDouble("target size", reports[0].particleArea);
                 return;
             }
         }
+        SmartDashboard.putInt("numTargets", 0);
         targets= null;//this shouldn't be possible
     }
     

@@ -18,7 +18,7 @@ public class Drive extends PIDSubsystem {
     final private static double GRAV_MAX = 1.0;
     private Jaguar left;
     private Jaguar right;
-    private int PID_MODE = PID_MODE_BALANCE;
+    private int PID_MODE = PID_MODE_TURN;
     private double heading = 0.0;
     private double grav = 0.0;
     private boolean onRamp = false;
@@ -46,9 +46,11 @@ public class Drive extends PIDSubsystem {
         switch (PID_MODE) {
             case PID_MODE_TURN:
                 double tempHeading = CommandBase.globalState.getHeading();
-                if (Math.abs(tempHeading - this.getSetpoint()) < RobotMap.TURN_ZERO_THRESHOLD) {
+                /*
+                if (Math.abs(tempHeading - this.getSetpoint()) < RobotMap.AZIMUTH_THRESHOLD) {
                     tempHeading = this.getSetpoint();
                 }
+                */
                 heading = tempHeading;
                 return heading;
 
@@ -95,12 +97,15 @@ public class Drive extends PIDSubsystem {
     }
 
     protected void usePIDOutput(double output) {
+        SmartDashboard.putDouble("TURN PID OUTPUT", output);
+         this.set(-output, -output);
+                //break;
+        /*
         switch (PID_MODE) {
             case PID_MODE_TURN:
-                this.set(output, -1.0 * output);
-                break;
+               
 
-            default:
+            default:/*
                 // Drive uphill if we are not yet fully on the ramp
                 // Also drive uphill if we are not near-level or are past-level
                 // If we are near-level (i.e. starting to fall) drive downhill at a fixed rate
@@ -116,18 +121,23 @@ public class Drive extends PIDSubsystem {
                     this.set(-1.0 * output, output);
                 }
                 break;
-        }
+        }/**/
     }
-
+    public boolean isActive(){
+        return this.getPIDController().isEnable();
+    }
     // Return true if the current PID action is complete (i.e. within the zero threshold)
     public boolean pidComplete() {
         if (!this.getPIDController().isEnable()) {
-            return false;
+            return true;
         }
-
+        SmartDashboard.putString("is turning", ""+this.isActive());
+        
         switch (PID_MODE) {
             case PID_MODE_TURN:
-                if (this.getSetpoint() == heading) {
+                
+                
+                if (Math.abs(Math.abs(this.getSetpoint())-Math.abs(heading)) < RobotMap.AZIMUTH_THRESHOLD) {
                     return true;
                 }
             default:
@@ -137,7 +147,7 @@ public class Drive extends PIDSubsystem {
         }
         return false;
     }
-
+/*
     public void balance() {
         // Stop to get everything reset
         this.stop();
@@ -153,22 +163,25 @@ public class Drive extends PIDSubsystem {
         this.getPIDController().reset();
         this.enable();
     }
-
+*/
     public void turn(double angle) {
         // Stop to get everything reset
         this.stop();
-
+        this.getPIDController().reset();
         // Then enable the PID control
         PID_MODE = PID_MODE_TURN;
         this.getPIDController().setPID(RobotMap.TURN_P_GAIN, RobotMap.TURN_I_GAIN,
                 RobotMap.TURN_D_GAIN);
+        
         this.setSetpointRange(-1.0 * HEADING_MIN, HEADING_MAX);
         this.getPIDController().setOutputRange(-1.0 * RobotMap.TURN_SPEED_MAX, RobotMap.TURN_SPEED_MAX);
         this.getPIDController().setInputRange(HEADING_MIN, HEADING_MAX);
         this.getPIDController().setContinuous(true);
-        this.setSetpoint(angle % HEADING_MAX);
-        this.getPIDController().reset();
+        this.setSetpoint( (CommandBase.heading.readHeading()+angle)%HEADING_MAX);
+        
         this.enable();
+        
+        /**/
     }
 
     private void set(double leftSpeed, double rightSpeed) {

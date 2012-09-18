@@ -33,6 +33,8 @@ public class RefreshCameraImage extends CommandBase {
         try {
             ledring.on();
             
+            
+            isfinished=false;
             camera.refreshImages();
                    
             if(camera.hasTarget()){
