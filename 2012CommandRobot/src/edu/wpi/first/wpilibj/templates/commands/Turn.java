@@ -5,12 +5,13 @@ public class Turn extends CommandBase {
     private boolean started = false;
 
     public Turn() {
+        setInterruptible(true);
         requires(drive);
     }
 
     public void turnTo(double angle) {
-        double newHeading = globalState.getHeading() + angle;
-        drive.turn(newHeading);
+        //double newHeading = globalState.getHeading() + angle;
+        drive.turn(angle);
         started = true;
     }
 

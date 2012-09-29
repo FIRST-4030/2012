@@ -22,15 +22,17 @@ public class Shooter extends PIDSubsystem {
     }
 
     protected double returnPIDInput() {
-        return CommandBase.globalState.getShooterRate();
+        double shooterRate=CommandBase.globalState.getShooterRate();
+        SmartDashboard.putDouble("shooter encoder", shooterRate);
+        return shooterRate;
 
     }
 
     protected void usePIDOutput(double output) {
         SmartDashboard.putDouble("Shooter Command Rate", this.getSetpoint());
         SmartDashboard.putDouble("Shooter Command Speed", output);
-
-        shooter.set(-1.0 * output);
+        
+        shooter.set(1.0 * output);
     }
 
     protected void initDefaultCommand() {
@@ -48,6 +50,7 @@ public class Shooter extends PIDSubsystem {
     }
 
     public void setSpeed(double speed) {
+        System.out.println(speed);
         this.setSetpoint(speed);
         adjusting = true;
     }
@@ -71,11 +74,13 @@ public class Shooter extends PIDSubsystem {
         //for(int i=0;i<240;i+=4)
         
         //OLD DATA from competition
-        //int distances[] = {110,122,142,154,197,205};
-        //int speeds[] =    { 28, 30, 34, 34, 44, 52};
+        //double distances[] = {110,122,142,154,197,205};
+        //double speeds[] =    { 28, 30, 34, 34, 44, 52};
         //NEW DATA updated Sept 012
-        int distances[] = {110,122,142,154,197,205};
-        int speeds[] =    { 28, 30, 34, 34, 44, 52};
+        System.out.println(distance);
+        double distances[] = { 100,   125,   150,   175,   200,   225,   237.8, 241.9};
+        //double speeds[] =    { 27.39, 30.04, 32.68, 35.33, 37.98, 40.63, 46,    52};
+        double speeds[] =    { 27.39, 30.04, 32.68, 34.33, 36.98, 39.63, 45,    52};
 
         if (distances.length != speeds.length) {
             System.err.println("Invalid speed/distance data");
@@ -86,7 +91,7 @@ public class Shooter extends PIDSubsystem {
         double speed;
         if (distance >= distances[distances.length - 1]) {
             // Max distance == max speed
-            speed = distances[distances.length - 1];
+            speed = speeds[speeds.length - 1];
         } else if (distance <= distances[0]) {
             // Min distance == min speed
             speed = speeds[0];
@@ -99,17 +104,17 @@ public class Shooter extends PIDSubsystem {
             }
 
             // Calculate distance and speed differences about our target
-            int targetDiff = distances[i] - distance;
-            int distanceDiff = distances[i] - distances[i - 1];
-            int speedDiff = speeds[i] - speeds[i - 1];
+            double targetDiff = distances[i] - distance;
+            double distanceDiff = distances[i] - distances[i - 1];
+            double speedDiff = speeds[i] - speeds[i - 1];
 
             // Determine the ratio of differences
-            double diffRatio = (targetDiff / distanceDiff);
+            double diffRatio = ((targetDiff) / (distanceDiff));
 
             // Base speed + (difference ratio * speed difference)
-            speed = speeds[i] + (diffRatio * speedDiff);
+            speed = speeds[i-1] + (diffRatio * speedDiff);
         }
-
+        
         this.setSpeed(speed);
     }
 
@@ -121,12 +126,12 @@ public class Shooter extends PIDSubsystem {
 
     public void stop() {
         
-        System.out.println("stopped");
+        //System.out.println("stopped");
         this.disable();
         shooter.stopMotor();
     }
     public void disable(){
-        System.out.println("dissabled");
+        //System.out.println("dissabled");
         super.disable();
     }
 }

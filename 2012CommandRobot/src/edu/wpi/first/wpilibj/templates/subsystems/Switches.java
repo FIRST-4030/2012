@@ -38,7 +38,7 @@ public class Switches extends Subsystem {
         // Read the balance-mode toggle
         // Reset to joystick control if driving is disabled
         if (CommandBase.globalState.isDriveEnabled()) {
-            CommandBase.globalState.updateBalanceEnabled(CommandBase.oi.isBalanceEnablePressed());
+            //CommandBase.globalState.updateBalanceEnabled(CommandBase.oi.isBalanceEnablePressed());
         } else {
             CommandBase.globalState.setBalanceEnabled(false);
         }
@@ -60,9 +60,9 @@ public class Switches extends Subsystem {
         // Start an autoshoot sequence
         if (CommandBase.globalState.isDriveEnabled() && CommandBase.globalState.isBallHandlingEnabled()
                 && CommandBase.globalState.ballsInControl() > 0) {
-            if (! CommandBase.globalState.isAutoshootEnabled() && CommandBase.oi.isAutoshootPressed()) {
-                CommandBase.globalState.setAutoshoot(true);
-            }
+            //if (! CommandBase.globalState.isAutoshootEnabled() && CommandBase.oi.isAutoshootPressed()) {
+            //    CommandBase.globalState.setAutoshoot(true);
+            //}
         }
         SmartDashboard.putBoolean("Autoshoot Mode Enabled", CommandBase.globalState.isAutoshootEnabled());
 

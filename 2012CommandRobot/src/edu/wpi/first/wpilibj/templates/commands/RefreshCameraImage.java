@@ -26,15 +26,17 @@ public class RefreshCameraImage extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        isfinished=false;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         try {
+            isfinished=false;
             ledring.on();
             
             
-            isfinished=false;
+            
             camera.refreshImages();
                    
             if(camera.hasTarget()){
@@ -45,6 +47,7 @@ public class RefreshCameraImage extends CommandBase {
                 SmartDashboard.putDouble("DISTANCE TO TARGET", globalState.getCameraDistance());
                 globalState.setTargetAngle(camera.getTargetAngle());
                 SmartDashboard.putDouble("ANGLE TO TARGET", camera.getTargetDistance());
+                shooter.setDistance((int)globalState.getCameraDistance());
             }else{
                 globalState.setTargetVisible(false);
 

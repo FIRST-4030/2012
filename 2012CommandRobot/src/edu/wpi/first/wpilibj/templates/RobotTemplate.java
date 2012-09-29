@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.templates.commands.*;
  * directory.
  */
 public class RobotTemplate extends IterativeRobot {
-
+    public static RobotTemplate robot;
     private final static boolean AUTONOMOUS_ENABLED = true;
     private Command findTarget;
     private Command joystick;
@@ -38,6 +38,7 @@ public class RobotTemplate extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+        robot=this;
         // Initialize all subsystems
         CommandBase.init();
 
@@ -73,7 +74,7 @@ public class RobotTemplate extends IterativeRobot {
         if (AUTONOMOUS_ENABLED) {
             //if (CommandBase.globalState.targetVisible()) {
             cancelIfRunning(findTarget);
-            runShooter();
+            //runShooter();
             runElevator();
             startIfNotRunning(autoshoot);
             //}
@@ -81,6 +82,7 @@ public class RobotTemplate extends IterativeRobot {
     /**/}
 
     public void teleopInit() {
+        cancelIfRunning(autoshoot);
         if (AUTONOMOUS_ENABLED) {
             cancelIfRunning(findTarget);
         }
@@ -126,6 +128,7 @@ public class RobotTemplate extends IterativeRobot {
                 if (CommandBase.globalState.isAutoshootEnabled()
                         && CommandBase.globalState.ballsInControl() > 0) {
                     startIfNotRunning(autoshoot);
+                    return;
                 }
 
                 // Disable loading (but not until the load elevator is done)
@@ -165,7 +168,7 @@ public class RobotTemplate extends IterativeRobot {
     }
 
     // Run the shooter anytime we have balls (and the loader is done)
-    private void runShooter() {
+    public void runShooter() {
         if (!load.isElevatorRunning() && CommandBase.globalState.ballsInControl() > 0) {
             startIfNotRunning(shooter);
         }

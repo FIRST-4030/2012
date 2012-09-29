@@ -10,6 +10,7 @@ public class RobotMap {
 
     // Drive Joystick
     public static final int JOYSTICK_DRIVE = 1;
+    public static final int BUTTON_IMAGE = 1;
     public static final int BUTTON_BALANCE = 2;
     public static final int BUTTON_DRIVE = 3;
     public static final int BUTTON_BACKWARDS = 4;
@@ -84,8 +85,8 @@ public class RobotMap {
     public static final double BALANCE_NEAR_LEVEL_SPEED = 0.10;
     public static final double TURN_SPEED_MAX = 0.4;
     public static final double TURN_ZERO_THRESHOLD = 1.0;
-    public static final double TURN_P_GAIN = TURN_SPEED_MAX / (15.0*20);
-    public static final double TURN_I_GAIN = TURN_P_GAIN / (10.0*2);
+    public static final double TURN_P_GAIN = TURN_SPEED_MAX / (15.0*15);
+    public static final double TURN_I_GAIN = TURN_P_GAIN / (10.0);
     public static final double TURN_D_GAIN = 0.0;
     public static final int FIND_TARGET_TURN = 15;
     public static final double AUTO_RAMP_KNOCKDOWN_SPEED = 0.75;
@@ -104,15 +105,15 @@ public class RobotMap {
     public static final double ARMLOCK_MOD = .5;
     // LED ring constants
     //Camera Constants
-    public static final double AZIMUTH_THRESHOLD = 3.5;
+    public static final double AZIMUTH_THRESHOLD = 2.5;
     public static final double CAMERA_VA = 47; //Horizontal viewing angle in degrees
     //HSL limits for target square
-    public static final int HUE_LOW = 40;
-    public static final int HUE_HIGH = 145;
-    public static final int SAT_LOW = 50;
+    public static final int HUE_LOW = 50;
+    public static final int HUE_HIGH = 155;
+    public static final int SAT_LOW = 60;
     public static final int SAT_HIGH = 255;
-    public static final int LUM_LOW = 50;
-    public static final int LUM_HIGH = 200;
+    public static final int LUM_LOW = 60;
+    public static final int LUM_HIGH = 255;
     public static final double TARGET_W = 24;
     public static final double TARGET_H = 18;
     public static final double TOP_TO_BOTTOM_H = 88;

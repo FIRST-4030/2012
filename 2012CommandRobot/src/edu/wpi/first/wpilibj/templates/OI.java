@@ -31,26 +31,26 @@ public class OI {
         driveStick = new Joystick(RobotMap.JOYSTICK_DRIVE);
         ballStick = new Joystick(RobotMap.JOYSTICK_BALL);
         
-        JoystickButton img=new JoystickButton(driveStick,1);
-        img.whenPressed(new RefreshCameraImage());
+        image = new JoystickButton(driveStick, RobotMap.BUTTON_IMAGE);
+        image.whenPressed(new RefreshCameraImage());
         
         // Shoot when the trigger is pulled
         shoot = new JoystickButton(ballStick, RobotMap.BUTTON_SHOOT);
         shoot.whenPressed(new Shoot());
 
-        shoot = new JoystickButton(driveStick, 9);
-        shoot.whenPressed(new TakePicture());
+        //shoot = new JoystickButton(driveStick, 9);
+        //shoot.whenPressed(new TakePicture());
         
         // Toggle joystick driving mode
         driveEnabled = new JoystickButton(driveStick, RobotMap.BUTTON_DRIVE);
         driveBackwards = new JoystickButton(driveStick, RobotMap.BUTTON_BACKWARDS);
-        balanceEnabled = new JoystickButton(driveStick, RobotMap.BUTTON_BALANCE);
+        //balanceEnabled = new JoystickButton(driveStick, RobotMap.BUTTON_BALANCE);
 
         // Toggle the shoot/load/autoshoot mode
         ballHandlingEnabled = new JoystickButton(ballStick, RobotMap.BUTTON_BALL_HANDLING);
         shootMode = new JoystickButton(ballStick, RobotMap.BUTTON_SHOOT_MODE);
-        autoshoot = new JoystickButton(ballStick, RobotMap.BUTTON_AUTOSHOOT);
-        autoshoot.whenPressed(new Autoshoot());
+        //autoshoot = new JoystickButton(ballStick, RobotMap.BUTTON_AUTOSHOOT);
+        //autoshoot.whenPressed(new Autoshoot());
         
         // Balance arm
         arm = new JoystickButton(ballStick, RobotMap.BUTTON_ARM);
@@ -90,15 +90,15 @@ public class OI {
         return driveBackwards.get();
     }
 
-    public boolean isBalanceEnablePressed() {
-        return balanceEnabled.get();
-    }
+    //public boolean isBalanceEnablePressed() {
+    //    return balanceEnabled.get();
+    //}
 
     public boolean isBallHandlingEnablePressed() {
         return ballHandlingEnabled.get();
     }
     
-    public boolean isAutoshootPressed() {
-        return autoshoot.get();
-    }
+    //public boolean isAutoshootPressed() {
+    //    return autoshoot.get();
+    //}
 }

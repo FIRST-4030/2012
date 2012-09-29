@@ -3,19 +3,20 @@ package edu.wpi.first.wpilibj.templates.commands;
 import edu.wpi.first.wpilibj.templates.RobotMap;
 
 public class SpinShooter extends CommandBase {
-
+    private boolean waiting=false;
     public SpinShooter() {
         requires(shooter);
     }
 
     protected void initialize() {
+        waiting=false;
         shooter.start();
     }
 
     protected void execute() {
-        if (globalState.ballsInControl() < 1) {
+        if (globalState.ballsInControl() < 1 && !waiting) {
             setTimeout(timeSinceInitialized()+RobotMap.SHOOTER_SPINDOWN_TIME);
-            
+            waiting=true;
         }
     }
 
@@ -31,6 +32,7 @@ public class SpinShooter extends CommandBase {
     }
 
     protected void end() {
+        waiting=false;
         shooter.stop();
     }
 

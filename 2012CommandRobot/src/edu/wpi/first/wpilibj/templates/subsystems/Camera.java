@@ -22,7 +22,7 @@ public class Camera extends Subsystem {
     private BinaryImage thresholdHSLImage=null;
     private int imagenumber=0;//keeps track of images being saved
     // Create and set up a camera instance 
-    private AxisCamera camera = AxisCamera.getInstance("10.40.30.11");
+    private AxisCamera camera = AxisCamera.getInstance();
     private Target[] targets=null;
     private Target mainTarget=null;
 
@@ -185,6 +185,7 @@ public class Camera extends Subsystem {
     
     
     //wrappers for important methods
+    
     public double getAzimuth() throws NIVisionException{
         return getAzimuth(getTarget());
     }
